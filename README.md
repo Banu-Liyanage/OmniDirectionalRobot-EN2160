@@ -31,13 +31,13 @@ This repository contains the design, firmware, and software for an **Omni Direct
 - **Development Tools:** [PlatformIO, Arduino IDE, KiCad, Altium, etc.]
 
 ## Repository Structure
+```
 OmniDirectionalRobot-EN2160/
 │── firmware/       # Embedded code for motor control, sensors, and communication
 │── hardware/       # PCB design files, schematics, and component details
 │── software/       # Any simulation, ROS-based control, or other related software
-│── docs/           # Documentation, reports, and references
-│── tests/          # Testing scripts and validation data
-│── README.md       # Project overview
-│── LICENSE         # Open-source license (e.g., MIT, Apache 2.0)
-
-
+│── docs/          # Documentation, reports, and references
+│── tests/         # Testing scripts and validation data
+│── README.md      # Project overview
+│── LICENSE        # Open-source license (e.g., MIT, Apache 2.0)
+```
