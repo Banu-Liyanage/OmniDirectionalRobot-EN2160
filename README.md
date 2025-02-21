@@ -7,16 +7,18 @@ All project-related documents, resources, and plans are organized in the **Googl
 This repository contains the design, firmware, and software for an **Omni Directional Robot Platform** developed as part of the **EN2160 Electronic Design Realization Module** at the University of Moratuwa.
 
 ## Team Members
-| Name            | Email              |
-|----------------|--------------------|
-| [Your Name]    | [your.email@example.com] |
-| [Member 2]     | [member2.email@example.com] |
-| [Member 3]     | [member3.email@example.com] |
-| [Member 4]     | [member4.email@example.com] |
-| [Member 5]     | [member5.email@example.com] |
-| [Member 6]     | [member6.email@example.com] |
-| [Member 7]     | [member7.email@example.com] |
-| [Member 8]     | [member8.email@example.com] |
+| Name            | Index Number |Email              |
+|----------------|--------------------|--------------------|
+|Pankaja Balasooriya | 220054N | balasooriyabapi.22@uom.lk|
+| Banuka Liyanage  | 220362G    |   liyanagedlbb.22@uom.lk |
+|Rusula Oshadha Pathirana |  220448C | pathiranapdro.22@uom.lk|
+|Oshani Dewasumithra | 220112R | dewasumithrampo.22@uom.lk|
+|Chamath Diunugala | 220143L | diunugalach.22@uom.lk|
+|Rusiru Fernando |220161N| fernandoard.22@uom.lk|
+|Chandupa Dineshara |220128V|dinesharamc.22@uom.lk|
+|Sahas Eshan|220148G|eashansgs.22@uom.lk|
+
+
 
 ## Project Objectives
 - Construct a **4-wheel platform** using Mecanum wheels for omnidirectional motion.
