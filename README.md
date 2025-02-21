@@ -10,13 +10,18 @@ This repository contains the design, firmware, and software for an **Omni Direct
 | Name            | Index Number |Email              |
 |----------------|--------------------|--------------------|
 |Pankaja Balasooriya | 220054N | balasooriyabapi.22@uom.lk|
-| Banuka Liyanage  | 220362G    |   liyanagedlbb.22@uom.lk |
-|Rusula Oshadha Pathirana |  220448C | pathiranapdro.22@uom.lk|
 |Oshani Dewasumithra | 220112R | dewasumithrampo.22@uom.lk|
-|Chamath Diunugala | 220143L | diunugalach.22@uom.lk|
-|Rusiru Fernando |220161N| fernandoard.22@uom.lk|
 |Chandupa Dineshara |220128V|dinesharamc.22@uom.lk|
+|Chamath Diunugala | 220143L | diunugalach.22@uom.lk|
 |Sahas Eshan|220148G|eashansgs.22@uom.lk|
+|Rusiru Fernando |220161N| fernandoard.22@uom.lk|
+| Banuka Liyanage  | 220362G |   liyanagedlbb.22@uom.lk |
+|Rusula Oshadha Pathirana |  220448C | pathiranapdro.22@uom.lk|
+
+
+
+
+
 
 
 
