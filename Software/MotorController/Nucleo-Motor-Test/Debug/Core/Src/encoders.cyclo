@@ -1,0 +1,2 @@
+../Core/Src/encoders.c:12:9:getEncoderCounts	1
+../Core/Src/encoders.c:16:6:resetEncoders	1

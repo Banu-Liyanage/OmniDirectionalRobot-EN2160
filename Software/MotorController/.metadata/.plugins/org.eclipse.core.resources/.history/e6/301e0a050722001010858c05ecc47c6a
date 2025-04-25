@@ -1,0 +1,61 @@
+/*
+ * motors.c
+ *
+ *  Created on: Apr 25, 2025
+ *      Author: PANKAJA
+ */
+
+
+/*
+ * motors.c
+ */
+
+#include "main.h"
+#include "motors.h"
+
+
+// This is the buffer that will get filled up with all the measurements
+uint16_t adc_buf[NUM_SAMPLES];
+// "boolean" variable to keep say when the ADC has finished filling up the buffer
+uint8_t complete = 0;
+
+
+float limitPWM(float pwm) {
+	if (pwm > PWM_MAX)
+		return PWM_MAX;
+	else if (pwm < -PWM_MAX)
+		return -PWM_MAX;
+	return pwm;
+}
+
+
+
+
+void setMotorPWM(float pwm) {
+	if (pwm >= 0) {
+		GPIOB_BSRR = (1U << INA_PIN) | (1U << (INB_PIN + 16));
+		TIM4->CCR1 = (uint32_t) (limitPWM(pwm) * MAX_TIMER_COUNTS);
+	}
+	else if (pwm < 0) {
+		GPIOB_BSRR = (1U << (INA_PIN + 16)) | (1U << INB_PIN);
+		TIM4->CCR1 = (uint32_t) (-1 * limitPWM(pwm) * MAX_TIMER_COUNTS);
+	}
+}
+
+
+void resetMotors() {
+	GPIOB_BSRR = (1U << (INA_PIN + 16)) | (1U << (INB_PIN + 16));
+	setMotorPWM(0);
+}
+
+
+
+/*
+ This function is called when the ADC buffer is filled
+ It stops the ADC and changes our "complete" variable to be "true"
+ */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
+    // stop the ADC
+    HAL_ADC_Stop_DMA(hadc);
+    complete = 1;
+}

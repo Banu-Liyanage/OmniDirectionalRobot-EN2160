@@ -1,0 +1,26 @@
+/*
+ * encoders.c
+ *
+ *  Created on: Apr 25, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "main.h"
+#include "encoders.h"
+
+int16_t getEncoderCounts() {
+	return (int16_t) TIM1->CNT;
+}
+
+void resetEncoders() {
+	TIM1->CNT = (int16_t) 0;
+	TIM2->CNT = (int16_t) 0;
+	m_robot_distance = 0;
+	m_robot_angle = 0;
+	left_delta = 0;
+	right_delta = 0;
+	previous_left_count = 0;
+	previous_right_count = 0;
+
+}

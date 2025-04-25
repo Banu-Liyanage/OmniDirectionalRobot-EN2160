@@ -1,0 +1,6 @@
+../Core/Src/motors.c:17:7:limitPWM	16	static
+../Core/Src/motors.c:28:6:setMotorPWM	16	static
+../Core/Src/motors.c:40:6:resetMotors	8	static
+../Core/Src/motors.c:46:10:analogRead	40	static
+../Core/Src/motors.c:83:10:getCurrentMilliamps	8	static
+../Core/Src/motors.c:93:6:HAL_ADC_ConvCpltCallback	16	static

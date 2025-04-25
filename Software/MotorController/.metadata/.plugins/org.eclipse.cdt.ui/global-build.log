@@ -1,0 +1,7 @@
+00:37:18 **** Incremental Build of configuration Debug for project Nucleo-Motor-Test ****
+make -j20 all 
+arm-none-eabi-size  Nucleo-Motor-Test.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16496	     12	   1956	  18464	   4820	Nucleo-Motor-Test.elf
+Finished building: default.size.stdout
+ 
