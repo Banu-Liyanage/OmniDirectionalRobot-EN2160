@@ -13,7 +13,7 @@
 #define INA_PIN             0  // PB0
 #define INB_PIN             1  // PB1
 
-#define NUM_SAMPLES 128
+#define NUM_SAMPLES 16
 
 #define PWM_MAX 1 //  do not exceed 1
 #define MAX_TIMER_COUNTS 7199

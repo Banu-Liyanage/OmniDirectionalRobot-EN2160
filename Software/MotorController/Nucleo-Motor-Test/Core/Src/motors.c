@@ -24,7 +24,6 @@ float limitPWM(float pwm) {
 
 
 
-
 void setMotorPWM(float pwm) {
 	if (pwm >= 0) {
 		GPIOB_BSRR = (1U << INA_PIN) | (1U << (INB_PIN + 16));
@@ -50,8 +49,6 @@ uint16_t analogRead()
 
 
 	sConfig.Channel = ADC_CHANNEL_15;
-
-
     sConfig.Rank = 1;
     sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
 
@@ -81,8 +78,8 @@ uint16_t analogRead()
 }
 
 uint16_t getCurrentMilliamps(){
-	// 5V / 4096 ADC counts / 144 mV per A = 8.477105 mA per count
-	return analogRead() * 8.477105;
+	// 3.3V / 4096 ADC counts / 144 mV per A = 5.5948893229166666666666666666667 mA per count
+	return analogRead() * 5.5948893229166666666666666666667;
 }
 
 

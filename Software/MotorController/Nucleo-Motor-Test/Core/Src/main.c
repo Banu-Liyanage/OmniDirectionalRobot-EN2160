@@ -23,6 +23,8 @@
 /* USER CODE BEGIN Includes */
 #include "encoders.h"
 #include "motors.h"
+#include "serial_oscilloscope.h"
+#include "FIRFilter.h"
 
 /* USER CODE END Includes */
 
@@ -34,6 +36,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define NUM_CHANNELS 2
+
 
 /* USER CODE END PD */
 
@@ -53,6 +57,20 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 int16_t encoder_counts = 0;
+uint16_t current = 0;
+float filteredCurrent = 0;
+
+
+float pwm = 0.0f;
+float pwm_step = 0.01f; // Change per update
+uint32_t delay_ms = 50; // Delay between updates
+
+
+int16_t data_values[NUM_CHANNELS];
+char *labels[NUM_CHANNELS] = {"i", "f_i"};
+
+
+FIRFilter currentFilterMovingAverage;
 
 
 /* USER CODE END PV */
@@ -112,6 +130,24 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
   HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
 
+  resetMotors();
+
+  /* Initialize Serial Oscilloscope */
+  SerialOscilloscope_Config_t osc_config = {
+	  .huart = &huart2,
+	  .sample_rate_ms = 20,
+	  .max_channels = NUM_CHANNELS
+  };
+  if (SerialOscilloscope_Init(&osc_config) != HAL_OK) {
+	  Error_Handler();
+  }
+
+  FIRFilter_Init(&currentFilterMovingAverage);
+
+
+  HAL_Delay(5000);
+  //setMotorPWM(0.9);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -122,6 +158,41 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	encoder_counts = (int16_t) TIM1->CNT;
+	current = getCurrentMilliamps();
+	filteredCurrent = FIRFilter_Update(&currentFilterMovingAverage, current);
+	//current = analogRead();
+
+	/* Check if it's time to sample */
+	if (SerialOscilloscope_IsTimeToSample()) {
+		/* Read ADC channels */
+		/* Convert to signed values if needed */
+		data_values[0] = (int16_t)current;
+		data_values[1] = (int16_t)filteredCurrent;
+
+
+		/* Send data to Serial Oscilloscope */
+		// Option 1: Send raw data
+		//SerialOscilloscope_SendData(data_values, NUM_CHANNELS);
+
+		// Option 2: Send labeled data (uncomment if needed)
+		SerialOscilloscope_SendLabeledData(labels, data_values, NUM_CHANNELS);
+
+	}
+
+	setMotorPWM(pwm);
+	HAL_Delay(delay_ms);
+
+	pwm += pwm_step;
+
+	// If PWM exceeds limits, reverse the increment direction
+	if (pwm >= 1.0f) {
+	  pwm = 1.0f;
+	  pwm_step = -pwm_step;
+	}
+	else if (pwm <= -1.0f) {
+	  pwm = -1.0f;
+	  pwm_step = -pwm_step;
+	}
 
   }
   /* USER CODE END 3 */

@@ -1,0 +1,4 @@
+../Core/Src/serial_oscilloscope.c:26:19:SerialOscilloscope_Init	16	static
+../Core/Src/serial_oscilloscope.c:45:19:SerialOscilloscope_SendData	24	static
+../Core/Src/serial_oscilloscope.c:75:19:SerialOscilloscope_SendLabeledData	32	static
+../Core/Src/serial_oscilloscope.c:105:9:SerialOscilloscope_IsTimeToSample	16	static

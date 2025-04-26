@@ -1,10 +1,17 @@
-00:37:18 **** Incremental Build of configuration Debug for project Nucleo-Motor-Test ****
+17:24:08 **** Incremental Build of configuration Debug for project Nucleo-Motor-Test ****
 make -j20 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "Nucleo-Motor-Test.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Nucleo-Motor-Test\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Nucleo-Motor-Test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Nucleo-Motor-Test.elf
+ 
 arm-none-eabi-size  Nucleo-Motor-Test.elf 
+arm-none-eabi-objdump -h -S Nucleo-Motor-Test.elf  > "Nucleo-Motor-Test.list"
    text	   data	    bss	    dec	    hex	filename
-  16496	     12	   1956	  18464	   4820	Nucleo-Motor-Test.elf
+  24376	    188	   2572	  27136	   6a00	Nucleo-Motor-Test.elf
 Finished building: default.size.stdout
  
+Finished building: Nucleo-Motor-Test.list
+ 
 
-00:37:19 Build Finished. 0 errors, 0 warnings. (took 322ms)
+17:24:09 Build Finished. 0 errors, 0 warnings. (took 910ms)
 

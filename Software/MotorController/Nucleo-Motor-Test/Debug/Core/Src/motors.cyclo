@@ -1,6 +1,6 @@
 ../Core/Src/motors.c:17:7:limitPWM	3
-../Core/Src/motors.c:28:6:setMotorPWM	3
-../Core/Src/motors.c:40:6:resetMotors	1
-../Core/Src/motors.c:46:10:analogRead	4
-../Core/Src/motors.c:83:10:getCurrentMilliamps	1
-../Core/Src/motors.c:93:6:HAL_ADC_ConvCpltCallback	1
+../Core/Src/motors.c:27:6:setMotorPWM	3
+../Core/Src/motors.c:39:6:resetMotors	1
+../Core/Src/motors.c:45:10:analogRead	4
+../Core/Src/motors.c:80:10:getCurrentMilliamps	1
+../Core/Src/motors.c:90:6:HAL_ADC_ConvCpltCallback	1

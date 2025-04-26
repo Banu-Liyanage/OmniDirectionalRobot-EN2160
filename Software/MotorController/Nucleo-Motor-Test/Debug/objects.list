@@ -1,6 +1,8 @@
+"./Core/Src/FIRFilter.o"
 "./Core/Src/encoders.o"
 "./Core/Src/main.o"
 "./Core/Src/motors.o"
+"./Core/Src/serial_oscilloscope.o"
 "./Core/Src/stm32f4xx_hal_msp.o"
 "./Core/Src/stm32f4xx_it.o"
 "./Core/Src/syscalls.o"
