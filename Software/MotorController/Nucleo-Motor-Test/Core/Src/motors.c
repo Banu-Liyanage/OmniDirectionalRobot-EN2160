@@ -79,7 +79,7 @@ uint16_t analogRead()
 
 uint16_t getCurrentMilliamps(){
 	// 3.3V / 4096 ADC counts / 144 mV per A = 5.5948893229166666666666666666667 mA per count
-	return analogRead() * 5.5948893229166666666666666666667;
+	return analogRead();
 }
 
 

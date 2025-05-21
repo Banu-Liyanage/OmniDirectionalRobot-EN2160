@@ -1,0 +1,20 @@
+/*
+ * motors.h
+ *
+ *  Created on: May 20, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_MOTORS_H_
+#define INC_MOTORS_H_
+
+
+#define PWM_MAX 1 //  do not exceed 1
+#define MAX_TIMER_COUNTS 7199
+
+
+
+float limitPWM(float pwm);
+
+
+#endif /* INC_MOTORS_H_ */

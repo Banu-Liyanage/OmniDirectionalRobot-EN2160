@@ -1,0 +1,16 @@
+/*
+ * motors.c
+ *
+ *  Created on: May 20, 2025
+ *      Author: PANKAJA
+ */
+
+#include "motors.h"
+
+float limitPWM(float pwm) {
+	if (pwm > PWM_MAX)
+		return PWM_MAX;
+	else if (pwm < -PWM_MAX)
+		return -PWM_MAX;
+	return pwm;
+}

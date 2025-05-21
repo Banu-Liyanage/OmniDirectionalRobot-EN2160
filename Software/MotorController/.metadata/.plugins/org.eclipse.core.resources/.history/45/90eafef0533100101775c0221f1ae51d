@@ -1,0 +1,71 @@
+/*
+ * controller.c
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#include "controller.h"
+
+// --- Setpoints ---
+volatile float velocity_setpoint_rpm = 0.0f;
+volatile float current_setpoint_amps = 0.0f; // Output of velocity loop
+
+// --- Measured Values ---
+volatile int16_t encoder_counts_raw = 0;
+volatile float actual_velocity_rpm = 0.0f;
+volatile uint16_t adc_raw_value = 0;
+volatile float actual_current_amps = 0.0f;
+
+// --- PID Controller States (Outer Velocity Loop) ---
+float vel_pid_error = 0.0f;
+float vel_pid_integral = 0.0f;
+float vel_pid_derivative = 0.0f;
+float vel_pid_previous_error = 0.0f;
+float vel_pid_output = 0.0f; // This will be the current_setpoint_amps
+
+// --- PID Controller Gains (Outer Velocity Loop) ---
+float vel_Kp = 1.0f; // Tune these!
+float vel_Ki = 0.1f;
+float vel_Kd = 0.01f;
+float vel_pid_integral_limit = 10.0f; // Anti-windup
+
+// --- PID Controller States (Inner Current Loop) ---
+float cur_pid_error = 0.0f;
+float cur_pid_integral = 0.0f;
+float cur_pid_derivative = 0.0f;
+float cur_pid_previous_error = 0.0f;
+float cur_pid_output_pwm = 0.0f; // This is the PWM duty cycle
+
+// --- PID Controller Gains (Inner Current Loop) ---
+float cur_Kp = 2.0f;  // Tune these!
+float cur_Ki = 0.5f;
+float cur_Kd = 0.05f;
+float cur_pid_integral_limit = 1.0f; // Anti-windup for PWM output
+
+// --- Feedforward Gains (Optional, start without if complex) ---
+float ff_velocity_gain = 0.05f; // Output is a current component
+// float ff_acceleration_gain = 0.01f; // If you want to add acceleration FF
+
+// --- Control Loop Timing ---
+float control_loop_delta_t_seconds = 0.001f; // e.g., 1ms loop time
+
+// --- Motor & System Parameters ---
+#define ENCODER_PPR 1920 // Pulses Per Revolution of your encoder (AFTER GEARBOX if applicable)
+#define GEAR_RATIO 1.0 // If you have a gearbox
+#define VNH5019_SENSE_RESISTOR_OHMS (0.000825) // Check VNH5019 datasheet Rsense, often 825 uOhm for CS_OUT/1000
+#define VNH5019_CS_GAIN (1.0f/144e-3f) // Amps per Volt from datasheet (144mV/A is what you used for mA/count)
+                                         // Your 5.594889 mA/count implies:
+                                         // 1 count = 3.3V / 4096 counts = 0.000805664 V
+                                         // Current (A) for 1 count = 0.000805664 V / (144 mV/A) = 0.000805664 / 0.144 = 0.005594889 A
+                                         // So current (mA) for 1 count = 5.594889 mA. This matches your calculation.
+                                         // Let's refine this for Amps directly:
+#define ADC_RESOLUTION 4096.0f
+#define ADC_VREF 3.3f
+#define CURRENT_SENSE_MV_PER_AMP 144.0f // From VNH5019 datasheet
+#define ADC_COUNTS_TO_AMPS ((ADC_VREF / ADC_RESOLUTION) / (CURRENT_SENSE_MV_PER_AMP / 1000.0f)) // Amps per ADC count
+
+
+// --- PWM settings from your code ---
+#define PWM_MAX 1.0f
+#define MAX_TIMER_COUNTS (TIM4->ARR) // Assuming ARR is set for your PWM frequency (e.g. 999 for 1kHz if clock is 1MHz)
