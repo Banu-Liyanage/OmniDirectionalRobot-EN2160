@@ -1,0 +1,7 @@
+../Core/Src/encoders.c:33:9:getForwardLeftEncoderCounts	1
+../Core/Src/encoders.c:37:9:getForwardRightEncoderCounts	1
+../Core/Src/encoders.c:41:9:getRearLeftEncoderCounts	1
+../Core/Src/encoders.c:45:9:getRearRightEncoderCounts	1
+../Core/Src/encoders.c:49:6:resetEncoders	1
+../Core/Src/encoders.c:70:6:resetEncodersinSystick	1
+../Core/Src/encoders.c:78:6:update_Encoder_Data	1

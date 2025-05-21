@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "motors.h"
+#include "encoders.h"
 
 /* USER CODE END Includes */
 
@@ -119,11 +120,16 @@ int main(void)
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
 
+  HAL_TIM_Encoder_Start(&htim2, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim3, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
+  HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
 
   HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
   HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
   HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
+
 
 
   /* USER CODE END 2 */
@@ -136,24 +142,26 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  //HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_PIN, 1);
-//	  setForwardLeftMotorPWM(-1);
-//	  setForwardRightMotorPWM(-1); // - not working
-//
-//	  setRearLeftMotorPWM(-1);
-//	  setRearRightMotorPWM(-1);
+	  setForwardLeftMotorPWM(-1);
+	  setForwardRightMotorPWM(-1); // - not working
+
+	  setRearLeftMotorPWM(-1);
+	  setRearRightMotorPWM(-1);
 	  //resetMotors();
 	  //setForwardLeftMotorPWM(-0.5);
 
 
-	  HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
-	HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
-	HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
+	 //HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
+//	 HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
+//	HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
 
-	HAL_Delay(1000);
+	//HAL_Delay(1000);
 
-	HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 0);
-	  HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
-	  HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 0);
+	//HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 0);
+
+	//HAL_Delay(1000);
+//	  HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
+//	  HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 0);
   }
   /* USER CODE END 3 */
 }
@@ -371,10 +379,10 @@ static void MX_TIM2_Init(void)
   htim2.Instance = TIM2;
   htim2.Init.Prescaler = 0;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim2.Init.Period = 4294967295;
+  htim2.Init.Period = 65535;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim2.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
@@ -423,7 +431,7 @@ static void MX_TIM3_Init(void)
   htim3.Init.Period = 65535;
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
@@ -472,7 +480,7 @@ static void MX_TIM4_Init(void)
   htim4.Init.Period = 65535;
   htim4.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim4.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
@@ -518,10 +526,10 @@ static void MX_TIM5_Init(void)
   htim5.Instance = TIM5;
   htim5.Init.Prescaler = 0;
   htim5.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim5.Init.Period = 4294967295;
+  htim5.Init.Period = 65535;
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
   sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
@@ -632,7 +640,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOC, M4_INA_Pin|M4_INB_Pin|TX_EN_Pin|M2_INA_Pin
-                          |M1_INA_Pin|M1_INB_Pin, GPIO_PIN_RESET);
+                          |M2_INB_Pin|M1_INA_Pin|M1_INB_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, LED_RX_Pin|LED_TX_Pin|M3_INA_Pin|M3_INB_Pin, GPIO_PIN_RESET);
@@ -658,8 +666,9 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : M2_INB_Pin */
   GPIO_InitStruct.Pin = M2_INB_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(M2_INB_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : Status_LED_Pin */
