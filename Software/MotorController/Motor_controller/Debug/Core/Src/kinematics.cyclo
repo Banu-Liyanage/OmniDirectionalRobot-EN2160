@@ -1,0 +1,9 @@
+../Core/Src/kinematics.c:21:6:kinematics_init	1
+../Core/Src/kinematics.c:47:6:inverse_kinematics	1
+../Core/Src/kinematics.c:67:6:forward_kinematics	1
+../Core/Src/kinematics.c:83:18:limit_velocities	7
+../Core/Src/kinematics.c:101:6:set_robot_velocity	1
+../Core/Src/kinematics.c:111:6:stop_robot	1
+../Core/Src/kinematics.c:116:6:update_kinematics_control	1
+../Core/Src/kinematics.c:149:6:start_demo_sequence	1
+../Core/Src/kinematics.c:155:6:update_demo_sequence	13

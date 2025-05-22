@@ -37,7 +37,8 @@ void setRearLeftMotorPWM(float pwm);
 void setRearRightMotorPWM(float pwm);
 
 void resetMotors();
-
+void emergencyStop(void);
+void initMotors(void);
 
 
 #endif /* INC_MOTORS_H_ */

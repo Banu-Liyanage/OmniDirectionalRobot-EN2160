@@ -10,6 +10,8 @@
 
 #include "main.h"
 
+void CheckEncoderCounts(void);
 void SysTickFunction(void);
+
 
 #endif /* INC_SYSTICK_H_ */

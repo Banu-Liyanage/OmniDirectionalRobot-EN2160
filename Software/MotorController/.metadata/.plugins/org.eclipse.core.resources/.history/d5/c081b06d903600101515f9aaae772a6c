@@ -1,0 +1,66 @@
+/*
+ * systick.c
+ *
+ *  Created on: May 21, 2025
+ *      Author: PANKAJA
+ */
+
+#include "systick.h"
+#include "encoders.h"
+#include "kinematics.h"
+#include "config.h"
+
+// Timing control variables
+static uint32_t tick_counter = 0;
+static uint8_t control_loop_flag = 0;
+
+// Control loop interval in milliseconds (10ms = 100Hz)
+#define CONTROL_LOOP_INTERVAL 10
+
+/**
+ * Checks if encoder counts are near overflow and resets if necessary
+ */
+void CheckEncoderCounts(void) {
+    // Check for encoder overflow (near 32-bit signed integer limits)
+    if (getForwardLeftEncoderCounts() > 31000 || getForwardRightEncoderCounts() > 31000
+            || getRearLeftEncoderCounts() > 31000 || getRearRightEncoderCounts() > 31000
+            || getForwardLeftEncoderCounts() < -31000 || getForwardRightEncoderCounts() < -31000
+            || getRearLeftEncoderCounts() < -31000 || getRearRightEncoderCounts() < -31000) {
+
+        // Save the current encoder deltas
+        update_Encoder_Data();
+
+        // Reset encoders to prevent overflow
+        resetEncodersinSystick();
+    }
+}
+
+/**
+ * SysTick Handler - called every millisecond
+ */
+void SysTickFunction(void) {
+    tick_counter++;
+
+    // Check if it's time to run the control loop (every CONTROL_LOOP_INTERVAL ms)
+    if (tick_counter >= CONTROL_LOOP_INTERVAL) {
+        tick_counter = 0;
+        control_loop_flag = 1;
+    }
+
+    // Check encoder counts to prevent overflow
+    CheckEncoderCounts();
+}
+
+/**
+ * Main control loop handler - called from the main loop
+ * This separates time-critical SysTick interrupts from computational work
+ */
+void ProcessControlLoop(void) {
+    if (control_loop_flag) {
+        // Run the kinematics control loop
+        kinematicsControlLoop();
+
+        // Reset the flag
+        control_loop_flag = 0;
+    }
+}

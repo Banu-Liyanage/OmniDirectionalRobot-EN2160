@@ -24,10 +24,10 @@ int16_t previous_RearLeft_count = 0;
 int16_t previous_RearRight_count = 0;
 
 
-float ForwardLeft_W = 0;
-float ForwardRight_W = 0;
-float RearLeft_W = 0;
-float RearRight_W = 0;
+volatile float ForwardLeft_W = 0;
+volatile float ForwardRight_W = 0;
+volatile float RearLeft_W = 0;
+volatile float RearRight_W = 0;
 
 
 int16_t getForwardLeftEncoderCounts() {

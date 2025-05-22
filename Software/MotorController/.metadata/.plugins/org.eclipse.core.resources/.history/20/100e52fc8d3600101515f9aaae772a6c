@@ -1,0 +1,155 @@
+/*
+ * kinematics.c
+ *
+ *  Created on: May 22, 2025
+ *      Author: PANKAJA
+ */
+
+#include "kinematics.h"
+#include "motors.h"
+#include "encoders.h"
+#include "config.h"
+
+// Define the robot kinematics structure
+RobotKinematics_t robot;
+
+/**
+ * Initialize the kinematics module
+ */
+void initKinematics(void) {
+    // Initialize robot state variables
+    robot.vx = 0.0f;
+    robot.vy = 0.0f;
+    robot.omega_z = 0.0f;
+
+    robot.omega1 = 0.0f;
+    robot.omega2 = 0.0f;
+    robot.omega3 = 0.0f;
+    robot.omega4 = 0.0f;
+
+    robot.pwm1 = 0.0f;
+    robot.pwm2 = 0.0f;
+    robot.pwm3 = 0.0f;
+    robot.pwm4 = 0.0f;
+
+    // Set default PID values
+    robot.kp = 0.5f;
+    robot.ki = 0.1f;
+    robot.kd = 0.01f;
+
+    // Initialize setpoints
+    robot.vx_setpoint = 0.0f;
+    robot.vy_setpoint = 0.0f;
+    robot.omega_z_setpoint = 0.0f;
+
+    robot.update_required = 0;
+}
+
+/**
+ * Update robot velocities from wheel encoder measurements
+ * This implements the forward kinematics (equation 8)
+ */
+void updateRobotVelocityFromWheels(void) {
+    // Get the current wheel angular velocities from encoders
+    // Note: ForwardLeft_W, etc. are already computed in encoders.c
+    robot.omega1 = ForwardLeft_W;   // Forward Left
+    robot.omega2 = ForwardRight_W;  // Forward Right
+    robot.omega3 = RearLeft_W;      // Rear Left
+    robot.omega4 = RearRight_W;     // Rear Right
+
+    // Implement forward kinematics matrix multiplication (equation 8)
+    // [v_x]     R   [ 1   1   1   1 ] [ω₁]
+    // [v_y]  =  - * [ 1  -1  -1   1 ] [ω₂]
+    // [ω_z]     4   [1/K 1/K -1/K -1/K] [ω₃]
+    //                                   [ω₄]
+    // where K = (l₁+l₂)
+
+    float K = L1 + L2;  // Sum of distances from center
+    float R_div_4 = WHEEL_RADIUS / 4.0f;  // R/4
+
+    // Matrix multiplication
+    robot.vx = R_div_4 * (robot.omega1 + robot.omega2 + robot.omega3 + robot.omega4);
+    robot.vy = R_div_4 * (robot.omega1 - robot.omega2 - robot.omega3 + robot.omega4);
+    robot.omega_z = R_div_4 * ((1.0f/K) * robot.omega1 + (1.0f/K) * robot.omega2
+                             - (1.0f/K) * robot.omega3 - (1.0f/K) * robot.omega4);
+}
+
+/**
+ * Calculate wheel velocities based on desired robot velocities
+ * This implements the inverse kinematics (equation 9)
+ */
+void calculateWheelVelocitiesFromRobot(void) {
+    // Implement inverse kinematics matrix multiplication (equation 9)
+    // [ω₁]      1   [ 1   1   -(l₁+l₂) ] [v_x]
+    // [ω₂]   =  - * [ 1  -1    (l₁+l₂) ] [v_y]
+    // [ω₃]      R   [ 1  -1   -(l₁+l₂) ] [ω_z]
+    // [ω₄]          [ 1   1    (l₁+l₂) ]
+
+    float K = L1 + L2;  // Sum of distances from center
+    float one_div_R = 1.0f / WHEEL_RADIUS;  // 1/R
+
+    // Use the setpoints for desired velocities
+    float vx = robot.vx_setpoint;
+    float vy = robot.vy_setpoint;
+    float omega_z = robot.omega_z_setpoint;
+
+    // Matrix multiplication
+    robot.omega1 = one_div_R * (vx + vy - K * omega_z);
+    robot.omega2 = one_div_R * (vx - vy + K * omega_z);
+    robot.omega3 = one_div_R * (vx - vy - K * omega_z);
+    robot.omega4 = one_div_R * (vx + vy + K * omega_z);
+}
+
+/**
+ * Simple conversion from wheel angular velocity to PWM
+ * In a real system, this would be replaced with a proper PID controller
+ */
+void updateMotorPWM(void) {
+    // For simplicity, assuming a linear relationship between angular velocity and PWM
+    // In a real robot, you would implement a PID controller here for each wheel
+
+    // This is a very basic conversion - a proper controller would be needed
+    // Adjust the scale factor based on your motor characteristics
+    float scale = 0.1f;  // This is a placeholder - needs tuning
+
+    robot.pwm1 = robot.omega1 * scale;
+    robot.pwm2 = robot.omega2 * scale;
+    robot.pwm3 = robot.omega3 * scale;
+    robot.pwm4 = robot.omega4 * scale;
+
+    // Set the motor PWM values
+    setForwardLeftMotorPWM(robot.pwm1);
+    setForwardRightMotorPWM(robot.pwm2);
+    setRearLeftMotorPWM(robot.pwm3);
+    setRearRightMotorPWM(robot.pwm4);
+}
+
+/**
+ * Set the desired robot velocity
+ */
+void setRobotVelocity(float vx, float vy, float omega_z) {
+    robot.vx_setpoint = vx;
+    robot.vy_setpoint = vy;
+    robot.omega_z_setpoint = omega_z;
+    robot.update_required = 1;
+}
+
+/**
+ * Control loop function to be called by SysTick
+ */
+void kinematicsControlLoop(void) {
+    // Update encoder data (get current wheel angular velocities)
+    update_Encoder_Data();
+
+    // Update robot velocity from wheel measurements (forward kinematics)
+    updateRobotVelocityFromWheels();
+
+    // If there's a new setpoint, calculate wheel velocities
+    if (robot.update_required) {
+        calculateWheelVelocitiesFromRobot();
+        robot.update_required = 0;
+    }
+
+    // Update motor PWM values and apply to motors
+    updateMotorPWM();
+}

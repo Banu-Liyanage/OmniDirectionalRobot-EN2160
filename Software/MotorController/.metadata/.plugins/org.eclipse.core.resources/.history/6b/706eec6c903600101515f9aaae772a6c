@@ -1,0 +1,17 @@
+/*
+ * systick.h
+ *
+ *  Created on: May 21, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_SYSTICK_H_
+#define INC_SYSTICK_H_
+
+#include "main.h"
+
+void CheckEncoderCounts(void);
+void SysTickFunction(void);
+void ProcessControlLoop(void);
+
+#endif /* INC_SYSTICK_H_ */

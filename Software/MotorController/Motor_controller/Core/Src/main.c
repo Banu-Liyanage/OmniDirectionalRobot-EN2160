@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "motors.h"
 #include "encoders.h"
+#include "kinematics.h"
 
 /* USER CODE END Includes */
 
@@ -74,6 +75,109 @@ static void MX_USART3_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int speed1 = 0.1;
+int speed2 = 0.4;
+int speed3 = 0.6;
+int speed4 = 0.8;
+int speed5 = 1;
+
+int stopDelay = 4000;
+
+void Stop(){
+	setForwardLeftMotorPWM(0);
+	setForwardRightMotorPWM(0);
+
+	setRearLeftMotorPWM(0);
+	setRearRightMotorPWM(0);
+
+	resetMotors();
+
+	HAL_Delay(stopDelay);
+}
+
+void MoveForward(int speed, int delay){
+	setForwardLeftMotorPWM(speed);
+	setForwardRightMotorPWM(speed);
+
+	setRearLeftMotorPWM(speed);
+	setRearRightMotorPWM(speed);
+	HAL_Delay(delay);
+	Stop();
+
+
+}
+
+void MoveReverse(int speed, int delay){
+	setForwardLeftMotorPWM(-speed);
+	setForwardRightMotorPWM(-speed);
+
+	setRearLeftMotorPWM(-speed);
+	setRearRightMotorPWM(-speed);
+	HAL_Delay(delay);
+	Stop();
+}
+
+
+void MoveRight(int speed, int delay){
+	setForwardLeftMotorPWM(speed);
+	setForwardRightMotorPWM(-speed);
+
+	setRearLeftMotorPWM(-speed);
+	setRearRightMotorPWM(speed);
+	HAL_Delay(delay);
+	Stop();
+}
+
+void MoveLeft(int speed, int delay){
+	setForwardLeftMotorPWM(-speed);
+	setForwardRightMotorPWM(speed);
+
+	setRearLeftMotorPWM(speed);
+	setRearRightMotorPWM(-speed);
+	HAL_Delay(delay);
+	Stop();
+}
+
+void MoveRightDiagonalForward(int speed, int delay){
+	setForwardLeftMotorPWM(speed);
+	setForwardRightMotorPWM(0);
+
+	setRearLeftMotorPWM(0);
+	setRearRightMotorPWM(speed);
+	HAL_Delay(delay);
+	Stop();
+}
+
+void MoveLeftDiagonalReverse(int speed, int delay){
+	setForwardLeftMotorPWM(-speed);
+	setForwardRightMotorPWM(0);
+
+	setRearLeftMotorPWM(0);
+	setRearRightMotorPWM(-speed);
+	HAL_Delay(delay);
+	Stop();
+}
+
+void MoveleftDiagonalForward(int speed, int delay){
+	setForwardLeftMotorPWM(0);
+	setForwardRightMotorPWM(speed);
+
+	setRearLeftMotorPWM(speed);
+	setRearRightMotorPWM(0);
+	HAL_Delay(delay);
+	Stop();
+}
+
+void Rotate(int speed, int delay){
+	setForwardLeftMotorPWM(speed);
+	setForwardRightMotorPWM(-speed);
+
+	setRearLeftMotorPWM(speed);
+	setRearRightMotorPWM(-speed);
+	HAL_Delay(delay);
+	Stop();
+}
+
 
 /* USER CODE END 0 */
 
@@ -126,9 +230,39 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
 
-  HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
-  HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
-  HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
+//  HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
+//  HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
+//  HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
+
+  // Initialize encoders
+  //resetEncoders();
+
+  // Initialize kinematics
+  //kinematics_init();
+
+  // Optional: Start demo sequence after 2 seconds
+  HAL_Delay(5000);
+  //start_demo_sequence();
+  int delay = 2500;
+  int speed = 0.1;
+
+  //MoveForward(speed, delay);
+  //MoveRight(speed, delay);
+  //MoveReverse(speed, delay);
+  //MoveLeft(speed, delay);
+
+  //MoveRightDiagonalForward(speed, delay);
+  //MoveRight(speed, delay);
+  //MoveleftDiagonalForward(speed, delay);
+  //MoveRight(speed1, delay);
+
+
+
+  //Rotate(speed1, delay);
+  //Stop();
+
+
+
 
 
 
@@ -142,13 +276,33 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	  //HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_PIN, 1);
-	  setForwardLeftMotorPWM(-1);
-	  setForwardRightMotorPWM(-1); // - not working
+//	  setForwardLeftMotorPWM(0.2);
+//	  setForwardRightMotorPWM(-0.2); // - not working
+//
+//	  setRearLeftMotorPWM(0.2);
+//	  setRearRightMotorPWM(-0.2);
 
-	  setRearLeftMotorPWM(-1);
-	  setRearRightMotorPWM(-1);
+//	  MoveForward(speed2, 3000);
+//	  MoveRight(Speed2, 3000);
+//	  MoveReverse(speed2, 3000);
+//	  MoveLeft(speed2, 3000);
+//
+//	  MoveRightDiagonalForward(speed2, 3000);
+
 	  //resetMotors();
 	  //setForwardLeftMotorPWM(-0.5);
+
+	    HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
+	    HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
+	    HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
+
+	    HAL_Delay(2000);
+
+	      HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 0);
+	      HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
+	      HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 0);
+
+	      HAL_Delay(2000);
 
 
 	 //HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
@@ -183,11 +337,12 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 4;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLM = 8;
   RCC_OscInitStruct.PLL.PLLN = 180;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 2;
