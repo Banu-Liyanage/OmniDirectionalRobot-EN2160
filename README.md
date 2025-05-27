@@ -265,7 +265,7 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 <table>
 <tr>
 <td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-8.jpg" alt="CAD Model" width="300"><br><b>CAD Model of Chassis</b></td>
-<td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-5-Icon.jpg" alt="FEA Analysis" width="300"><br><b>FEA Stress Distribution</b></td>
+<td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-5.jpg" alt="FEA Analysis" width="300"><br><b>FEA Stress Distribution</b></td>
 </tr>
 </table>
 
