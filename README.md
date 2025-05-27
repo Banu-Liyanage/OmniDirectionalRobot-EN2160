@@ -233,6 +233,47 @@ graph TD
 
 ---
 
+---
+
+## 🧱 Mechanical Design & FEA Analysis
+
+<div align="left">
+
+### *Robust Engineering for Real-World Demands*
+
+</div>
+
+The mechanical design of the platform was optimized for both **structural integrity** and **functional adaptability**, with a focus on durability, vibration mitigation, and payload endurance.
+
+### 🛠️ Structural Overview
+
+- **Material Selection:** Stainless steel box bars with cantalie vibration dampening
+- **Fabrication:** In-house welding, precision machining, and 3D printed PCB enclosures
+- **Design Philosophy:** Balancing rigidity and modularity for both performance and ease of maintenance
+
+### 📊 FEA Validation
+
+Extensive Finite Element Analysis (FEA) was conducted to validate:
+
+- Load-bearing capacity under dynamic and static conditions
+- Results depicts chassis has a 900% safe margin
+- Stress and deformation distribution across the chassis
+- Vibration response under high-speed operation
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-8.jpg" alt="CAD Model" width="300"><br><b>CAD Model of Chassis</b></td>
+<td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-5-Icon.jpg" alt="FEA Analysis" width="300"><br><b>FEA Stress Distribution</b></td>
+</tr>
+</table>
+
+</div>
+
+---
+
+
 ## 🚀 Applications & Use Cases
 
 <div align="center">
