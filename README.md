@@ -103,7 +103,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <tr>
 <td align="center"><img src="Images/robor1.jpg" alt="Complete Robot" width="200"><br><b>Complete Assembly</b></td>
 <td align="center"><img src="Images/robot.jpg" alt="Enclosure" width="200"><br><b>Custom Enclosure</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.37.45_ffeaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
+<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_d23abd3f.jpg" alt="Platform" width="200"><br><b>Base Platform</b></td>
 </tr>
 </table>
