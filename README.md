@@ -1,6 +1,6 @@
 # 🤖 Omni Directional Robot Platform - EN2160
 ### *Next-Generation Autonomous Mobile Robotics*
-
+*[https://github.com/PankajaBalasooriya/OmniDirectionalRobot-EN2160/blob/main/Images/robot.jpg]*
 <div align="center">
 
 [![Google Drive](https://img.shields.io/badge/Google%20Drive-Project%20Management-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/1gBgsQ-QxK0Zy2K9BndymeuY9-QAq1h1s?usp=sharing)
