@@ -1,79 +1,155 @@
-🤖 Omni Directional Robot Platform - EN2160
-Next-Generation Autonomous Mobile Robotics
+# 🤖 Omni Directional Robot Platform - EN2160
+### *Next-Generation Autonomous Mobile Robotics*
+
 <div align="center">
-Show Image
-Show Image
-Show Image
-Show Image
-🏆 Engineering Excellence in Motion - Crafted by the Next Generation of Robotics Engineers
+
+[![Google Drive](https://img.shields.io/badge/Google%20Drive-Project%20Management-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/1gBgsQ-QxK0Zy2K9BndymeuY9-QAq1h1s?usp=sharing)
+[![University](https://img.shields.io/badge/University%20of-Moratuwa-red?style=for-the-badge&logo=university&logoColor=white)](https://uom.lk)
+[![Course](https://img.shields.io/badge/Course-EN2160-orange?style=for-the-badge&logo=academic&logoColor=white)]()
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensource&logoColor=white)]()
+
+*🏆 Engineering Excellence in Motion - Crafted by the Next Generation of Robotics Engineers*
+
 </div>
 
-🌟 Project Vision
-Revolutionizing Indoor Automation Through Intelligent Omnidirectional Mobility
-This cutting-edge repository showcases the design and development of a state-of-the-art Omni Directional Robot Platform engineered as part of the prestigious EN2160 Electronic Design Realization Module at the University of Moratuwa. Our platform represents the perfect fusion of academic rigor and industry-grade performance, delivering unprecedented maneuverability in confined spaces.
+---
+
+## 🌟 Project Vision
+
+**Revolutionizing Indoor Automation Through Intelligent Omnidirectional Mobility**
+
+This cutting-edge repository showcases the design and development of a **state-of-the-art Omni Directional Robot Platform** engineered as part of the prestigious **EN2160 Electronic Design Realization Module** at the University of Moratuwa. Our platform represents the perfect fusion of academic rigor and industry-grade performance, delivering unprecedented maneuverability in confined spaces.
+
 <div align="center">
+
 <!-- Add your hero image here -->
-[Hero Image Placeholder - Main Robot Assembly]
+*[Hero Image Placeholder - Main Robot Assembly]*
+
 </div>
-✨ Core Philosophy
 
-"Where precision meets innovation, and theory transforms into reality"
+### ✨ Core Philosophy
+> *"Where precision meets innovation, and theory transforms into reality"*
 
-Our robot transcends traditional mobility constraints, offering 360-degree freedom of movement through advanced Mecanum wheel technology, intelligent control algorithms, and robust engineering practices.
+Our robot transcends traditional mobility constraints, offering **360-degree freedom of movement** through advanced Mecanum wheel technology, intelligent control algorithms, and robust engineering practices.
 
-🎯 Project Objectives
+---
+
+## 🎯 Project Objectives
+
 <div align="center">
-🎪 Omnidirectional Mastery🧠 Intelligent Positioning⚙️ Precision Control4-wheel Mecanum platform for unrestricted motionAdvanced position estimation algorithmsReal-time wheel control with sub-millimeter accuracy
+
+| 🎪 **Omnidirectional Mastery** | 🧠 **Intelligent Positioning** | ⚙️ **Precision Control** |
+|:---:|:---:|:---:|
+| 4-wheel Mecanum platform for unrestricted motion | Advanced position estimation algorithms | Real-time wheel control with sub-millimeter accuracy |
+
 </div>
-🚀 Key Achievements
 
-360° Movement Freedom - Forward, backward, lateral, and rotational motion simultaneously
-Industry-Grade Precision - Sub-millimeter positioning accuracy
-Modular Architecture - Scalable design for diverse applications
-Real-Time Performance - Ultra-low latency control systems
+### 🚀 Key Achievements
+- **360° Movement Freedom** - Forward, backward, lateral, and rotational motion simultaneously
+- **Industry-Grade Precision** - Sub-millimeter positioning accuracy
+- **Modular Architecture** - Scalable design for diverse applications
+- **Real-Time Performance** - Ultra-low latency control systems
 
+---
 
-👥 Meet the Innovation Team
+## 👥 Meet the Innovation Team
+
 <div align="center">
-The brilliant minds behind the next generation of autonomous robotics
+
+*The brilliant minds behind the next generation of autonomous robotics*
+
 </div>
-🧑‍💻 Engineer📧 Contact🏷️ Index🎯 SpecializationPankaja Balasooriyabalasooriyabapi.22@uom.lk220054NSystems IntegrationOshani Dewasumithradewasumithrampo.22@uom.lk220112RControl AlgorithmsChandupa Dinesharadinesharamc.22@uom.lk220128VHardware DesignChamath Diunugaladiunugalach.22@uom.lk220143LEmbedded SystemsSahas Eshaneashansgs.22@uom.lk220148GSoftware ArchitectureRusiru Fernandofernandoard.22@uom.lk220161NPower ElectronicsBanuka Liyanageliyanagedlbb.22@uom.lk220362GMechanical DesignRusula Oshadha Pathiranapathiranapdro.22@uom.lk220448CTesting & Validation
 
-🛠️ Revolutionary Features
+| 🧑‍💻 **Engineer** | 📧 **Contact** | 🏷️ **Index** | 🎯 **Specialization** |
+|:---:|:---:|:---:|:---:|
+| **Pankaja Balasooriya** | balasooriyabapi.22@uom.lk | 220054N | *Systems Integration* |
+| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk | 220112R | *Control Algorithms* |
+| **Chandupa Dineshara** | dinesharamc.22@uom.lk | 220128V | *Hardware Design* |
+| **Chamath Diunugala** | diunugalach.22@uom.lk | 220143L | *Embedded Systems* |
+| **Sahas Eshan** | eashansgs.22@uom.lk | 220148G | *Software Architecture* |
+| **Rusiru Fernando** | fernandoard.22@uom.lk | 220161N | *Power Electronics* |
+| **Banuka Liyanage** | liyanagedlbb.22@uom.lk | 220362G | *Mechanical Design* |
+| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Testing & Validation* |
+
+---
+
+## 🛠️ Revolutionary Features
+
 <div align="center">
-Where Innovation Meets Implementation
+
+*Where Innovation Meets Implementation*
+
 </div>
-🎯 Core Capabilities
-FeatureDescriptionStatus✅ Mecanum Wheel MasteryAdvanced 4-wheel omnidirectional locomotion system🟢 Complete✅ Multi-MCU ArchitectureDistributed processing with dedicated motor controllers🟢 Complete✅ Precision Sensing SuiteIMU-based orientation tracking and sensor fusion🟢 Complete✅ Wireless Command CenterBluetooth connectivity with intuitive GUI control🟢 Complete✅ Robust CommunicationRS485 differential signaling for noise immunity🟢 Complete✅ Modular PCB DesignCustom-engineered boards for power, logic, and motor control🟢 Complete✅ Real-Time DiagnosticsLive telemetry and system health monitoring🟢 Complete✅ Industrial AestheticsProfessional-grade chassis with automotive paint finish🟢 Complete
+
+### 🎯 **Core Capabilities**
+
+| Feature | Description | Status |
+|:---:|:---|:---:|
+| ✅ **Mecanum Wheel Mastery** | Advanced 4-wheel omnidirectional locomotion system | 🟢 **Complete** |
+| ✅ **Multi-MCU Architecture** | Distributed processing with dedicated motor controllers | 🟢 **Complete** |
+| ✅ **Precision Sensing Suite** | IMU-based orientation tracking and sensor fusion | 🟢 **Complete** |
+| ✅ **Wireless Command Center** | Bluetooth connectivity with intuitive GUI control | 🟢 **Complete** |
+| ✅ **Robust Communication** | RS485 differential signaling for noise immunity | 🟢 **Complete** |
+| ✅ **Modular PCB Design** | Custom-engineered boards for power, logic, and motor control | 🟢 **Complete** |
+| ✅ **Real-Time Diagnostics** | Live telemetry and system health monitoring | 🟢 **Complete** |
+| ✅ **Industrial Aesthetics** | Professional-grade chassis with automotive paint finish | 🟢 **Complete** |
+
 <div align="center">
+
 <!-- Add feature showcase images here -->
-[Feature Gallery - Control Interface, PCB Modules, Chassis Assembly]
+*[Feature Gallery - Control Interface, PCB Modules, Chassis Assembly]*
+
 </div>
 
-🔧 Technical Excellence
-🏗️ System Architecture
+---
+
+## 🔧 Technical Excellence
+
+### 🏗️ **System Architecture**
+
 <div align="center">
+
 <!-- Add system architecture diagram here -->
-[Architecture Diagram Placeholder]
+*[Architecture Diagram Placeholder]*
+
 </div>
-⚡ Hardware Specifications
-ComponentSelectionPerformanceRationale🧠 Main MCUSAM3X8E (Arduino Due)84 MHz Cortex-M3High I/O density, robust processing power🎮 Motor ControllerSTM32F446RE180 MHz, Real-time loopsPrecision motor control with encoder feedback🔋 Drive Motors24V 5Nm Planetary Gear1:100 ratio, 120 RPMOptimal torque-speed characteristics🧭 Navigation IMUBosch BNO0559-DOF sensor fusionIndustry-standard orientation tracking⚡ Motor DriversVNH5019 H-Bridge30A peak currentRobust protection and thermal management🎯 Mecanum WheelsMetal-core constructionOmnidirectional mobilityEnhanced durability and load capacity🔌 Power System12V battery + regulationModular distributionFuse-protected multi-rail design📡 CommunicationRS485 + Bluetooth HC-05Differential + wirelessReliable inter-board and GUI connectivity
-📐 Mechanical Design
+
+### ⚡ **Hardware Specifications**
+
+| **Component** | **Selection** | **Performance** | **Rationale** |
+|:---:|:---:|:---:|:---|
+| 🧠 **Main MCU** | SAM3X8E (Arduino Due) | 84 MHz Cortex-M3 | High I/O density, robust processing power |
+| 🎮 **Motor Controller** | STM32F446RE | 180 MHz, Real-time loops | Precision motor control with encoder feedback |
+| 🔋 **Drive Motors** | 24V 5Nm Planetary Gear | 1:100 ratio, 120 RPM | Optimal torque-speed characteristics |
+| 🧭 **Navigation IMU** | Bosch BNO055 | 9-DOF sensor fusion | Industry-standard orientation tracking |
+| ⚡ **Motor Drivers** | VNH5019 H-Bridge | 30A peak current | Robust protection and thermal management |
+| 🎯 **Mecanum Wheels** | Metal-core construction | Omnidirectional mobility | Enhanced durability and load capacity |
+| 🔌 **Power System** | 12V battery + regulation | Modular distribution | Fuse-protected multi-rail design |
+| 📡 **Communication** | RS485 + Bluetooth HC-05 | Differential + wireless | Reliable inter-board and GUI connectivity |
+
+### 📐 **Mechanical Design**
+
 <div align="center">
+
 <!-- Add mechanical design images here -->
-[Mechanical Assembly Views - Isometric, Side, Bottom]
+*[Mechanical Assembly Views - Isometric, Side, Bottom]*
+
 </div>
-Chassis Engineering:
 
-Material: Stainless steel construction with cantalie sheet vibration dampening
-Finish: Automotive-grade paint system for professional appearance
-Assembly: In-house fabrication using precision welding and machining
-Modularity: 3D printed enclosures for PCB protection and accessibility
+**Chassis Engineering:**
+- **Material:** Stainless steel construction with cantalie sheet vibration dampening
+- **Finish:** Automotive-grade paint system for professional appearance
+- **Assembly:** In-house fabrication using precision welding and machining
+- **Modularity:** 3D printed enclosures for PCB protection and accessibility
 
+---
 
-🧠 Intelligence Stack
-🎛️ Control Hierarchy
-mermaidgraph TD
+## 🧠 Intelligence Stack
+
+### 🎛️ **Control Hierarchy**
+
+```mermaid
+graph TD
     A[Python GUI Controller] -->|Bluetooth| B[SAM3X8E Main Controller]
     B -->|RS485| C[STM32F446RE Motor Controller]
     B -->|I2C| D[BNO055 IMU]
@@ -81,37 +157,85 @@ mermaidgraph TD
     E --> F[Mecanum Wheels]
     D -->|Sensor Data| B
     C -->|Encoder Feedback| B
-🎯 Software Architecture
-LayerFunctionTechnology🖥️ User InterfaceIntuitive direction control and telemetryPython Tkinter GUI📡 CommunicationWireless command transmission and echo verificationBluetooth Serial Protocol🧠 High-Level ControlCommand parsing, sensor fusion, system coordinationSAM3X8E Embedded C++⚡ Real-Time ControlPWM generation, encoder processing, motor loopsSTM32 Real-Time OS🔧 Hardware AbstractionDriver interfaces and peripheral managementHAL Libraries
+```
 
-📊 Performance Metrics
+### 🎯 **Software Architecture**
+
+| **Layer** | **Function** | **Technology** |
+|:---:|:---|:---:|
+| 🖥️ **User Interface** | Intuitive direction control and telemetry | Python Tkinter GUI |
+| 📡 **Communication** | Wireless command transmission and echo verification | Bluetooth Serial Protocol |
+| 🧠 **High-Level Control** | Command parsing, sensor fusion, system coordination | SAM3X8E Embedded C++ |
+| ⚡ **Real-Time Control** | PWM generation, encoder processing, motor loops | STM32 Real-Time OS |
+| 🔧 **Hardware Abstraction** | Driver interfaces and peripheral management | HAL Libraries |
+
+---
+
+## 📊 Performance Metrics
+
 <div align="center">
-🏆 Benchmark Results
+
+### 🏆 **Benchmark Results**
+
 </div>
-MetricSpecificationAchievement🏋️ Payload Capacity5 kg operational load✅ Exceeded⚖️ Total System Weight~25 kg including payload✅ Target Met🔧 Wheel Torque3.2 Nm per wheel minimum✅ Optimized🚀 Maximum Speed1 m/s target velocity✅ Achieved🎯 Positioning AccuracySub-millimeter precision✅ Validated📡 Communication Range10m+ Bluetooth connectivity✅ Confirmed⚡ Response Time<50ms command to motion✅ Real-Time
 
-🔌 Electronic Systems
-📋 PCB Module Ecosystem
+| **Metric** | **Specification** | **Achievement** |
+|:---:|:---:|:---:|
+| 🏋️ **Payload Capacity** | 5 kg operational load | **✅ Exceeded** |
+| ⚖️ **Total System Weight** | ~25 kg including payload | **✅ Target Met** |
+| 🔧 **Wheel Torque** | 3.2 Nm per wheel minimum | **✅ Optimized** |
+| 🚀 **Maximum Speed** | 1 m/s target velocity | **✅ Achieved** |
+| 🎯 **Positioning Accuracy** | Sub-millimeter precision | **✅ Validated** |
+| 📡 **Communication Range** | 10m+ Bluetooth connectivity | **✅ Confirmed** |
+| ⚡ **Response Time** | <50ms command to motion | **✅ Real-Time** |
+
+---
+
+## 🔌 Electronic Systems
+
+### 📋 **PCB Module Ecosystem**
+
 <div align="center">
+
 <!-- Add PCB images here -->
-[PCB Gallery - Power Module, Main Controller, Motor Driver]
+*[PCB Gallery - Power Module, Main Controller, Motor Driver]*
+
 </div>
-PCB ModuleFunctionKey Features🔋 Power DistributionMulti-rail power managementFuse protection, LED diagnostics, screw terminals🧠 Main ControllerSystem coordination and communication4-layer design, SAM3X8E, BNO055, HC-05 integration⚡ Motor ControllerReal-time motor drive and feedbackSTM32F446RE, VNH5019 drivers, RS485 communication
-🛡️ Safety & Protection Systems
 
-20A Master Fuse with branch-specific protection (2A-15A)
-Thermal Management with active cooling consideration
-Overcurrent Protection at component and system levels
-EMI Mitigation through differential signaling and proper grounding
+| **PCB Module** | **Function** | **Key Features** |
+|:---:|:---|:---|
+| 🔋 **Power Distribution** | Multi-rail power management | Fuse protection, LED diagnostics, screw terminals |
+| 🧠 **Main Controller** | System coordination and communication | 4-layer design, SAM3X8E, BNO055, HC-05 integration |
+| ⚡ **Motor Controller** | Real-time motor drive and feedback | STM32F446RE, VNH5019 drivers, RS485 communication |
 
+### 🛡️ **Safety & Protection Systems**
 
-🚀 Applications & Use Cases
+- **20A Master Fuse** with branch-specific protection (2A-15A)
+- **Thermal Management** with active cooling consideration
+- **Overcurrent Protection** at component and system levels
+- **EMI Mitigation** through differential signaling and proper grounding
+
+---
+
+## 🚀 Applications & Use Cases
+
 <div align="center">
-Transforming Industries Through Intelligent Mobility
-</div>
-🏭 Industrial🏥 Healthcare🛒 Retail🎓 EducationLogistics automationHospital transportInventory managementResearch platformMaterial handlingSupply deliveryShelf restockingSTEM demonstrationsQuality inspectionPatient assistanceCustomer guidanceCompetition robotics
 
-📁 Repository Architecture
+*Transforming Industries Through Intelligent Mobility*
+
+</div>
+
+| 🏭 **Industrial** | 🏥 **Healthcare** | 🛒 **Retail** | 🎓 **Education** |
+|:---:|:---:|:---:|:---:|
+| Logistics automation | Hospital transport | Inventory management | Research platform |
+| Material handling | Supply delivery | Shelf restocking | STEM demonstrations |
+| Quality inspection | Patient assistance | Customer guidance | Competition robotics |
+
+---
+
+## 📁 Repository Architecture
+
+```
 OmniDirectionalRobot-EN2160/
 ├── 📁 firmware/              # Embedded systems code
 │   ├── main_controller/      # SAM3X8E firmware
@@ -140,58 +264,108 @@ OmniDirectionalRobot-EN2160/
 └── 📁 resources/            # Additional materials
     ├── references/          # Academic papers and standards
     └── tools/               # Development utilities
+```
 
-🌐 Future Roadmap
-🔮 Next-Generation Enhancements
-PhaseEnhancementImpactTimeline🔋 Phase 1Advanced Battery Management SystemExtended operational timeQ2 2025🤖 Phase 2Autonomous Navigation & SLAMSelf-directed operationQ3 2025🌐 Phase 3ROS2 Integration & Fleet ManagementMulti-robot coordinationQ4 2025🧠 Phase 4AI-Powered Decision MakingIntelligent task executionQ1 2026📡 Phase 5Cloud Analytics DashboardRemote monitoring and optimizationQ2 2026
+---
 
-🏆 Project Impact
+## 🌐 Future Roadmap
+
+### 🔮 **Next-Generation Enhancements**
+
+| **Phase** | **Enhancement** | **Impact** | **Timeline** |
+|:---:|:---|:---|:---:|
+| 🔋 **Phase 1** | Advanced Battery Management System | Extended operational time | Q2 2025 |
+| 🤖 **Phase 2** | Autonomous Navigation & SLAM | Self-directed operation | Q3 2025 |
+| 🌐 **Phase 3** | ROS2 Integration & Fleet Management | Multi-robot coordination | Q4 2025 |
+| 🧠 **Phase 4** | AI-Powered Decision Making | Intelligent task execution | Q1 2026 |
+| 📡 **Phase 5** | Cloud Analytics Dashboard | Remote monitoring and optimization | Q2 2026 |
+
+---
+
+## 🏆 Project Impact
+
 <div align="center">
-Engineering Excellence Recognition
+
+### *Engineering Excellence Recognition*
+
 </div>
-This project demonstrates how academic excellence can drive industry innovation. By combining theoretical knowledge with practical implementation, we've created a platform that bridges the gap between education and real-world applications.
-Key Contributions:
 
-Advanced undergraduate-level robotics engineering
-Open-source platform for educational advancement
-Industry-applicable design methodologies
-Sustainable and cost-effective innovation
+This project demonstrates how **academic excellence** can drive **industry innovation**. By combining theoretical knowledge with practical implementation, we've created a platform that bridges the gap between education and real-world applications.
 
+**Key Contributions:**
+- Advanced undergraduate-level robotics engineering
+- Open-source platform for educational advancement  
+- Industry-applicable design methodologies
+- Sustainable and cost-effective innovation
 
-📞 Connect With Us
+---
+
+## 📞 Connect With Us
+
 <div align="center">
-Join the Robotics Revolution
-Show Image
-Show Image
-Show Image
-Show Image
+
+### *Join the Robotics Revolution*
+
+[![Email](https://img.shields.io/badge/Email-Team%20Contact-red?style=for-the-badge&logo=gmail&logoColor=white)](mailto:robotics.en2160@uom.lk)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-University%20of%20Moratuwa-blue?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/school/university-of-moratuwa)
+[![YouTube](https://img.shields.io/badge/YouTube-Project%20Demos-red?style=for-the-badge&logo=youtube&logoColor=white)](https://youtube.com/@UoMRobotics)
+[![GitHub](https://img.shields.io/badge/GitHub-Open%20Source-black?style=for-the-badge&logo=github&logoColor=white)](https://github.com/UoM-Robotics)
+
 </div>
 
-📄 Documentation & Resources
-DocumentDescriptionAccess📋 Technical SpecificationsDetailed system parameters and performance data📖 View🔧 Assembly GuideStep-by-step construction instructions🛠️ Guide💻 Software ManualProgramming interfaces and API documentation💾 Manual🎥 Video DemonstrationsLive operation footage and feature showcases🎬 Watch📊 Performance AnalysisTesting results and benchmark comparisons📈 Data
+---
 
-🙏 Acknowledgments
+## 📄 Documentation & Resources
+
+| **Document** | **Description** | **Access** |
+|:---:|:---|:---:|
+| 📋 **Technical Specifications** | Detailed system parameters and performance data | [📖 View](docs/specifications.md) |
+| 🔧 **Assembly Guide** | Step-by-step construction instructions | [🛠️ Guide](docs/assembly_guide.md) |
+| 💻 **Software Manual** | Programming interfaces and API documentation | [💾 Manual](docs/software_manual.md) |
+| 🎥 **Video Demonstrations** | Live operation footage and feature showcases | [🎬 Watch](media/videos/) |
+| 📊 **Performance Analysis** | Testing results and benchmark comparisons | [📈 Data](tests/performance_data/) |
+
+---
+
+## 🙏 Acknowledgments
+
 <div align="center">
-Standing on the Shoulders of Giants
+
+*Standing on the Shoulders of Giants*
+
 </div>
+
 We extend our deepest gratitude to:
 
-University of Moratuwa - For providing world-class engineering education and facilities
-Department of Electronic and Telecommunication Engineering - For academic guidance and resources
-EN2160 Course Instructors - For mentorship and technical expertise
-Industry Partners - For component support and technical consultation
-Open Source Community - For foundational libraries and inspiration
+- **University of Moratuwa** - For providing world-class engineering education and facilities
+- **Department of Electronic and Telecommunication Engineering** - For academic guidance and resources  
+- **EN2160 Course Instructors** - For mentorship and technical expertise
+- **Industry Partners** - For component support and technical consultation
+- **Open Source Community** - For foundational libraries and inspiration
 
+---
 
-📜 License & Usage
-This project is released under the MIT License, promoting open innovation and educational advancement. We encourage the global robotics community to build upon our work, contribute improvements, and push the boundaries of autonomous mobile robotics.
+## 📜 License & Usage
+
+This project is released under the **MIT License**, promoting open innovation and educational advancement. We encourage the global robotics community to build upon our work, contribute improvements, and push the boundaries of autonomous mobile robotics.
+
+```
 MIT License - Open Innovation for Global Impact
 Copyright (c) 2024 University of Moratuwa Robotics Team
+```
+
+---
 
 <div align="center">
-🌟 "Innovation Distinguished by Excellence" 🌟
-Crafted with passion by the future engineers of tomorrow
-University of Moratuwa | Department of Electronic and Telecommunication Engineering
 
-Made with ❤️ in Sri Lanka | Engineered for the World
+### 🌟 **"Innovation Distinguished by Excellence"** 🌟
+
+*Crafted with passion by the future engineers of tomorrow*
+
+**University of Moratuwa | Department of Electronic and Telecommunication Engineering**
+
+---
+
+*Made with ❤️ in Sri Lanka | Engineered for the World*
+
 </div>
