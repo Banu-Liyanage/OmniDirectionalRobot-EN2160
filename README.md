@@ -1,7 +1,7 @@
 # 🤖 Omni Directional Robot Platform - EN2160
 ### *Next-Generation Autonomous Mobile Robotics*
 
-![Robot ](Images/robot.jpg)
+
 
 <div align="center">
 
@@ -25,7 +25,7 @@ This cutting-edge repository showcases the design and development of a **state-o
 <div align="center">
 
 <!-- Add your hero image here -->
-*[Hero Image Placeholder - Main Robot Assembly]*
+![Robot ](Images/robot.jpg)
 
 </div>
 
@@ -119,7 +119,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add system architecture diagram here -->
-*[Architecture Diagram Placeholder]*
+
 
 </div>
 
@@ -141,7 +141,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add mechanical design images here -->
-*[Mechanical Assembly Views - Isometric, Side, Bottom]*
+
 
 </div>
 
@@ -207,7 +207,12 @@ graph TD
 <div align="center">
 
 <!-- Add PCB images here -->
-*[PCB Gallery - Power Module, Main Controller, Motor Driver]*
+<tr>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Drive System</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_a80e16ce.jpg" alt="Platform" width="200"><br><b>Platform View</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Motor Assembly</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
+</tr>
 
 </div>
 
