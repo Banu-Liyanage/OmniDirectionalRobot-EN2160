@@ -71,7 +71,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 | **Sahas Eshan** | eashansgs.22@uom.lk | 220148G | *Software Architecture* |
 | **Rusiru Fernando** | fernandoard.22@uom.lk | 220161N | *Power Electronics* |
 | **Banuka Liyanage** | liyanagedlbb.22@uom.lk | 220362G | *Mechanical Design* |
-| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Testing & Validation* |
+| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Power Electronics* |
 
 ---
 
