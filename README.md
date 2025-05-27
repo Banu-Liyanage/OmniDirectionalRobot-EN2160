@@ -99,6 +99,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add feature showcase images here -->
+
 <table>
 <tr>
 <td align="center"><img src="Images/robor1.jpg" alt="Complete Robot" width="200"><br><b>Complete Assembly</b></td>
@@ -207,13 +208,14 @@ graph TD
 <div align="center">
 
 <!-- Add PCB images here -->
+<table>
 <tr>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Drive System</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_a80e16ce.jpg" alt="Platform" width="200"><br><b>Platform View</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Motor Assembly</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
 </tr>
-
+</table>table>
 </div>
 
 | **PCB Module** | **Function** | **Key Features** |
