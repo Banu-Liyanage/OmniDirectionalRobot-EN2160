@@ -99,7 +99,14 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add feature showcase images here -->
-*[Feature Gallery - Control Interface, PCB Modules, Chassis Assembly]*
+<table>
+<tr>
+<td align="center"><img src="Images/robor1.png" alt="Complete Robot" width="200"><br><b>Complete Assembly</b></td>
+<td align="center"><img src="Images/robot.png" alt="Enclosure" width="200"><br><b>Custom Enclosure</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.37.45_ffeaac85.png" alt="Controller" width="200"><br><b>Main Controller</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_d23abd3f.png" alt="Platform" width="200"><br><b>Base Platform</b></td>
+</tr>
+</table>
 
 </div>
 
