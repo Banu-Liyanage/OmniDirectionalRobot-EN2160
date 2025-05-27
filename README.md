@@ -1,7 +1,7 @@
 # 🤖 Omni Directional Robot Platform - EN2160
 ### *Next-Generation Autonomous Mobile Robotics*
 
-![Robot ](images/robot.jpg)
+![Robot ](Images/robot.jpg)
 
 <div align="center">
 
