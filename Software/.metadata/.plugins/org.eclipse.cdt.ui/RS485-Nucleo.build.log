@@ -1,0 +1,10 @@
+17:21:12 **** Incremental Build of configuration Debug for project RS485-Nucleo ****
+make -j16 all 
+arm-none-eabi-size  RS485-Nucleo.elf 
+   text	   data	    bss	    dec	    hex	filename
+  16284	    104	   1992	  18380	   47cc	RS485-Nucleo.elf
+Finished building: default.size.stdout
+ 
+
+17:21:12 Build Finished. 0 errors, 0 warnings. (took 320ms)
+
