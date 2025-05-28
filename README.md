@@ -65,11 +65,11 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 | 🧑‍💻 **Engineer** | 📧 **Contact** | 🏷️ **Index** | 🎯 **Specialization** |
 |:---:|:---:|:---:|:---:|
 | **Pankaja Balasooriya** | balasooriyabapi.22@uom.lk | 220054N | *Systems Integration* |
-| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk | 220112R | *Control Algorithms* |
-| **Chandupa Dineshara** | dinesharamc.22@uom.lk | 220128V | *Hardware Design* |
-| **Chamath Diunugala** | diunugalach.22@uom.lk | 220143L | *Embedded Systems* |
+| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk | 220112R | *Electroinc Hardware* |
+| **Chandupa Dineshara** | dinesharamc.22@uom.lk | 220128V | *Enclosure Design* |
+| **Chamath Diunugala** | diunugalach.22@uom.lk | 220143L | *Control Algorithms* |
 | **Sahas Eshan** | eashansgs.22@uom.lk | 220148G | *Software Architecture* |
-| **Rusiru Fernando** | fernandoard.22@uom.lk | 220161N | *Power Electronics* |
+| **Rusiru Fernando** | fernandoard.22@uom.lk | 220161N | *Communications Systems* |
 | **Banuka Liyanage** | liyanagedlbb.22@uom.lk | 220362G | *Mechanical Design* |
 | **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Power Electronics* |
 
