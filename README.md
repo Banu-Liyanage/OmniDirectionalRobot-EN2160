@@ -25,7 +25,7 @@ This cutting-edge repository showcases the design and development of a **state-o
 <div align="center">
 
 <!-- Add your hero image here -->
-![Robot ](Images/robot.jpg)
+![Robot ](Images/front.jpg)
 
 </div>
 
@@ -213,7 +213,7 @@ graph TD
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Drive System</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_a80e16ce.jpg" alt="Platform" width="200"><br><b>Platform View</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Motor Assembly</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
+<td align="center"><img src="robot" alt="Back View" width="200"><br><b>Control Electronics</b></td>
 </tr>
 </table>table>
 </div>
