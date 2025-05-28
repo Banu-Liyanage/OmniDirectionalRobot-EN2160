@@ -1,6 +1,8 @@
 # 🤖 Omni Directional Robot Platform - EN2160
 ### *Next-Generation Autonomous Mobile Robotics*
 
+
+
 <div align="center">
 
 [![Google Drive](https://img.shields.io/badge/Google%20Drive-Project%20Management-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/1gBgsQ-QxK0Zy2K9BndymeuY9-QAq1h1s?usp=sharing)
@@ -23,7 +25,7 @@ This cutting-edge repository showcases the design and development of a **state-o
 <div align="center">
 
 <!-- Add your hero image here -->
-*[Hero Image Placeholder - Main Robot Assembly]*
+![Robot ](Images/robot.jpg)
 
 </div>
 
@@ -69,7 +71,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 | **Sahas Eshan** | eashansgs.22@uom.lk | 220148G | *Software Architecture* |
 | **Rusiru Fernando** | fernandoard.22@uom.lk | 220161N | *Power Electronics* |
 | **Banuka Liyanage** | liyanagedlbb.22@uom.lk | 220362G | *Mechanical Design* |
-| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Testing & Validation* |
+| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Power Electronics* |
 
 ---
 
@@ -97,7 +99,15 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add feature showcase images here -->
-*[Feature Gallery - Control Interface, PCB Modules, Chassis Assembly]*
+
+<table>
+<tr>
+<td align="center"><img src="Images/robor1.jpg" alt="Complete Robot" width="200"><br><b>Complete Assembly</b></td>
+<td align="center"><img src="Images/robot.jpg" alt="Enclosure" width="200"><br><b>Custom Enclosure</b></td>
+<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_d23abd3f.jpg" alt="Platform" width="200"><br><b>Base Platform</b></td>
+</tr>
+</table>
 
 </div>
 
@@ -110,7 +120,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add system architecture diagram here -->
-*[Architecture Diagram Placeholder]*
+
 
 </div>
 
@@ -132,7 +142,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 <div align="center">
 
 <!-- Add mechanical design images here -->
-*[Mechanical Assembly Views - Isometric, Side, Bottom]*
+
 
 </div>
 
@@ -198,8 +208,14 @@ graph TD
 <div align="center">
 
 <!-- Add PCB images here -->
-*[PCB Gallery - Power Module, Main Controller, Motor Driver]*
-
+<table>
+<tr>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Drive System</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_a80e16ce.jpg" alt="Platform" width="200"><br><b>Platform View</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Motor Assembly</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
+</tr>
+</table>table>
 </div>
 
 | **PCB Module** | **Function** | **Key Features** |
@@ -216,6 +232,47 @@ graph TD
 - **EMI Mitigation** through differential signaling and proper grounding
 
 ---
+
+---
+
+## 🧱 Mechanical Design & FEA Analysis
+
+<div align="left">
+
+### *Robust Engineering for Real-World Demands*
+
+</div>
+
+The mechanical design of the platform was optimized for both **structural integrity** and **functional adaptability**, with a focus on durability, vibration mitigation, and payload endurance.
+
+### 🛠️ Structural Overview
+
+- **Material Selection:** Stainless steel box bars with cantalie vibration dampening
+- **Fabrication:** In-house welding, precision machining, and 3D printed PCB enclosures
+- **Design Philosophy:** Balancing rigidity and modularity for both performance and ease of maintenance
+
+### 📊 FEA Validation
+
+Extensive Finite Element Analysis (FEA) was conducted to validate:
+
+- Load-bearing capacity under dynamic and static conditions
+- Results depicts chassis has a 900% safe margin
+- Stress and deformation distribution across the chassis
+- Vibration response under high-speed operation
+
+<div align="center">
+
+<table>
+<tr>
+<td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-8.jpg" alt="CAD Model" width="300"><br><b>CAD Model of Chassis</b></td>
+<td align="center"><img src="\Mechanical Designs\Finite Element Analysis\EDR Chassis Assembly-Chassis Weight Test-Image-5.jpg" alt="FEA Analysis" width="300"><br><b>FEA Stress Distribution</b></td>
+</tr>
+</table>
+
+</div>
+
+---
+
 
 ## 🚀 Applications & Use Cases
 
