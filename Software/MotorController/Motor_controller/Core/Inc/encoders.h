@@ -25,6 +25,4 @@ void resetEncodersinSystick();
 void update_Encoder_Data();
 
 
-
-
 #endif /* INC_ENCODERS_H_ */

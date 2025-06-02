@@ -1,25 +1,55 @@
 /*
  * kinematics.c
  *
- *  Created on: May 22, 2025
+ *  Created on: May 15, 2025
  *      Author: PANKAJA
  */
 
 #include "kinematics.h"
+#include "config.h"
 #include "motors.h"
 #include "encoders.h"
-#include "math.h"
+#include <math.h>
+
+// Mecanum wheel geometry constants
+#define WHEEL_RADIUS 39.0f          // Wheel radius in mm (Diameter 78mm)
+#define WHEEL_BASE_LENGTH 280.0f    // Distance between front and rear wheels (mm)
+#define WHEEL_BASE_WIDTH 380.0f     // Distance between left and right wheels (mm)
+#define L_PLUS_W ((WHEEL_BASE_LENGTH + WHEEL_BASE_WIDTH) / 2.0f)
+
+// Conversion factors
+#define MM_PER_S_TO_RAD_PER_S (1.0f / WHEEL_RADIUS)
+#define RAD_PER_S_TO_MM_PER_S (WHEEL_RADIUS)
+#define PWM_PER_RAD_PER_S 0.03768f // Need to tune this value
 
 // Global variables
-volatile robot_velocity_t current_robot_velocity = {0, 0, 0};
-volatile robot_velocity_t target_robot_velocity = {0, 0, 0};
-volatile wheel_velocities_t target_wheel_velocities = {0, 0, 0, 0};
-volatile wheel_velocities_t current_wheel_velocities = {0, 0, 0, 0};
-volatile demo_state_t demo_state = DEMO_STOP;
-volatile uint32_t demo_timer = 0;
+volatile RobotVelocity current_robot_velocity = {0, 0, 0};
+volatile RobotVelocity target_robot_velocity = {0, 0, 0};
+volatile RobotPosition current_robot_position = {0, 0, 0};
+volatile MotionCommand motion_command = {0, 0, 0, 0, 0, 0};
 
-void kinematics_init(void) {
-    // Initialize all velocities to zero
+// PID controllers for velocity control
+static PIDController pid_vx, pid_vy, pid_wz;
+
+// Motion control variables
+static float start_position_x = 0;
+static float start_position_y = 0;
+static float start_theta = 0;
+static uint32_t motion_start_time = 0;
+static uint32_t current_time = 0;
+
+// Demo sequence variables
+static uint8_t demo_step = 0;
+static uint32_t demo_timer = 0;
+static uint8_t demo_active = 0;
+
+void init_kinematics(void) {
+    // Initialize PID controllers for velocity control
+    init_pid_controller(&pid_vx, 0.245f, 0.132f, 0.05f, -1.0f, 1.0f);
+    init_pid_controller(&pid_vy, 0.180f, 0.11f, 0.05f, -0.8f, 0.8f);
+    init_pid_controller(&pid_wz, 0.15f, 0.08f, 0.03f, -0.4f, 0.4f);
+
+    // Reset all variables
     current_robot_velocity.vx = 0;
     current_robot_velocity.vy = 0;
     current_robot_velocity.wz = 0;
@@ -28,187 +58,344 @@ void kinematics_init(void) {
     target_robot_velocity.vy = 0;
     target_robot_velocity.wz = 0;
 
-    target_wheel_velocities.w1 = 0;
-    target_wheel_velocities.w2 = 0;
-    target_wheel_velocities.w3 = 0;
-    target_wheel_velocities.w4 = 0;
+    current_robot_position.x = 0;
+    current_robot_position.y = 0;
+    current_robot_position.theta = 0;
 
-    current_wheel_velocities.w1 = 0;
-    current_wheel_velocities.w2 = 0;
-    current_wheel_velocities.w3 = 0;
-    current_wheel_velocities.w4 = 0;
+    motion_command.motion_active = 0;
+    motion_command.motion_complete = 1;
 
-    demo_state = DEMO_STOP;
-    demo_timer = 0;
+    current_time = 0;
+    demo_active = 0;
 }
 
-// Inverse kinematics: Convert body velocities to wheel angular velocities
-// Based on equation (9) from your reference
-void inverse_kinematics(robot_velocity_t body_vel, wheel_velocities_t* wheel_vel) {
-    float inv_R = 1.0f / WHEEL_RADIUS;
-    float l1_plus_l2 = L1 + L2;
+void calculate_wheel_velocities(RobotVelocity robot_vel, float *wheel_velocities) {
+    /*
+     * Mecanum wheel inverse kinematics
+     * Converts robot velocities (vx, vy, wz) to individual wheel velocities
+     *
+     * Matrix form:
+     * [ω1]   1  [1   1  -(l1+l2)] [vx]
+     * [ω2] = -- [1  -1   l1+l2 ] [vy]
+     * [ω3]   R  [1  -1  -(l1+l2)] [ωz]
+     * [ω4]      [1   1   l1+l2 ]
+     *
+     */
 
-    // Apply kinematic transformation matrix (equation 9)
-    // ω1 = (1/R) * [vx + vy - (l1+l2)*wz]  - Front Left
-    wheel_vel->w1 = inv_R * (body_vel.vx + body_vel.vy - l1_plus_l2 * body_vel.wz);
+    float vx = robot_vel.vx;          // mm/s
+    float vy = robot_vel.vy;          // mm/s
+    float wz = robot_vel.wz;          // rad/s
 
-    // ω2 = (1/R) * [vx - vy + (l1+l2)*wz]  - Front Right
-    wheel_vel->w2 = inv_R * (body_vel.vx - body_vel.vy + l1_plus_l2 * body_vel.wz);
-
-    // ω3 = (1/R) * [vx - vy - (l1+l2)*wz]  - Rear Left
-    wheel_vel->w3 = inv_R * (body_vel.vx - body_vel.vy - l1_plus_l2 * body_vel.wz);
-
-    // ω4 = (1/R) * [vx + vy + (l1+l2)*wz]  - Rear Right
-    wheel_vel->w4 = inv_R * (body_vel.vx + body_vel.vy + l1_plus_l2 * body_vel.wz);
+    // Apply inverse kinematics matrix
+    wheel_velocities[0] = (vx + vy - wz * L_PLUS_W) / WHEEL_RADIUS;
+    wheel_velocities[1] = (vx - vy + wz * L_PLUS_W) / WHEEL_RADIUS;
+    wheel_velocities[2] = (vx - vy - wz * L_PLUS_W) / WHEEL_RADIUS;
+    wheel_velocities[3] = (vx + vy + wz * L_PLUS_W) / WHEEL_RADIUS;
 }
 
-// Forward kinematics: Convert wheel angular velocities to body velocities
-// Based on equation (8) from your reference
-void forward_kinematics(wheel_velocities_t wheel_vel, robot_velocity_t* body_vel) {
-    float R_over_4 = WHEEL_RADIUS / 4.0f;
-    float l1_plus_l2 = L1 + L2;
+void calculate_robot_velocities(float *wheel_velocities, RobotVelocity *robot_vel) {
+    /*
+     * Mecanum wheel forward kinematics
+     * Converts individual wheel velocities to robot velocities (vx, vy, wz)
+     *
+     * Matrix form:
+     * [vx]   R  [1   1   1   1 ] [ω1]
+     * [vy] = -- [1  -1  -1   1 ] [ω2]
+     * [ωz]   4  [1   1   1   1 ] [ω3]
+     *           [--- --- --- ---] [ω4]
+     *           [l1+l2 l1+l2 l1+l2 l1+l2]
 
-    // Apply kinematic transformation matrix (equation 8)
-    // vx = (R/4) * [ω1 + ω2 + ω3 + ω4]
-    body_vel->vx = R_over_4 * (wheel_vel.w1 + wheel_vel.w2 + wheel_vel.w3 + wheel_vel.w4);
+     */
 
-    // vy = (R/4) * [ω1 - ω2 - ω3 + ω4]
-    body_vel->vy = R_over_4 * (wheel_vel.w1 - wheel_vel.w2 - wheel_vel.w3 + wheel_vel.w4);
+    float w1 = wheel_velocities[0];
+    float w2 = wheel_velocities[1];
+    float w3 = wheel_velocities[2];
+    float w4 = wheel_velocities[3];
 
-    // wz = (R/4) * [-ω1/(l1+l2) + ω2/(l1+l2) - ω3/(l1+l2) + ω4/(l1+l2)]
-    body_vel->wz = R_over_4 * (-wheel_vel.w1 + wheel_vel.w2 - wheel_vel.w3 + wheel_vel.w4) / l1_plus_l2;
+    // Apply forward kinematics matrix
+    robot_vel->vx = (WHEEL_RADIUS / 4.0f) * (w1 + w2 + w3 + w4);
+    robot_vel->vy = (WHEEL_RADIUS / 4.0f) * (w1 - w2 - w3 + w4);
+    robot_vel->wz = (WHEEL_RADIUS / (4.0f * L_PLUS_W)) * (-w1 + w2 - w3 + w4);
 }
 
-// Limit velocities to safe ranges
-robot_velocity_t limit_velocities(robot_velocity_t vel) {
-    robot_velocity_t limited_vel = vel;
+void update_robot_position(void) {
+    /*
+     * Update robot position using odometry
+     */
 
-    // Limit linear velocities
-    if (limited_vel.vx > MAX_LINEAR_VELOCITY) limited_vel.vx = MAX_LINEAR_VELOCITY;
-    if (limited_vel.vx < -MAX_LINEAR_VELOCITY) limited_vel.vx = -MAX_LINEAR_VELOCITY;
+    float dt = LOOP_INTERVAL;
 
-    if (limited_vel.vy > MAX_LINEAR_VELOCITY) limited_vel.vy = MAX_LINEAR_VELOCITY;
-    if (limited_vel.vy < -MAX_LINEAR_VELOCITY) limited_vel.vy = -MAX_LINEAR_VELOCITY;
+    // Calculate current wheel velocities from encoder data
+    float current_wheel_velocities[4];
+    current_wheel_velocities[0] = ForwardLeft_W;
+    current_wheel_velocities[1] = ForwardRight_W;
+    current_wheel_velocities[2] = RearLeft_W;
+    current_wheel_velocities[3] = RearRight_W;
 
-    // Limit angular velocity
-    if (limited_vel.wz > MAX_ANGULAR_VELOCITY) limited_vel.wz = MAX_ANGULAR_VELOCITY;
-    if (limited_vel.wz < -MAX_ANGULAR_VELOCITY) limited_vel.wz = -MAX_ANGULAR_VELOCITY;
+    // Calculate current robot velocities
+    RobotVelocity measured_velocity;
+    calculate_robot_velocities(current_wheel_velocities, &measured_velocity);
 
-    return limited_vel;
+    // Update current velocity
+    current_robot_velocity.vx = 0.8f * current_robot_velocity.vx + 0.2f * measured_velocity.vx;
+    current_robot_velocity.vy = 0.8f * current_robot_velocity.vy + 0.2f * measured_velocity.vy;
+    current_robot_velocity.wz = 0.8f * current_robot_velocity.wz + 0.2f * measured_velocity.wz;
+
+    // Update position using current orientation
+    float cos_theta = cosf(current_robot_position.theta);
+    float sin_theta = sinf(current_robot_position.theta);
+
+    // Transform velocities from robot frame to world frame
+    float vx_world = current_robot_velocity.vx * cos_theta - current_robot_velocity.vy * sin_theta;
+    float vy_world = current_robot_velocity.vx * sin_theta + current_robot_velocity.vy * cos_theta;
+
+    // Integrate position
+    current_robot_position.x += vx_world * dt;
+    current_robot_position.y += vy_world * dt;
+    current_robot_position.theta += current_robot_velocity.wz * dt;
+
+    // Normalize angle to [-π, π]
+    while (current_robot_position.theta > M_PI) {
+        current_robot_position.theta -= 2.0f * M_PI;
+    }
+    while (current_robot_position.theta < -M_PI) {
+        current_robot_position.theta += 2.0f * M_PI;
+    }
 }
 
-// Set target robot velocity
-void set_robot_velocity(float vx, float vy, float wz) {
-    robot_velocity_t new_vel = {vx, vy, wz};
-    new_vel = limit_velocities(new_vel);
-
-    target_robot_velocity.vx = new_vel.vx;
-    target_robot_velocity.vy = new_vel.vy;
-    target_robot_velocity.wz = new_vel.wz;
-}
-
-// Stop the robot
-void stop_robot(void) {
-    set_robot_velocity(0, 0, 0);
-}
-
-// Main kinematics control update function (called from SysTick)
 void update_kinematics_control(void) {
+    /*
+     * Main kinematics control function called every millisecond
+     */
+
+    current_time++;
+
     // Update encoder data
     update_Encoder_Data();
 
-    // Get current wheel velocities from encoders
-    current_wheel_velocities.w1 = ForwardLeft_W;   // Front Left
-    current_wheel_velocities.w2 = ForwardRight_W;  // Front Right
-    current_wheel_velocities.w3 = RearLeft_W;      // Rear Left
-    current_wheel_velocities.w4 = RearRight_W;     // Rear Right
+    // Update robot position from odometry
+    update_robot_position();
 
-    // Calculate current robot velocity using forward kinematics
-    forward_kinematics(current_wheel_velocities, (robot_velocity_t*)&current_robot_velocity);
+    // Check if motion is complete
+    if (motion_command.motion_active) {
+        float distance_traveled = sqrtf(
+            (current_robot_position.x - start_position_x) * (current_robot_position.x - start_position_x) +
+            (current_robot_position.y - start_position_y) * (current_robot_position.y - start_position_y)
+        );
 
-    // Convert target robot velocity to wheel velocities using inverse kinematics
-    inverse_kinematics(target_robot_velocity, (wheel_velocities_t*)&target_wheel_velocities);
+        float angle_traveled = fabsf(current_robot_position.theta - start_theta);
 
-    // Convert wheel angular velocities to PWM values (simple proportional control)
-    // You may want to implement PID control here for better performance
-    float pwm_scale = 0.3f; // Adjust this scaling factor based on your system
+        // Check if target distance/angle is reached
+        if ((motion_command.target_distance > 0 && distance_traveled >= motion_command.target_distance) ||
+            (motion_command.target_rotation != 0 && angle_traveled >= fabsf(motion_command.target_rotation))) {
 
-    float pwm1 = target_wheel_velocities.w1 * pwm_scale;
-    float pwm2 = target_wheel_velocities.w2 * pwm_scale;
-    float pwm3 = target_wheel_velocities.w3 * pwm_scale;
-    float pwm4 = target_wheel_velocities.w4 * pwm_scale;
-
-    // Set motor PWM values
-    setForwardLeftMotorPWM(pwm1);
-    setForwardRightMotorPWM(pwm2);
-    setRearLeftMotorPWM(pwm3);
-    setRearRightMotorPWM(pwm4);
-}
-
-// Start demonstration sequence
-void start_demo_sequence(void) {
-    demo_state = DEMO_FORWARD;
-    demo_timer = 0;
-}
-
-// Update demo sequence (called from SysTick)
-void update_demo_sequence(void) {
-    demo_timer++;
-
-    // Check if it's time to switch to next demo state
-    if (demo_timer >= DEMO_DURATION) {
-        demo_timer = 0;
-        demo_state++;
-
-        if (demo_state >= DEMO_COMPLETE) {
-            demo_state = DEMO_STOP;
+            motion_command.motion_active = 0;
+            motion_command.motion_complete = 1;
+            target_robot_velocity.vx = 0;
+            target_robot_velocity.vy = 0;
+            target_robot_velocity.wz = 0;
         }
     }
 
-    // Execute current demo state
-    switch (demo_state) {
-        case DEMO_STOP:
-            set_robot_velocity(0, 0, 0);
-            break;
+    // PID control for velocity
+    float dt = LOOP_INTERVAL;
 
-        case DEMO_FORWARD:
-            set_robot_velocity(DEMO_VELOCITY, 0, 0);  // Move forward
-            break;
+    float control_vx = calculate_pid(&pid_vx, target_robot_velocity.vx, current_robot_velocity.vx, dt);
+    float control_vy = calculate_pid(&pid_vy, target_robot_velocity.vy, current_robot_velocity.vy, dt);
+    float control_wz = calculate_pid(&pid_wz, target_robot_velocity.wz, current_robot_velocity.wz, dt);
 
-        case DEMO_BACKWARD:
-            set_robot_velocity(-DEMO_VELOCITY, 0, 0); // Move backward
-            break;
+    // Calculate target wheel velocities
+    RobotVelocity control_velocity = {control_vx, control_vy, control_wz};
+    float target_wheel_velocities[4];
+    calculate_wheel_velocities(control_velocity, target_wheel_velocities);
 
-        case DEMO_LEFT:
-            set_robot_velocity(0, DEMO_VELOCITY, 0);  // Strafe left
-            break;
+    // Convert to PWM and apply to motors
+    float pwm_fl = target_wheel_velocities[0] * PWM_PER_RAD_PER_S;
+    float pwm_fr = target_wheel_velocities[1] * PWM_PER_RAD_PER_S;
+    float pwm_rl = target_wheel_velocities[2] * PWM_PER_RAD_PER_S;
+    float pwm_rr = target_wheel_velocities[3] * PWM_PER_RAD_PER_S;
 
-        case DEMO_RIGHT:
-            set_robot_velocity(0, -DEMO_VELOCITY, 0); // Strafe right
-            break;
+    // Apply PWM to motors
+    setForwardLeftMotorPWM(pwm_fl);
+    setForwardRightMotorPWM(pwm_fr);
+    setRearLeftMotorPWM(pwm_rl);
+    setRearRightMotorPWM(pwm_rr);
+}
 
-        case DEMO_DIAGONAL_FL:
-            set_robot_velocity(DEMO_VELOCITY, DEMO_VELOCITY, 0); // Diagonal forward-left
-            break;
+void set_robot_velocity(float vx, float vy, float wz) {
+    target_robot_velocity.vx = vx;
+    target_robot_velocity.vy = vy;
+    target_robot_velocity.wz = wz;
+    motion_command.motion_active = 0;
+}
 
-        case DEMO_DIAGONAL_FR:
-            set_robot_velocity(DEMO_VELOCITY, -DEMO_VELOCITY, 0); // Diagonal forward-right
-            break;
+void move_robot_distance_direction(float distance, float angle_deg, float speed) {
+    // Convert angle to radians
+    float angle_rad = angle_deg * RADIANS_PER_DEGREE;
 
-        case DEMO_ROTATE_CW:
-            set_robot_velocity(0, 0, -DEMO_ANGULAR_VEL); // Rotate clockwise
-            break;
+    // Calculate velocity components
+    float vx = speed * cosf(angle_rad);
+    float vy = speed * sinf(angle_rad);
 
-        case DEMO_ROTATE_CCW:
-            set_robot_velocity(0, 0, DEMO_ANGULAR_VEL);  // Rotate counter-clockwise
-            break;
+    // Set target velocity
+    target_robot_velocity.vx = vx;
+    target_robot_velocity.vy = vy;
+    target_robot_velocity.wz = 0;
 
-        case DEMO_STRAFE_ROTATE:
-            set_robot_velocity(0, DEMO_VELOCITY, DEMO_ANGULAR_VEL); // Strafe left while rotating
-            break;
+    // Set motion command
+    motion_command.target_distance = distance;
+    motion_command.target_angle = angle_rad;
+    motion_command.target_speed = speed;
+    motion_command.target_rotation = 0;
+    motion_command.motion_active = 1;
+    motion_command.motion_complete = 0;
 
-        default:
-            demo_state = DEMO_STOP;
-            break;
+    // Store starting position
+    start_position_x = current_robot_position.x;
+    start_position_y = current_robot_position.y;
+    start_theta = current_robot_position.theta;
+    motion_start_time = current_time;
+}
+
+void rotate_robot(float angle_deg, float angular_speed) {
+    // Convert to radians
+    float angle_rad = angle_deg * RADIANS_PER_DEGREE;
+    float angular_speed_rad = angular_speed * RADIANS_PER_DEGREE;
+
+    // Set target velocity
+    target_robot_velocity.vx = 0;
+    target_robot_velocity.vy = 0;
+    target_robot_velocity.wz = (angle_rad > 0) ? angular_speed_rad : -angular_speed_rad;
+
+    // Set motion command
+    motion_command.target_distance = 0;
+    motion_command.target_angle = 0;
+    motion_command.target_speed = 0;
+    motion_command.target_rotation = angle_rad;
+    motion_command.motion_active = 1;
+    motion_command.motion_complete = 0;
+
+    // Store starting position
+    start_position_x = current_robot_position.x;
+    start_position_y = current_robot_position.y;
+    start_theta = current_robot_position.theta;
+    motion_start_time = current_time;
+}
+
+void stop_robot(void) {
+    target_robot_velocity.vx = 0;
+    target_robot_velocity.vy = 0;
+    target_robot_velocity.wz = 0;
+    motion_command.motion_active = 0;
+    motion_command.motion_complete = 1;
+}
+
+uint8_t is_motion_complete(void) {
+    return motion_command.motion_complete;
+}
+
+// Only for testing - comment the code when not in the test mode.
+void update_demo_sequence(void) {
+    if (!demo_active) return;
+
+//    demo_timer++;
+//
+//    // Demo sequence: Move in different directions to test Mecanum wheels
+//    switch (demo_step) {
+//        case 0:
+//            if (demo_timer > 2000) { // Wait 2 seconds
+//                move_robot_distance_direction(500, 0, 200); // Forward 500mm at 200mm/s
+//                demo_step++;
+//                demo_timer = 0;
+//            }
+//            break;
+//
+//        case 1:
+//            if (is_motion_complete()) {
+//                move_robot_distance_direction(500, 90, 200); // Left 500mm
+//                demo_step++;
+//            }
+//            break;
+//
+//        case 2:
+//            if (is_motion_complete()) {
+//                move_robot_distance_direction(500, 180, 200); // Backward 500mm
+//                demo_step++;
+//            }
+//            break;
+//
+//        case 3:
+//            if (is_motion_complete()) {
+//                move_robot_distance_direction(500, 270, 200); // Right 500mm
+//                demo_step++;
+//            }
+//            break;
+//
+//        case 4:
+//            if (is_motion_complete()) {
+//                rotate_robot(90, 45); // Rotate 90 degrees at 45 deg/s
+//                demo_step++;
+//            }
+//            break;
+//
+//        case 5:
+//            if (is_motion_complete()) {
+//                move_robot_distance_direction(707, 45, 200); // Diagonal movement
+//                demo_step++;
+//            }
+//            break;
+//
+//        case 6:
+//            if (is_motion_complete()) {
+//                stop_robot();
+//                demo_step = 0; // Restart demo
+//                demo_timer = 0;
+//            }
+//            break;
+//    }
+}
+
+// PID Controller Implementation
+void init_pid_controller(PIDController *pid, float kp, float ki, float kd, float min_out, float max_out) {
+    pid->kp = kp;
+    pid->ki = ki;
+    pid->kd = kd;
+    pid->integral = 0;
+    pid->prev_error = 0;
+    pid->output_min = min_out;
+    pid->output_max = max_out;
+}
+
+float calculate_pid(PIDController *pid, float setpoint, float measured_value, float dt) {
+    float error = setpoint - measured_value;
+
+    // Proportional term
+    float proportional = pid->kp * error;
+
+    // Integral term
+    pid->integral += error * dt;
+    float integral = pid->ki * pid->integral;
+
+    // Derivative term
+    float derivative = pid->kd * (error - pid->prev_error) / dt;
+    pid->prev_error = error;
+
+    // Calculate output
+    float output = proportional + integral + derivative;
+
+    // Apply output limits
+    if (output > pid->output_max) {
+        output = pid->output_max;
+        pid->integral -= error * dt;
+    } else if (output < pid->output_min) {
+        output = pid->output_min;
+        pid->integral -= error * dt;
     }
+
+    return output;
+}
+
+void reset_pid(PIDController *pid) {
+    pid->integral = 0;
+    pid->prev_error = 0;
 }

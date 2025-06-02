@@ -1,7 +1,7 @@
 /*
  * encoders.c
  *
- *  Created on: May 21, 2025
+ *  Created on: May 12, 2025
  *      Author: PANKAJA
  */
 
@@ -107,5 +107,6 @@ void update_Encoder_Data(){
 	RearRight_W = RearRight * LOOP_FREQUENCY;
 
 }
+
 
 

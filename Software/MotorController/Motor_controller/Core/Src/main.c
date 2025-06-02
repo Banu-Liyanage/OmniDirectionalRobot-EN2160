@@ -75,108 +75,6 @@ static void MX_USART3_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int speed1 = 0.1;
-int speed2 = 0.4;
-int speed3 = 0.6;
-int speed4 = 0.8;
-int speed5 = 1;
-
-int stopDelay = 4000;
-
-void Stop(){
-	setForwardLeftMotorPWM(0);
-	setForwardRightMotorPWM(0);
-
-	setRearLeftMotorPWM(0);
-	setRearRightMotorPWM(0);
-
-	resetMotors();
-
-	HAL_Delay(stopDelay);
-}
-
-void MoveForward(int speed, int delay){
-	setForwardLeftMotorPWM(speed);
-	setForwardRightMotorPWM(speed);
-
-	setRearLeftMotorPWM(speed);
-	setRearRightMotorPWM(speed);
-	HAL_Delay(delay);
-	Stop();
-
-
-}
-
-void MoveReverse(int speed, int delay){
-	setForwardLeftMotorPWM(-speed);
-	setForwardRightMotorPWM(-speed);
-
-	setRearLeftMotorPWM(-speed);
-	setRearRightMotorPWM(-speed);
-	HAL_Delay(delay);
-	Stop();
-}
-
-
-void MoveRight(int speed, int delay){
-	setForwardLeftMotorPWM(speed);
-	setForwardRightMotorPWM(-speed);
-
-	setRearLeftMotorPWM(-speed);
-	setRearRightMotorPWM(speed);
-	HAL_Delay(delay);
-	Stop();
-}
-
-void MoveLeft(int speed, int delay){
-	setForwardLeftMotorPWM(-speed);
-	setForwardRightMotorPWM(speed);
-
-	setRearLeftMotorPWM(speed);
-	setRearRightMotorPWM(-speed);
-	HAL_Delay(delay);
-	Stop();
-}
-
-void MoveRightDiagonalForward(int speed, int delay){
-	setForwardLeftMotorPWM(speed);
-	setForwardRightMotorPWM(0);
-
-	setRearLeftMotorPWM(0);
-	setRearRightMotorPWM(speed);
-	HAL_Delay(delay);
-	Stop();
-}
-
-void MoveLeftDiagonalReverse(int speed, int delay){
-	setForwardLeftMotorPWM(-speed);
-	setForwardRightMotorPWM(0);
-
-	setRearLeftMotorPWM(0);
-	setRearRightMotorPWM(-speed);
-	HAL_Delay(delay);
-	Stop();
-}
-
-void MoveleftDiagonalForward(int speed, int delay){
-	setForwardLeftMotorPWM(0);
-	setForwardRightMotorPWM(speed);
-
-	setRearLeftMotorPWM(speed);
-	setRearRightMotorPWM(0);
-	HAL_Delay(delay);
-	Stop();
-}
-
-void Rotate(int speed, int delay){
-	setForwardLeftMotorPWM(speed);
-	setForwardRightMotorPWM(-speed);
-
-	setRearLeftMotorPWM(speed);
-	setRearRightMotorPWM(-speed);
-	HAL_Delay(delay);
-	Stop();
-}
 
 
 /* USER CODE END 0 */
@@ -229,44 +127,14 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
+  // Initialize kinematics system
+  init_kinematics();
 
-//  HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
-//  HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
-//  HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
-
-  // Initialize encoders
-  //resetEncoders();
-
-  // Initialize kinematics
-  //kinematics_init();
-
-  // Optional: Start demo sequence after 2 seconds
-  HAL_Delay(5000);
-  //start_demo_sequence();
-  int delay = 2500;
-  int speed = 0.1;
-
-  //MoveForward(speed, delay);
-  //MoveRight(speed, delay);
-  //MoveReverse(speed, delay);
-  //MoveLeft(speed, delay);
-
-  //MoveRightDiagonalForward(speed, delay);
-  //MoveRight(speed, delay);
-  //MoveleftDiagonalForward(speed, delay);
-  //MoveRight(speed1, delay);
-
-
-
-  //Rotate(speed1, delay);
-  //Stop();
-
-
-
-
-
+  // Reset encoders
+  resetEncoders();
 
   /* USER CODE END 2 */
+
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -275,47 +143,56 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  //HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_PIN, 1);
-//	  setForwardLeftMotorPWM(0.2);
-//	  setForwardRightMotorPWM(-0.2); // - not working
-//
-//	  setRearLeftMotorPWM(0.2);
-//	  setRearRightMotorPWM(-0.2);
+	 // Wait for demo sequence to complete, then execute custom movements
+	 static uint32_t custom_demo_timer = 0;
+	 static uint8_t custom_step = 0;
 
-//	  MoveForward(speed2, 3000);
-//	  MoveRight(Speed2, 3000);
-//	  MoveReverse(speed2, 3000);
-//	  MoveLeft(speed2, 3000);
-//
-//	  MoveRightDiagonalForward(speed2, 3000);
+	 custom_demo_timer++;
 
-	  //resetMotors();
-	  //setForwardLeftMotorPWM(-0.5);
+	 // After 30 seconds of demo, start custom movements
+	 if (custom_demo_timer > 3000) {
+		 switch (custom_step) {
+			 case 0:
+				 // Move forward 1 meter at 300mm/s
+				 move_robot_distance_direction(1000, 0, 300);
+				 custom_step++;
+				 break;
 
-	    HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
-	    HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
-	    HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
+			 case 1:
+				 if (is_motion_complete()) {
+					 // Strafe right 500mm at 200mm/s
+					 move_robot_distance_direction(500, 270, 200); // 270° = right
+					 custom_step++;
+				 }
+				 break;
 
-	    HAL_Delay(2000);
+			 case 2:
+				 if (is_motion_complete()) {
+					 // Rotate 180 degrees at 60 deg/s
+					 rotate_robot(180, 60);
+					 custom_step++;
+				 }
+				 break;
 
-	      HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 0);
-	      HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
-	      HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 0);
+			 case 3:
+				 if (is_motion_complete()) {
+					 // Move diagonally (45 degrees) 707mm at 250mm/s
+					 move_robot_distance_direction(707, 45, 250);
+					 custom_step++;
+				 }
+				 break;
 
-	      HAL_Delay(2000);
-
-
-	 //HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
-//	 HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
-//	HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 1);
-
-	//HAL_Delay(1000);
-
-	//HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 0);
-
-	//HAL_Delay(1000);
-//	  HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
-//	  HAL_GPIO_WritePin(LED_TX_GPIO_Port, LED_TX_Pin, 0);
+			 case 4:
+				 if (is_motion_complete()) {
+					 // Stop and reset
+					 stop_robot();
+					 custom_step = 0;
+					 custom_demo_timer = 0;
+				 }
+				 break;
+		 }
+	 }
+	 for (volatile int i = 0; i < 10000; i++);
   }
   /* USER CODE END 3 */
 }

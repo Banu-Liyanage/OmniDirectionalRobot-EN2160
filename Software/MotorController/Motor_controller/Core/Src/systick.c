@@ -1,7 +1,7 @@
 /*
  * systick.c
  *
- *  Created on: May 21, 2025
+ *  Created on: May 12, 2025
  *      Author: PANKAJA
  */
 
@@ -27,7 +27,7 @@ void CheckEncoderCounts(void) {
 void SysTickFunction(void) {
     /*
      * This function is called every millisecond (1kHz)
-     * Main control loop for the Mecanum wheel robot
+     * Main control loop for the Omni-Dorectional robot
      */
 
     control_counter++;
@@ -42,8 +42,6 @@ void SysTickFunction(void) {
 
     // Update demo sequence
     update_demo_sequence();
-
-    // Optional: Add debugging output every second
     /*
     if (control_counter % 1000 == 0) {
         // Print current velocities or other debug info

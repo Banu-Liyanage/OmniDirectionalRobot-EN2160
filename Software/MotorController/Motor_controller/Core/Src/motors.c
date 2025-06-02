@@ -1,7 +1,7 @@
 /*
  * motors.c
  *
- *  Created on: May 20, 2025
+ *  Created on: May 10, 2025
  *      Author: PANKAJA
  */
 
@@ -21,15 +21,16 @@ void setForwardLeftMotorPWM(float pwm) {
     pwm = limitPWM(pwm);
 
     if (pwm >= 0) {
-        // Forward direction
-        HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, GPIO_PIN_SET);
+        // Forward direction: INA=0, INB=1
+        // M1_INA = PC10, M1_INB = PC11
+        // Reset bit 10 and Set bit 11 simultaneously
+        GPIOC->BSRR = (1U << (10 + 16)) | (1U << 11);
         TIM1->CCR1 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
     }
     else {
-        // Reverse direction
-        HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, GPIO_PIN_RESET);
+        // Reverse direction: INA=1, INB=0
+        // Set bit 10 and Reset bit 11 simultaneously
+        GPIOC->BSRR = (1U << 10) | (1U << (11 + 16));
         TIM1->CCR1 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
     }
 }
@@ -39,15 +40,16 @@ void setForwardRightMotorPWM(float pwm) {
     pwm = limitPWM(pwm);
 
     if (pwm >= 0) {
-        // Forward direction
-        HAL_GPIO_WritePin(M2_INA_GPIO_Port, M2_INA_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(M2_INB_GPIO_Port, M2_INB_Pin, GPIO_PIN_RESET);
+        // Forward direction: INA=1, INB=0
+        // M2_INA = PC8, M2_INB = PC9
+        // Set bit 8 and Reset bit 9 simultaneously
+        GPIOC->BSRR = (1U << 8) | (1U << (9 + 16));
         TIM1->CCR2 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
     }
     else {
-        // Reverse direction
-        HAL_GPIO_WritePin(M2_INA_GPIO_Port, M2_INA_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(M2_INB_GPIO_Port, M2_INB_Pin, GPIO_PIN_SET);
+        // Reverse direction: INA=0, INB=1
+        // Reset bit 8 and Set bit 9 simultaneously
+        GPIOC->BSRR = (1U << (8 + 16)) | (1U << 9);
         TIM1->CCR2 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
     }
 }
@@ -57,15 +59,16 @@ void setRearLeftMotorPWM(float pwm) {
     pwm = limitPWM(pwm);
 
     if (pwm >= 0) {
-        // Forward direction
-        HAL_GPIO_WritePin(M3_INA_GPIO_Port, M3_INA_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(M3_INB_GPIO_Port, M3_INB_Pin, GPIO_PIN_SET);
+        // Forward direction: INA=0, INB=1
+        // M3_INA = PB4, M3_INB = PB5
+        // Reset bit 4 and Set bit 5 simultaneously
+        GPIOB->BSRR = (1U << (4 + 16)) | (1U << 5);
         TIM1->CCR3 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
     }
     else {
-        // Reverse direction
-        HAL_GPIO_WritePin(M3_INA_GPIO_Port, M3_INA_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(M3_INB_GPIO_Port, M3_INB_Pin, GPIO_PIN_RESET);
+        // Reverse direction: INA=1, INB=0
+        // Set bit 4 and Reset bit 5 simultaneously
+        GPIOB->BSRR = (1U << 4) | (1U << (5 + 16));
         TIM1->CCR3 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
     }
 }
@@ -75,37 +78,33 @@ void setRearRightMotorPWM(float pwm) {
     pwm = limitPWM(pwm);
 
     if (pwm >= 0) {
-        // Forward direction
-        HAL_GPIO_WritePin(M4_INA_GPIO_Port, M4_INA_Pin, GPIO_PIN_SET);
-        HAL_GPIO_WritePin(M4_INB_GPIO_Port, M4_INB_Pin, GPIO_PIN_RESET);
+        // Forward direction: INA=1, INB=0
+        // M4_INA = PC2, M4_INB = PC3
+        // Set bit 2 and Reset bit 3 simultaneously
+        GPIOC->BSRR = (1U << 2) | (1U << (3 + 16));
         TIM1->CCR4 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
     }
     else {
-        // Reverse direction
-        HAL_GPIO_WritePin(M4_INA_GPIO_Port, M4_INA_Pin, GPIO_PIN_RESET);
-        HAL_GPIO_WritePin(M4_INB_GPIO_Port, M4_INB_Pin, GPIO_PIN_SET);
+        // Reverse direction: INA=0, INB=1
+        // Reset bit 2 and Set bit 3 simultaneously
+        GPIOC->BSRR = (1U << (2 + 16)) | (1U << 3);
         TIM1->CCR4 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
     }
 }
 
 void resetMotors(void) {
-    // Stop all motors
-    setForwardLeftMotorPWM(0);
-    setForwardRightMotorPWM(0);
-    setRearLeftMotorPWM(0);
-    setRearRightMotorPWM(0);
+    // Stop all motors by setting PWM to 0
+    TIM1->CCR1 = 0;
+    TIM1->CCR2 = 0;
+    TIM1->CCR3 = 0;
+    TIM1->CCR4 = 0;
 
-    // Set all control pins low
-    HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, GPIO_PIN_RESET);
+    // Set all control pins low simultaneously for each port
+    // GPIOC: Reset M1_INA(PC10), M1_INB(PC11), M2_INA(PC8), M2_INB(PC9), M4_INA(PC2), M4_INB(PC3)
+    GPIOC->BSRR = (1U << (10 + 16)) | (1U << (11 + 16)) |
+                  (1U << (8 + 16)) | (1U << (9 + 16)) |
+                  (1U << (2 + 16)) | (1U << (3 + 16));
 
-    HAL_GPIO_WritePin(M2_INA_GPIO_Port, M2_INA_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(M2_INB_GPIO_Port, M2_INB_Pin, GPIO_PIN_RESET);
-
-    HAL_GPIO_WritePin(M3_INA_GPIO_Port, M3_INA_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(M3_INB_GPIO_Port, M3_INB_Pin, GPIO_PIN_RESET);
-
-    HAL_GPIO_WritePin(M4_INA_GPIO_Port, M4_INA_Pin, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(M4_INB_GPIO_Port, M4_INB_Pin, GPIO_PIN_RESET);
+    // GPIOB: Reset M3_INA(PB4), M3_INB(PB5)
+    GPIOB->BSRR = (1U << (4 + 16)) | (1U << (5 + 16));
 }
-

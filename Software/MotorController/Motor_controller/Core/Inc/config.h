@@ -1,44 +1,53 @@
 /*
  * config.h
  *
- *  Created on: May 20, 2025
+ *  Created on: May 2, 2025
  *      Author: PANKAJA
  */
 
-#ifndef INC_CONFIG_H_
-#define INC_CONFIG_H_
+#ifndef CONFIG_H_
+#define CONFIG_H_
 
-#include "main.h"
+#include <stdint.h>
 
-//*** MATHEMATICAL CONSTANTS **********************************************//
-#define PI 3.1415926535897932384626433832795
-#define HALF_PI 1.5707963267948966192313216916398
-#define TWO_PI 6.283185307179586476925286766559
-#define DEG_TO_RAD 0.017453292519943295769236907684886
-#define RAD_TO_DEG 57.295779513082320876798154814105
+// Mathematical constants
+#define PI 3.14159265358979323846f
 
+// Robot physical constants
+extern const float ROBOT_RADIUS;
+extern const float DEG_PER_MM_DIFFERENCE;
 extern const float RADIANS_PER_DEGREE;
 extern const float DEGREES_PER_RADIAN;
 
-
-
-//*** ROBOT CONSTANTS **********************************************//
-#define ENCODER_COUNTS_PER_REV 1024     // Encoder counts per revolution
-#define RAD_PER_COUNT_FORWARD_LEFT  (2.0f * 3.14159f / ENCODER_COUNTS_PER_REV)
-#define RAD_PER_COUNT_FORWARD_RIGHT (2.0f * 3.14159f / ENCODER_COUNTS_PER_REV)
-#define RAD_PER_COUNT_REAR_LEFT     (2.0f * 3.14159f / ENCODER_COUNTS_PER_REV)
-#define RAD_PER_COUNT_REAR_RIGHT    (2.0f * 3.14159f / ENCODER_COUNTS_PER_REV)
-
-#define MM_PER_COUNT_FORWARD_LEFT 0.06163081426854253155620883258464 //
-#define MM_PER_COUNT_FORWARD_RIGHT 0.06163081426854253155620883258464 //
-#define MM_PER_COUNT_REAR_LEFT 0.06163081426854253155620883258464 //
-#define MM_PER_COUNT_REAR_RIGHT 0.06163081426854253155620883258464 //
-
-extern const float ROBOT_RADIUS;
-extern const float DEG_PER_MM_DIFFERENCE;
-
+// Motion controller constants
 extern const float LOOP_FREQUENCY;
 extern const float LOOP_INTERVAL;
 
+// Motor control constants
+#define MAX_TIMER_COUNTS 7199
 
-#endif /* INC_CONFIG_H_ */
+// Encoder constants
+#define ENCODER_COUNTS_PER_REVOLUTION 12
+#define GEAR_RATIO 100.0f                   // Motor gearbox ratio
+#define WHEEL_CIRCUMFERENCE (2.0f * PI * 39.0f) // 39mm wheel radius
+
+
+#define RAD_PER_COUNT_FORWARD_LEFT   (2.0f * PI / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+#define RAD_PER_COUNT_FORWARD_RIGHT  (2.0f * PI / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+#define RAD_PER_COUNT_REAR_LEFT      (2.0f * PI / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+#define RAD_PER_COUNT_REAR_RIGHT     (2.0f * PI / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+
+
+#define MM_PER_COUNT_FORWARD_LEFT    (WHEEL_CIRCUMFERENCE / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+#define MM_PER_COUNT_FORWARD_RIGHT   (WHEEL_CIRCUMFERENCE / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+#define MM_PER_COUNT_REAR_LEFT       (WHEEL_CIRCUMFERENCE / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+#define MM_PER_COUNT_REAR_RIGHT      (WHEEL_CIRCUMFERENCE / (ENCODER_COUNTS_PER_REVOLUTION * GEAR_RATIO))
+
+
+extern volatile float ForwardLeft_W;
+extern volatile float ForwardRight_W;
+extern volatile float RearLeft_W;
+extern volatile float RearRight_W;
+
+
+#endif /* CONFIG_H_ */
