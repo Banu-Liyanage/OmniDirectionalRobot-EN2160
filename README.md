@@ -1,16 +1,17 @@
 # 🤖 Omni Directional Robot Platform - EN2160
-### *Next-Generation Autonomous Mobile Robotics*
+
 
 
 
 <div align="center">
 
 [![Google Drive](https://img.shields.io/badge/Google%20Drive-Project%20Management-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)](https://drive.google.com/drive/folders/1gBgsQ-QxK0Zy2K9BndymeuY9-QAq1h1s?usp=sharing)
-[![University](https://img.shields.io/badge/University%20of-Moratuwa-red?style=for-the-badge&logo=university&logoColor=white)](https://uom.lk)
+<br>
+<!-- [![University](https://img.shields.io/badge/University%20of-Moratuwa-red?style=for-the-badge&logo=university&logoColor=white)](https://uom.lk)
 [![Course](https://img.shields.io/badge/Course-EN2160-orange?style=for-the-badge&logo=academic&logoColor=white)]()
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensource&logoColor=white)]()
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensource&logoColor=white)]() -->
 
-*🏆 Engineering Excellence in Motion - Crafted by the Next Generation of Robotics Engineers*
+
 
 </div>
 
@@ -20,7 +21,15 @@
 
 **Revolutionizing Indoor Automation Through Intelligent Omnidirectional Mobility**
 
-This cutting-edge repository showcases the design and development of a **state-of-the-art Omni Directional Robot Platform** engineered as part of the prestigious **EN2160 Electronic Design Realization Module** at the University of Moratuwa. Our platform represents the perfect fusion of academic rigor and industry-grade performance, delivering unprecedented maneuverability in confined spaces.
+This repository showcases the design and development of an **Omni Directional Robot Platform** engineered as part of the **EN2160: Electronic Design Realization Module** at the University of Moratuwa. 
+
+Our mission is to create a **highly maneuverable, precise, and intelligent robotic platform** capable of navigating complex indoor environments with ease. 
+
+This project shows how we apply theoretical concepts from electronics and control systems to build a practical solution that meets real-world challenges in automation and robotics.
+
+This is an on-going project, where we are currently working on the Robot's Firmware and Control systems. The hardware is already completed and tested.
+
+
 
 <div align="center">
 
@@ -29,10 +38,7 @@ This cutting-edge repository showcases the design and development of a **state-o
 
 </div>
 
-### ✨ Core Philosophy
-> *"Where precision meets innovation, and theory transforms into reality"*
 
-Our robot transcends traditional mobility constraints, offering **360-degree freedom of movement** through advanced Mecanum wheel technology, intelligent control algorithms, and robust engineering practices.
 
 ---
 
@@ -40,48 +46,42 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 
 <div align="center">
 
-| 🎪 **Omnidirectional Mastery** | 🧠 **Intelligent Positioning** | ⚙️ **Precision Control** |
+| 🎪 **Mecanum Wheel Kinematics** | 🧠 **Intelligent Positioning** | ⚙️ **Precision Control** |
 |:---:|:---:|:---:|
 | 4-wheel Mecanum platform for unrestricted motion | Advanced position estimation algorithms | Real-time wheel control with sub-millimeter accuracy |
 
 </div>
 
-### 🚀 Key Achievements
-- **360° Movement Freedom** - Forward, backward, lateral, and rotational motion simultaneously
-- **Industry-Grade Precision** - Sub-millimeter positioning accuracy
-- **Modular Architecture** - Scalable design for diverse applications
-- **Real-Time Performance** - Ultra-low latency control systems
+
 
 ---
 
-## 👥 Meet the Innovation Team
+## 👥 Team
 
 <div align="center">
 
-*The brilliant minds behind the next generation of autonomous robotics*
+| 🧑‍💻 **Name** | 📧 **Email** |
+|:---:|:---:|
+| **Pankaja Balasooriya** | balasooriyabapi.22@uom.lk |
+| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk |
+| **Chandupa Dineshara** | dinesharamc.22@uom.lk |
+| **Chamath Diunugala** | diunugalach.22@uom.lk |
+| **Sahas Eshan** | eashansgs.22@uom.lk |
+| **Rusiru Fernando** | fernandoard.22@uom.lk |
+| **Banuka Liyanage** | liyanagedlbb.22@uom.lk |
+| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk |
 
 </div>
 
-| 🧑‍💻 **Engineer** | 📧 **Contact** | 🏷️ **Index** | 🎯 **Specialization** |
-|:---:|:---:|:---:|:---:|
-| **Pankaja Balasooriya** | balasooriyabapi.22@uom.lk | 220054N | *Systems Integration* |
-| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk | 220112R | *Electroinc Hardware* |
-| **Chandupa Dineshara** | dinesharamc.22@uom.lk | 220128V | *Enclosure Design* |
-| **Chamath Diunugala** | diunugalach.22@uom.lk | 220143L | *Control Algorithms* |
-| **Sahas Eshan** | eashansgs.22@uom.lk | 220148G | *Software Architecture* |
-| **Rusiru Fernando** | fernandoard.22@uom.lk | 220161N | *Communications Systems* |
-| **Banuka Liyanage** | liyanagedlbb.22@uom.lk | 220362G | *Mechanical Design* |
-| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk | 220448C | *Power Electronics* |
+
+
+
 
 ---
 
-## 🛠️ Revolutionary Features
+<!-- ## 🛠️ Revolutionary Features
 
-<div align="center">
 
-*Where Innovation Meets Implementation*
-
-</div>
 
 ### 🎯 **Core Capabilities**
 
@@ -94,7 +94,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 | ✅ **Robust Communication** | RS485 differential signaling for noise immunity | 🟢 **Complete** |
 | ✅ **Modular PCB Design** | Custom-engineered boards for power, logic, and motor control | 🟢 **Complete** |
 | ✅ **Real-Time Diagnostics** | Live telemetry and system health monitoring | 🟢 **Complete** |
-| ✅ **Industrial Aesthetics** | Professional-grade chassis with automotive paint finish | 🟢 **Complete** |
+| ✅ **Industrial Aesthetics** | Professional-grade chassis with automotive paint finish | 🟢 **Complete** | -->
 
 <div align="center">
 
@@ -113,7 +113,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 
 ---
 
-## 🔧 Technical Excellence
+
 
 ### 🏗️ **System Architecture**
 
@@ -126,22 +126,23 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 
 ### ⚡ **Hardware Specifications**
 
-| **Component** | **Selection** | **Performance** | **Rationale** |
-|:---:|:---:|:---:|:---|
-| 🧠 **Main MCU** | SAM3X8E (Arduino Due) | 84 MHz Cortex-M3 | High I/O density, robust processing power |
-| 🎮 **Motor Controller** | STM32F446RE | 180 MHz, Real-time loops | Precision motor control with encoder feedback |
-| 🔋 **Drive Motors** | 24V 5Nm Planetary Gear | 1:100 ratio, 120 RPM | Optimal torque-speed characteristics |
-| 🧭 **Navigation IMU** | Bosch BNO055 | 9-DOF sensor fusion | Industry-standard orientation tracking |
-| ⚡ **Motor Drivers** | VNH5019 H-Bridge | 30A peak current | Robust protection and thermal management |
-| 🎯 **Mecanum Wheels** | Metal-core construction | Omnidirectional mobility | Enhanced durability and load capacity |
-| 🔌 **Power System** | 12V battery + regulation | Modular distribution | Fuse-protected multi-rail design |
-| 📡 **Communication** | RS485 + Bluetooth HC-05 | Differential + wireless | Reliable inter-board and GUI connectivity |
+| **Component** | **Selection** | **Performance** |
+|:---:|:---:|:---:|
+| 🧠 **Main MCU** | SAM3X8E (Arduino Due) | 84 MHz Cortex-M3 |
+| 🎮 **Motor Controller** | STM32F446RE | 180 MHz, Real-time loops |
+| 🔋 **Drive Motors** | 24V 5Nm Planetary Gear | 1:100 ratio, 120 RPM |
+| 🧭 **Navigation IMU** | Bosch BNO055 | 9-DOF sensor fusion |
+| ⚡ **Motor Drivers** | VNH5019 H-Bridge | 30A peak current |
+| 🎯 **Mecanum Wheels** | Metal-core construction | Omnidirectional mobility |
+| 🔌 **Power System** | 12V battery + regulation | Modular distribution |
+| 📡 **Communication** | RS485 + Bluetooth HC-05 | Differential + wireless |
 
-### 📐 **Mechanical Design**
+
+<!-- ### 📐 **Mechanical Design**
 
 <div align="center">
 
-<!-- Add mechanical design images here -->
+
 
 
 </div>
@@ -150,7 +151,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 - **Material:** Stainless steel construction with cantalie sheet vibration dampening
 - **Finish:** Automotive-grade paint system for professional appearance
 - **Assembly:** In-house fabrication using precision welding and machining
-- **Modularity:** 3D printed enclosures for PCB protection and accessibility
+- **Modularity:** 3D printed enclosures for PCB protection and accessibility -->
 
 ---
 
@@ -161,7 +162,7 @@ Our robot transcends traditional mobility constraints, offering **360-degree fre
 ```mermaid
 graph TD
     A[Python GUI Controller] -->|Bluetooth| B[SAM3X8E Main Controller]
-    B -->|RS485| C[STM32F446RE Motor Controller]
+    B <-->|RS485| C[STM32F446RE Motor Controller]
     B -->|I2C| D[BNO055 IMU]
     C -->|PWM| E[VNH5019 Motor Drivers]
     E --> F[Mecanum Wheels]
