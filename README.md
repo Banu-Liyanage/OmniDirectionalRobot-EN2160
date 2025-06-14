@@ -104,8 +104,7 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 <tr>
 <td align="center"><img src="Images/robor1.jpg" alt="Complete Robot" width="200"><br><b>Complete Assembly</b></td>
 <td align="center"><img src="Images/robot.jpg" alt="Enclosure" width="200"><br><b>Custom Enclosure</b></td>
-<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_d23abd3f.jpg" alt="Platform" width="200"><br><b>Base Platform</b></td>
+
 </tr>
 </table>
 
@@ -128,7 +127,7 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 
 | **Component** | **Selection** | **Performance** |
 |:---:|:---:|:---:|
-| 🧠 **Main MCU** | SAM3X8E (Arduino Due) | 84 MHz Cortex-M3 |
+| 🧠 **Main MCU** | SAM3X8E | 84 MHz Cortex-M3 |
 | 🎮 **Motor Controller** | STM32F446RE | 180 MHz, Real-time loops |
 | 🔋 **Drive Motors** | 24V 5Nm Planetary Gear | 1:100 ratio, 120 RPM |
 | 🧭 **Navigation IMU** | Bosch BNO055 | 9-DOF sensor fusion |
@@ -153,7 +152,7 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 - **Assembly:** In-house fabrication using precision welding and machining
 - **Modularity:** 3D printed enclosures for PCB protection and accessibility -->
 
----
+
 
 ## 🧠 Intelligence Stack
 
@@ -163,14 +162,14 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 graph TD
     A[Python GUI Controller] -->|Bluetooth| B[SAM3X8E Main Controller]
     B <-->|RS485| C[STM32F446RE Motor Controller]
-    B -->|I2C| D[BNO055 IMU]
+    B <-->|I2C| D[BNO055 IMU]
     C -->|PWM| E[VNH5019 Motor Drivers]
     E --> F[Mecanum Wheels]
-    D -->|Sensor Data| B
-    C -->|Encoder Feedback| B
+    
+    
 ```
 
-### 🎯 **Software Architecture**
+<!-- ### 🎯 **Software Architecture**
 
 | **Layer** | **Function** | **Technology** |
 |:---:|:---|:---:|
@@ -178,11 +177,11 @@ graph TD
 | 📡 **Communication** | Wireless command transmission and echo verification | Bluetooth Serial Protocol |
 | 🧠 **High-Level Control** | Command parsing, sensor fusion, system coordination | SAM3X8E Embedded C++ |
 | ⚡ **Real-Time Control** | PWM generation, encoder processing, motor loops | STM32 Real-Time OS |
-| 🔧 **Hardware Abstraction** | Driver interfaces and peripheral management | HAL Libraries |
+| 🔧 **Hardware Abstraction** | Driver interfaces and peripheral management | HAL Libraries | -->
 
 ---
 
-## 📊 Performance Metrics
+<!-- ## 📊 Performance Metrics
 
 <div align="center">
 
@@ -198,25 +197,28 @@ graph TD
 | 🚀 **Maximum Speed** | 1 m/s target velocity | **✅ Achieved** |
 | 🎯 **Positioning Accuracy** | Sub-millimeter precision | **✅ Validated** |
 | 📡 **Communication Range** | 10m+ Bluetooth connectivity | **✅ Confirmed** |
-| ⚡ **Response Time** | <50ms command to motion | **✅ Real-Time** |
+| ⚡ **Response Time** | <50ms command to motion | **✅ Real-Time** | -->
 
 ---
 
 ## 🔌 Electronic Systems
 
-### 📋 **PCB Module Ecosystem**
+<!-- ### 📋 **PCB Module Ecosystem** -->
 
 <div align="center">
 
 <!-- Add PCB images here -->
 <table>
 <tr>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Drive System</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.33.46_a80e16ce.jpg" alt="Platform" width="200"><br><b>Platform View</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Motor Assembly</b></td>
 <td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Motor Controller Enclosure</b></td>
+
 </tr>
-</table>table>
+<tr>
+<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Main Controller Enclosure</b></td>
+</tr>
+</table>
 </div>
 
 | **PCB Module** | **Function** | **Key Features** |
@@ -225,24 +227,24 @@ graph TD
 | 🧠 **Main Controller** | System coordination and communication | 4-layer design, SAM3X8E, BNO055, HC-05 integration |
 | ⚡ **Motor Controller** | Real-time motor drive and feedback | STM32F446RE, VNH5019 drivers, RS485 communication |
 
-### 🛡️ **Safety & Protection Systems**
+<!-- ### 🛡️ **Safety & Protection Systems**
 
 - **20A Master Fuse** with branch-specific protection (2A-15A)
 - **Thermal Management** with active cooling consideration
 - **Overcurrent Protection** at component and system levels
 - **EMI Mitigation** through differential signaling and proper grounding
 
----
+--- -->
 
 ---
 
 ## 🧱 Mechanical Design & FEA Analysis
 
-<div align="left">
+<!-- <div align="left">
 
 ### *Robust Engineering for Real-World Demands*
 
-</div>
+</div> -->
 
 The mechanical design of the platform was optimized for both **structural integrity** and **functional adaptability**, with a focus on durability, vibration mitigation, and payload endurance.
 
@@ -291,7 +293,7 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 
 ---
 
-## 📁 Repository Architecture
+<!-- ## 📁 Repository Architecture
 
 ```
 OmniDirectionalRobot-EN2160/
@@ -324,9 +326,9 @@ OmniDirectionalRobot-EN2160/
     └── tools/               # Development utilities
 ```
 
----
+--- -->
 
-## 🌐 Future Roadmap
+<!-- ## 🌐 Future Roadmap
 
 ### 🔮 **Next-Generation Enhancements**
 
@@ -338,7 +340,7 @@ OmniDirectionalRobot-EN2160/
 | 🧠 **Phase 4** | AI-Powered Decision Making | Intelligent task execution | Q1 2026 |
 | 📡 **Phase 5** | Cloud Analytics Dashboard | Remote monitoring and optimization | Q2 2026 |
 
----
+--- -->
 
 ## 🏆 Project Impact
 
@@ -356,7 +358,7 @@ This project demonstrates how **academic excellence** can drive **industry innov
 - Industry-applicable design methodologies
 - Sustainable and cost-effective innovation
 
----
+<!-- ---
 
 ## 📞 Connect With Us
 
@@ -381,17 +383,17 @@ This project demonstrates how **academic excellence** can drive **industry innov
 | 🔧 **Assembly Guide** | Step-by-step construction instructions | [🛠️ Guide](docs/assembly_guide.md) |
 | 💻 **Software Manual** | Programming interfaces and API documentation | [💾 Manual](docs/software_manual.md) |
 | 🎥 **Video Demonstrations** | Live operation footage and feature showcases | [🎬 Watch](media/videos/) |
-| 📊 **Performance Analysis** | Testing results and benchmark comparisons | [📈 Data](tests/performance_data/) |
+| 📊 **Performance Analysis** | Testing results and benchmark comparisons | [📈 Data](tests/performance_data/) | -->
 
 ---
 
 ## 🙏 Acknowledgments
 
-<div align="center">
+<!-- <div align="center">
 
 *Standing on the Shoulders of Giants*
 
-</div>
+</div> -->
 
 We extend our deepest gratitude to:
 
@@ -402,7 +404,7 @@ We extend our deepest gratitude to:
 - **Open Source Community** - For foundational libraries and inspiration
 
 ---
-
+<!-- 
 ## 📜 License & Usage
 
 This project is released under the **MIT License**, promoting open innovation and educational advancement. We encourage the global robotics community to build upon our work, contribute improvements, and push the boundaries of autonomous mobile robotics.
@@ -410,9 +412,9 @@ This project is released under the **MIT License**, promoting open innovation an
 ```
 MIT License - Open Innovation for Global Impact
 Copyright (c) 2024 University of Moratuwa Robotics Team
-```
+``` -->
 
----
+<!-- ---
 
 <div align="center">
 
@@ -422,8 +424,12 @@ Copyright (c) 2024 University of Moratuwa Robotics Team
 
 **University of Moratuwa | Department of Electronic and Telecommunication Engineering**
 
----
+--- -->
+<div align="center">
+Made with ❤️ in Sri Lanka
 
-*Made with ❤️ in Sri Lanka | Engineered for the World*
+Department of Electronic and Telecommunication Engineering 
+
+University of Moratuwa
 
 </div>
