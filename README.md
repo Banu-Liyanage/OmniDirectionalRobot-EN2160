@@ -121,13 +121,13 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 <!-- Add PCB images here -->
 <table>
 <tr>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Motor Controller Enclosure</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="400"><br><b>Control Electronics</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="400"><br><b>Motor Controller Enclosure</b></td>
 
 </tr>
 <tr>
-<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Main Controller Enclosure</b></td>
+<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="400"><br><b>Main Controller</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="400"><br><b>Main Controller Enclosure</b></td>
 </tr>
 </table>
 </div>
@@ -197,7 +197,7 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 
 ```mermaid
 graph TD
-    A[Python GUI Controller] -->|Bluetooth| B[SAM3X8E Main Controller]
+    A[Python GUI Controller] <-->|Bluetooth| B[SAM3X8E Main Controller]
     B <-->|RS485| C[STM32F446RE Motor Controller]
     B <-->|I2C| D[BNO055 IMU]
     C -->|PWM| E[VNH5019 Motor Drivers]
