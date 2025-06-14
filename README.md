@@ -112,6 +112,43 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 
 ---
 
+## 🔌 Electronic Systems
+
+<!-- ### 📋 **PCB Module Ecosystem** -->
+
+<div align="center">
+
+<!-- Add PCB images here -->
+<table>
+<tr>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Motor Controller Enclosure</b></td>
+
+</tr>
+<tr>
+<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
+<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Main Controller Enclosure</b></td>
+</tr>
+</table>
+</div>
+
+| **PCB Module** | **Function** | **Key Features** |
+|:---:|:---|:---|
+| 🔋 **Power Distribution** | Multi-rail power management | Fuse protection, LED diagnostics, screw terminals |
+| 🧠 **Main Controller** | System coordination and communication | 4-layer design, SAM3X8E, BNO055, HC-05 integration |
+| ⚡ **Motor Controller** | Real-time motor drive and feedback | STM32F446RE, VNH5019 drivers, RS485 communication |
+
+<!-- ### 🛡️ **Safety & Protection Systems**
+
+- **20A Master Fuse** with branch-specific protection (2A-15A)
+- **Thermal Management** with active cooling consideration
+- **Overcurrent Protection** at component and system levels
+- **EMI Mitigation** through differential signaling and proper grounding
+
+--- -->
+
+---
+
 
 
 ### 🏗️ **System Architecture**
@@ -201,42 +238,7 @@ graph TD
 
 ---
 
-## 🔌 Electronic Systems
 
-<!-- ### 📋 **PCB Module Ecosystem** -->
-
-<div align="center">
-
-<!-- Add PCB images here -->
-<table>
-<tr>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2002.15.06_1b841aa7.jpg" alt="Electronics" width="200"><br><b>Control Electronics</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.28.38_fd7e2723.jpg" alt="Drive System" width="200"><br><b>Motor Controller Enclosure</b></td>
-
-</tr>
-<tr>
-<td align="center"><img src="Images/WhatsApp Image 2025-05-22 at 06.37.45_4feaac85.jpg" alt="Controller" width="200"><br><b>Main Controller</b></td>
-<td align="center"><img src="Images/WhatsApp%20Image%202025-05-22%20at%2006.25.21_07cbe0d1.jpg" alt="Motors" width="200"><br><b>Main Controller Enclosure</b></td>
-</tr>
-</table>
-</div>
-
-| **PCB Module** | **Function** | **Key Features** |
-|:---:|:---|:---|
-| 🔋 **Power Distribution** | Multi-rail power management | Fuse protection, LED diagnostics, screw terminals |
-| 🧠 **Main Controller** | System coordination and communication | 4-layer design, SAM3X8E, BNO055, HC-05 integration |
-| ⚡ **Motor Controller** | Real-time motor drive and feedback | STM32F446RE, VNH5019 drivers, RS485 communication |
-
-<!-- ### 🛡️ **Safety & Protection Systems**
-
-- **20A Master Fuse** with branch-specific protection (2A-15A)
-- **Thermal Management** with active cooling consideration
-- **Overcurrent Protection** at component and system levels
-- **EMI Mitigation** through differential signaling and proper grounding
-
---- -->
-
----
 
 ## 🧱 Mechanical Design & FEA Analysis
 
@@ -279,11 +281,11 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 
 ## 🚀 Applications & Use Cases
 
-<div align="center">
+<!-- <div align="center">
 
 *Transforming Industries Through Intelligent Mobility*
 
-</div>
+</div> -->
 
 | 🏭 **Industrial** | 🏥 **Healthcare** | 🛒 **Retail** | 🎓 **Education** |
 |:---:|:---:|:---:|:---:|
@@ -291,7 +293,7 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 | Material handling | Supply delivery | Shelf restocking | STEM demonstrations |
 | Quality inspection | Patient assistance | Customer guidance | Competition robotics |
 
----
+
 
 <!-- ## 📁 Repository Architecture
 
@@ -342,7 +344,7 @@ OmniDirectionalRobot-EN2160/
 
 --- -->
 
-## 🏆 Project Impact
+<!-- ## 🏆 Project Impact
 
 <div align="center">
 
@@ -356,7 +358,7 @@ This project demonstrates how **academic excellence** can drive **industry innov
 - Advanced undergraduate-level robotics engineering
 - Open-source platform for educational advancement  
 - Industry-applicable design methodologies
-- Sustainable and cost-effective innovation
+- Sustainable and cost-effective innovation -->
 
 <!-- ---
 
@@ -387,7 +389,7 @@ This project demonstrates how **academic excellence** can drive **industry innov
 
 ---
 
-## 🙏 Acknowledgments
+<!-- ## 🙏 Acknowledgments
 
 <!-- <div align="center">
 
@@ -395,7 +397,7 @@ This project demonstrates how **academic excellence** can drive **industry innov
 
 </div> -->
 
-We extend our deepest gratitude to:
+<!-- We extend our deepest gratitude to:
 
 - **University of Moratuwa** - For providing world-class engineering education and facilities
 - **Department of Electronic and Telecommunication Engineering** - For academic guidance and resources  
@@ -403,7 +405,7 @@ We extend our deepest gratitude to:
 - **Industry Partners** - For component support and technical consultation
 - **Open Source Community** - For foundational libraries and inspiration
 
----
+---  -->
 <!-- 
 ## 📜 License & Usage
 
