@@ -1,0 +1,67 @@
+/*
+ * bluetoothDebug.c
+ *
+ *  Created on: Jul 2, 2025
+ *      Author: PANKAJA
+ */
+
+#include "bluetoothDebug.h"
+#include "stdio.h"
+#include "string.h"
+
+// UART Initialization function
+void UART_Init(UART_HandleTypeDef *huart)
+{
+    HAL_UART_Init(huart);
+}
+
+// UART Transmit function (send string)
+void UART_Transmit(UART_HandleTypeDef *huart, const char *data)
+{
+    HAL_UART_Transmit(huart, (uint8_t *)data, strlen(data), HAL_MAX_DELAY);
+}
+
+// UART Transmit function for float with header and decimal precision
+void UART_Transmit_Float(UART_HandleTypeDef *huart, const char *header, float number, uint8_t decimal_points)
+{
+    char buffer[100];       // Main output buffer
+    char format[20];        // Format string buffer (increase size)
+
+    // Safely create the format string
+    snprintf(format, sizeof(format), "%%s:%%.%df\r\n", decimal_points);
+
+    // Format the final output using header and number
+    snprintf(buffer, sizeof(buffer), format, header, number);
+
+    // Transmit the formatted string via UART
+    HAL_UART_Transmit(huart, (uint8_t *)buffer, strlen(buffer), HAL_MAX_DELAY);
+}
+
+
+// UART Transmit function for integer with header
+void UART_Transmit_Int(UART_HandleTypeDef *huart, const char *header, int number)
+{
+    char buffer[64];
+    snprintf(buffer, sizeof(buffer), "%s:%d\r\n", header, number);
+
+    HAL_UART_Transmit(huart, (uint8_t *)buffer, strlen(buffer), HAL_MAX_DELAY);
+}
+
+// UART Transmit function for IR values
+void UART_Transmit_IR(UART_HandleTypeDef *huart, uint16_t IRL, uint16_t IRR)
+{
+    char buffer[64];
+    float timestamp = HAL_GetTick() / 1000.0f;
+
+    snprintf(buffer, sizeof(buffer), "%.2f\t%d\t%d\n", timestamp, IRL, IRR);
+    HAL_UART_Transmit(huart, (uint8_t *)buffer, strlen(buffer), HAL_MAX_DELAY);
+}
+
+// UART Transmit function for TOF sensor values
+void UART_Transmit_TOF(UART_HandleTypeDef *huart, uint16_t TOF1, uint16_t TOF2, uint16_t TOF3, uint16_t TOF4)
+{
+    char buffer[64];
+    snprintf(buffer, sizeof(buffer), ">LW:%d,LC:%d,RC:%d,RW:%d\r\n", TOF1, TOF2, TOF3, TOF4);
+
+    HAL_UART_Transmit(huart, (uint8_t *)buffer, strlen(buffer), HAL_MAX_DELAY);
+}

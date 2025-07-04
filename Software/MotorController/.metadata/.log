@@ -2683,3 +2683,1355 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-05-23 16:50:07.731
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-07-02 14:50:49.975 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-02 14:51:31.883
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-02 14:51:31.887
+!MESSAGE Log4j2 initialized with config file C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-02 14:51:40.689
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-02 14:52:07.612
+!MESSAGE Connection to https://sw-center.st.com/stm32cubeide/openstlinux/updatesite1/p2.index failed on No subject alternative DNS name matching sw-center.st.com found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-02 14:52:08.051
+!MESSAGE Unable to read repository at https://sw-center.st.com/stm32cubeide/openstlinux/updatesite1/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 21 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-02 14:52:08.069
+!MESSAGE Connection to https://sw-center.st.com/stm32cubeide/updatesite1/p2.index failed on No subject alternative DNS name matching sw-center.st.com found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 21 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-02 14:52:08.370
+!MESSAGE Unable to read repository at https://sw-center.st.com/stm32cubeide/updatesite1/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-02 14:52:10.485
+!MESSAGE Connection to https://download.eclipse.org/usssdk/updates/release/latest/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 21 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-02 14:52:10.931
+!MESSAGE Unable to read repository at https://download.eclipse.org/usssdk/updates/release/latest/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-02 14:52:10.984
+!MESSAGE Connection to https://download.eclipse.org/tools/cdt/releases/latest/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-02 14:52:11.319
+!MESSAGE Unable to read repository at https://download.eclipse.org/tools/cdt/releases/latest/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 21 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-02 14:52:11.344
+!MESSAGE Connection to https://download.eclipse.org/tools/cdt/releases/11.4/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-02 14:52:11.848
+!MESSAGE Unable to read repository at https://download.eclipse.org/tools/cdt/releases/11.4/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-02 14:52:11.910
+!MESSAGE Connection to https://download.eclipse.org/releases/2024-09/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-02 14:52:12.186
+!MESSAGE Unable to read repository at https://download.eclipse.org/releases/2024-09/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 21 more
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2025-07-02 17:33:19.361
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.gdb.internal.ui.actions.DsfTerminateCommand$3$1@45c29f6d): Status OK: unknown code=0 OK' resulted in a rejected execution exception.
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 17:33:31.454
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 39 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 17:33:31.455
+!MESSAGE Existing sessions are:
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2025-07-02 17:33:33.389
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.gdb.internal.ui.actions.DsfTerminateCommand$3$1@e85e8dd): Status OK: unknown code=0 OK' resulted in a rejected execution exception.
+
+!ENTRY org.eclipse.cdt.dsf 4 10005 2025-07-02 17:33:46.775
+!MESSAGE Request for monitor: 'RequestMonitor (org.eclipse.cdt.dsf.gdb.internal.ui.actions.DsfTerminateCommand$3$1@d1ae58d): Status OK: unknown code=0 OK' resulted in a rejected execution exception.
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 17:52:19.142
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 56 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 17:52:19.144
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 18:09:55.804
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 59 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 18:09:55.805
+!MESSAGE Existing sessions are:
+!SESSION 2025-07-02 18:29:10.277 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-02 18:29:19.623
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-02 18:29:19.625
+!MESSAGE Log4j2 initialized with config file C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-02 18:29:27.544
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 18:47:54.188
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 1 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 18:47:54.189
+!MESSAGE Existing sessions are:
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 18:51:06.261
+!MESSAGE Indexed 'Motor_controller' (32 sources, 135 headers) in 3.58 sec: 15,010 declarations; 76,250 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 18:54:01.692
+!MESSAGE Indexed 'Motor_controller' (32 sources, 135 headers) in 1.97 sec: 15,010 declarations; 76,250 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 18:54:49.547
+!MESSAGE Indexed 'Motor_controller' (32 sources, 135 headers) in 1.71 sec: 15,010 declarations; 76,250 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+!SESSION 2025-07-02 18:55:09.261 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-02 18:55:16.546
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-02 18:55:16.548
+!MESSAGE Log4j2 initialized with config file C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-02 18:55:23.336
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 19:04:22.227
+!MESSAGE Indexed 'Motor_controller' (32 sources, 135 headers) in 2.85 sec: 15,010 declarations; 76,250 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 19:04:42.681
+!MESSAGE Indexed 'Motor_controller' (32 sources, 135 headers) in 1.95 sec: 15,010 declarations; 76,250 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 19:05:36.456
+!MESSAGE Indexed 'Motor_controller' (33 sources, 136 headers) in 1.72 sec: 15,062 declarations; 76,333 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-07-02 19:07:18.147
+!MESSAGE Indexed 'Motor_controller' (33 sources, 136 headers) in 1.68 sec: 15,062 declarations; 76,333 references; 1 unresolved inclusions; 92 syntax errors; 240 unresolved names (0.26%)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 19:12:25.155
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 5 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 19:12:25.156
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 19:17:19.045
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 10 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-07-02 19:17:19.046
+!MESSAGE Existing sessions are:
+!SESSION 2025-07-03 10:36:07.403 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-03 10:36:19.201
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-03 10:36:19.202
+!MESSAGE Log4j2 initialized with config file C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-03 10:36:40.302
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-07-04 10:16:18.621 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-04 10:16:28.898
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-04 10:16:28.899
+!MESSAGE Log4j2 initialized with config file C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-04 10:16:35.237
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-04 10:17:00.268
+!MESSAGE Connection to https://sw-center.st.com/stm32cubeide/openstlinux/updatesite1/p2.index failed on No subject alternative DNS name matching sw-center.st.com found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-04 10:17:00.539
+!MESSAGE Unable to read repository at https://sw-center.st.com/stm32cubeide/openstlinux/updatesite1/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-04 10:17:00.558
+!MESSAGE Connection to https://sw-center.st.com/stm32cubeide/updatesite1/p2.index failed on No subject alternative DNS name matching sw-center.st.com found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-04 10:17:00.805
+!MESSAGE Unable to read repository at https://sw-center.st.com/stm32cubeide/updatesite1/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching sw-center.st.com found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-04 10:17:02.559
+!MESSAGE Connection to https://download.eclipse.org/usssdk/updates/release/latest/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-04 10:17:02.809
+!MESSAGE Unable to read repository at https://download.eclipse.org/usssdk/updates/release/latest/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-04 10:17:02.825
+!MESSAGE Connection to https://download.eclipse.org/tools/cdt/releases/latest/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-04 10:17:03.077
+!MESSAGE Unable to read repository at https://download.eclipse.org/tools/cdt/releases/latest/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-04 10:17:03.094
+!MESSAGE Connection to https://download.eclipse.org/tools/cdt/releases/11.4/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-04 10:17:03.379
+!MESSAGE Unable to read repository at https://download.eclipse.org/tools/cdt/releases/11.4/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 2 0 2025-07-04 10:17:03.396
+!MESSAGE Connection to https://download.eclipse.org/releases/2024-09/p2.index failed on No subject alternative DNS name matching download.eclipse.org found.. Retry attempt 0 started
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY org.eclipse.equinox.p2.transport.ecf 4 1002 2025-07-04 10:17:03.657
+!MESSAGE Unable to read repository at https://download.eclipse.org/releases/2024-09/compositeContent.xml.
+!STACK 0
+javax.net.ssl.SSLHandshakeException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.ssl.Alert.createSSLException(Alert.java:130)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:378)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:321)
+	at java.base/sun.security.ssl.TransportContext.fatal(TransportContext.java:316)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:647)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.onCertificate(CertificateMessage.java:467)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.consume(CertificateMessage.java:363)
+	at java.base/sun.security.ssl.SSLHandshake.consume(SSLHandshake.java:393)
+	at java.base/sun.security.ssl.HandshakeContext.dispatch(HandshakeContext.java:476)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1273)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask$DelegatedAction.run(SSLEngineImpl.java:1260)
+	at java.base/java.security.AccessController.doPrivileged(AccessController.java:714)
+	at java.base/sun.security.ssl.SSLEngineImpl$DelegatedTask.run(SSLEngineImpl.java:1205)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.lambda$executeTasks$3(SSLFlowDelegate.java:1134)
+	at java.net.http/jdk.internal.net.http.HttpClientImpl$DelegatingExecutor.execute(HttpClientImpl.java:177)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.executeTasks(SSLFlowDelegate.java:1129)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate.doHandshake(SSLFlowDelegate.java:1095)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader.processData(SSLFlowDelegate.java:494)
+	at java.net.http/jdk.internal.net.http.common.SSLFlowDelegate$Reader$ReaderDownstreamPusher.run(SSLFlowDelegate.java:269)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$LockingRestartableTask.run(SequentialScheduler.java:182)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:149)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$TryEndDeferredCompleter.complete(SequentialScheduler.java:324)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$CompleteRestartableTask.run(SequentialScheduler.java:151)
+	at java.net.http/jdk.internal.net.http.common.SequentialScheduler$SchedulableTask.run(SequentialScheduler.java:207)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+Caused by: java.security.cert.CertificateException: No subject alternative DNS name matching download.eclipse.org found.
+	at java.base/sun.security.util.HostnameChecker.matchDNS(HostnameChecker.java:207)
+	at java.base/sun.security.util.HostnameChecker.match(HostnameChecker.java:103)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:457)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkIdentity(X509TrustManagerImpl.java:417)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkTrusted(X509TrustManagerImpl.java:291)
+	at java.base/sun.security.ssl.X509TrustManagerImpl.checkServerTrusted(X509TrustManagerImpl.java:144)
+	at java.base/sun.security.ssl.CertificateMessage$T12CertificateConsumer.checkServerCerts(CertificateMessage.java:625)
+	... 23 more
+
+!ENTRY com.st.stm32cube.ide.mcu.toolchain 4 4 2025-07-04 10:22:57.395
+!MESSAGE ST-LINK GDB server failed to start (exit code = 0)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-07-04 10:22:57.419
+!MESSAGE Error in final launch sequence:
+
+Failed to start GDB server
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to start GDB server
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:334)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.runtime.CoreException: Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+	at com.st.stm32cube.ide.mcu.debug.stlink.StLinkDebugHardware.verifyServer(StLinkDebugHardware.java:1911)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:199)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:93)
+	at com.st.stm32cube.ide.mcu.debug.launch.LaunchSequenceUtil.stepStartGDBServer(LaunchSequenceUtil.java:206)
+	at com.st.stm32cube.ide.mcu.debug.launch.GDBExtendedJtagDSFFinalLaunchSequence_7_12.stepStartGDBServer(GDBExtendedJtagDSFFinalLaunchSequence_7_12.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.cdt.dsf.concurrent.ReflectionSequence$ReflectionStep.execute(ReflectionSequence.java:160)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.executeStep(Sequence.java:475)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleSuccess(Sequence.java:437)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:391)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-07-04 10:22:57.419
+!MESSAGE Failed to start GDB server
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+	at com.st.stm32cube.ide.mcu.debug.stlink.StLinkDebugHardware.verifyServer(StLinkDebugHardware.java:1911)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:199)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:93)
+	at com.st.stm32cube.ide.mcu.debug.launch.LaunchSequenceUtil.stepStartGDBServer(LaunchSequenceUtil.java:206)
+	at com.st.stm32cube.ide.mcu.debug.launch.GDBExtendedJtagDSFFinalLaunchSequence_7_12.stepStartGDBServer(GDBExtendedJtagDSFFinalLaunchSequence_7_12.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.cdt.dsf.concurrent.ReflectionSequence$ReflectionStep.execute(ReflectionSequence.java:160)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.executeStep(Sequence.java:475)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleSuccess(Sequence.java:437)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:391)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SUBENTRY 2 com.st.stm32cube.ide.mcu.toolchain 4 0 2025-07-04 10:22:57.419
+!MESSAGE Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+
+!ENTRY com.st.stm32cube.ide.mcu.toolchain 4 4 2025-07-04 10:23:13.123
+!MESSAGE ST-LINK GDB server failed to start (exit code = 0)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-07-04 10:23:13.137
+!MESSAGE Error in final launch sequence:
+
+Failed to start GDB server
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to start GDB server
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:334)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.runtime.CoreException: Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+	at com.st.stm32cube.ide.mcu.debug.stlink.StLinkDebugHardware.verifyServer(StLinkDebugHardware.java:1911)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:199)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:93)
+	at com.st.stm32cube.ide.mcu.debug.launch.LaunchSequenceUtil.stepStartGDBServer(LaunchSequenceUtil.java:206)
+	at com.st.stm32cube.ide.mcu.debug.launch.GDBExtendedJtagDSFFinalLaunchSequence_7_12.stepStartGDBServer(GDBExtendedJtagDSFFinalLaunchSequence_7_12.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.cdt.dsf.concurrent.ReflectionSequence$ReflectionStep.execute(ReflectionSequence.java:160)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.executeStep(Sequence.java:475)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleSuccess(Sequence.java:437)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:391)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-07-04 10:23:13.137
+!MESSAGE Failed to start GDB server
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+	at com.st.stm32cube.ide.mcu.debug.stlink.StLinkDebugHardware.verifyServer(StLinkDebugHardware.java:1911)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:199)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:93)
+	at com.st.stm32cube.ide.mcu.debug.launch.LaunchSequenceUtil.stepStartGDBServer(LaunchSequenceUtil.java:206)
+	at com.st.stm32cube.ide.mcu.debug.launch.GDBExtendedJtagDSFFinalLaunchSequence_7_12.stepStartGDBServer(GDBExtendedJtagDSFFinalLaunchSequence_7_12.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.cdt.dsf.concurrent.ReflectionSequence$ReflectionStep.execute(ReflectionSequence.java:160)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.executeStep(Sequence.java:475)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleSuccess(Sequence.java:437)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:391)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SUBENTRY 2 com.st.stm32cube.ide.mcu.toolchain 4 0 2025-07-04 10:23:13.137
+!MESSAGE Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+
+!ENTRY com.st.stm32cube.ide.mcu.toolchain 4 4 2025-07-04 10:23:32.315
+!MESSAGE ST-LINK GDB server failed to start (exit code = 0)
+
+!ENTRY org.eclipse.cdt.dsf.gdb 4 5012 2025-07-04 10:23:32.331
+!MESSAGE Error in final launch sequence:
+
+Failed to start GDB server
+!STACK 1
+org.eclipse.core.runtime.CoreException: Failed to start GDB server
+	at org.eclipse.cdt.dsf.concurrent.Query.get(Query.java:112)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugSession(GdbLaunchDelegate.java:252)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launchDebugger(GdbLaunchDelegate.java:109)
+	at org.eclipse.cdt.dsf.gdb.launching.GdbLaunchDelegate.launch(GdbLaunchDelegate.java:97)
+	at com.st.stm32cube.ide.mcu.debug.launch.DSFDelegate.launch(DSFDelegate.java:334)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:805)
+	at org.eclipse.debug.internal.core.LaunchConfiguration.launch(LaunchConfiguration.java:716)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin.buildAndLaunch(DebugUIPlugin.java:1054)
+	at org.eclipse.debug.internal.ui.DebugUIPlugin$1.run(DebugUIPlugin.java:1257)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.core.runtime.CoreException: Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+	at com.st.stm32cube.ide.mcu.debug.stlink.StLinkDebugHardware.verifyServer(StLinkDebugHardware.java:1911)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:199)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:93)
+	at com.st.stm32cube.ide.mcu.debug.launch.LaunchSequenceUtil.stepStartGDBServer(LaunchSequenceUtil.java:206)
+	at com.st.stm32cube.ide.mcu.debug.launch.GDBExtendedJtagDSFFinalLaunchSequence_7_12.stepStartGDBServer(GDBExtendedJtagDSFFinalLaunchSequence_7_12.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.cdt.dsf.concurrent.ReflectionSequence$ReflectionStep.execute(ReflectionSequence.java:160)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.executeStep(Sequence.java:475)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleSuccess(Sequence.java:437)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:391)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SUBENTRY 1 com.st.stm32cube.ide.mcu.debug.launch 4 0 2025-07-04 10:23:32.331
+!MESSAGE Failed to start GDB server
+!STACK 1
+org.eclipse.core.runtime.CoreException: Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+	at com.st.stm32cube.ide.mcu.debug.stlink.StLinkDebugHardware.verifyServer(StLinkDebugHardware.java:1911)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:199)
+	at com.st.stm32cube.ide.mcu.debug.launch.export.HardwareDebugUtil.startServer(HardwareDebugUtil.java:93)
+	at com.st.stm32cube.ide.mcu.debug.launch.LaunchSequenceUtil.stepStartGDBServer(LaunchSequenceUtil.java:206)
+	at com.st.stm32cube.ide.mcu.debug.launch.GDBExtendedJtagDSFFinalLaunchSequence_7_12.stepStartGDBServer(GDBExtendedJtagDSFFinalLaunchSequence_7_12.java:104)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.eclipse.cdt.dsf.concurrent.ReflectionSequence$ReflectionStep.execute(ReflectionSequence.java:160)
+	at org.eclipse.cdt.dsf.concurrent.Sequence.executeStep(Sequence.java:475)
+	at org.eclipse.cdt.dsf.concurrent.Sequence$2.handleSuccess(Sequence.java:437)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor.handleCompleted(RequestMonitor.java:391)
+	at org.eclipse.cdt.dsf.concurrent.RequestMonitor$2.run(RequestMonitor.java:317)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:572)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:317)
+	at java.base/java.util.concurrent.ScheduledThreadPoolExecutor$ScheduledFutureTask.run(ScheduledThreadPoolExecutor.java:304)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1583)
+!SUBENTRY 2 com.st.stm32cube.ide.mcu.toolchain 4 0 2025-07-04 10:23:32.331
+!MESSAGE Error in initializing ST-LINK device.
+Reason: (0) Unknown. Please check power and cabling to target.
+!SESSION 2025-07-04 10:30:06.579 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-07-04 10:30:19.431
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-07-04 10:30:19.431
+!MESSAGE Log4j2 initialized with config file C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-07-04 10:30:25.482
+!MESSAGE Started RMI Server, listening on port 41337

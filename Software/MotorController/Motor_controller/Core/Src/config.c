@@ -8,6 +8,9 @@
 
 
 
+
+
+
 const float ROBOT_RADIUS = 165.0;
 
 const float DEG_PER_MM_DIFFERENCE = (180.0 / (2 * ROBOT_RADIUS * PI));
@@ -17,5 +20,19 @@ const float DEGREES_PER_RADIAN = 57.295779513082320876798154814105;
 
 
 //*** MOTION CONTROLLER CONSTANTS **********************************************//
-const float LOOP_FREQUENCY = 1000;
-const float LOOP_INTERVAL = 0.001;
+const float LOOP_FREQUENCY = 100;
+const float LOOP_INTERVAL = 0.01;
+
+
+const float Kp_Vel = 0.22;// 0.2  - 3.69
+const float Ki_Vel = 2.15;
+
+const float MAXINTCLAMP = 1;
+
+
+// Clamp float
+float clampf(float val, float min, float max) {
+    if (val < min) return min;
+    if (val > max) return max;
+    return val;
+}

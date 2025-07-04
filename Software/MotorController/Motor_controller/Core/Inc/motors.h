@@ -11,21 +11,21 @@
 #include "stm32f4xx.h"
 #include "main.h"
 
-//#define M1_INA_PIN             10  // PC10
-//#define M1_INB_PIN             11  // PC11
-//
-//#define M2_INA_PIN             8  // PC8
-//#define M2_INB_PIN             9  // PC9
-//
-//#define M3_INA_PIN             4  // PB4
-//#define M3_INB_PIN             5  // PB5
-//
-//#define M4_INA_PIN             2  // PC2
-//#define M4_INB_PIN             3  // PC3
+#define NUM_SAMPLES 128
 
-
-#define PWM_MAX 1 //  do not exceed 1
+#define PWM_MAX 0.99
 #define MAX_TIMER_COUNTS 7199
+
+
+extern volatile float m1_target_W;
+extern volatile float m2_target_W;
+extern volatile float m3_target_W;
+extern volatile float m4_target_W;
+
+extern volatile float m1_int;
+extern volatile float m2_int;
+extern volatile float m3_int;
+extern volatile float m4_int;
 
 
 
@@ -40,5 +40,12 @@ void resetMotors();
 void emergencyStop(void);
 void initMotors(void);
 
+uint16_t analogRead();
+uint16_t getCurrentMilliamps();
+
+void updateMotors();
+
+void resetIntegralTerms(void);
+void setTargetVelocities(float m1_target, float m2_target, float m3_target, float m4_target);
 
 #endif /* INC_MOTORS_H_ */

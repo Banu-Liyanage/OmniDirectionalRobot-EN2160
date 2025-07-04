@@ -1,2 +1,0 @@
-../Core/Src/encoders.c:12:9:getEncoderCounts	4	static
-../Core/Src/encoders.c:16:6:resetEncoders	4	static

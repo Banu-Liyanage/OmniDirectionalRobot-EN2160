@@ -1,2 +1,2 @@
-../Core/Src/systick.c:15:6:CheckEncoderCounts	9
-../Core/Src/systick.c:27:6:SysTickFunction	2
+../Core/Src/systick.c:14:6:CheckEncoderCounts	9
+../Core/Src/systick.c:26:6:SysTickFunction	1

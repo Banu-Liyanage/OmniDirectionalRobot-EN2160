@@ -1,3 +1,0 @@
-../Core/Src/controller.c:23:6:calculate_velocity	1
-../Core/Src/controller.c:59:10:getRawEncoderCounts	1
-../Core/Src/controller.c:64:6:calculate_velocity_robust	3

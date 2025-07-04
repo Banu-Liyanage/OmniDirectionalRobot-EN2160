@@ -1,4 +1,7 @@
+"./Core/Src/bluetoothDebug.o"
 "./Core/Src/config.o"
+"./Core/Src/controller.o"
+"./Core/Src/delay.o"
 "./Core/Src/encoders.o"
 "./Core/Src/kinematics.o"
 "./Core/Src/main.o"

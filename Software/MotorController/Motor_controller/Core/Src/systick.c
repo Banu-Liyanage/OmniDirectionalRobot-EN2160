@@ -10,7 +10,6 @@
 #include "kinematics.h"
 
 // Control loop counter
-static uint32_t control_counter = 0;
 
 void CheckEncoderCounts(void) {
     // Check for encoder overflow and reset if necessary
@@ -30,18 +29,18 @@ void SysTickFunction(void) {
      * Main control loop for the Omni-Dorectional robot
      */
 
-    control_counter++;
-
-    // Check for encoder overflow every 100ms
-    if (control_counter % 100 == 0) {
-        CheckEncoderCounts();
-    }
-
-    // Update kinematics control every millisecond
-    update_kinematics_control();
-
-    // Update demo sequence
-    update_demo_sequence();
+//    control_counter++;
+//
+//    // Check for encoder overflow every 100ms
+//    if (control_counter % 100 == 0) {
+//        CheckEncoderCounts();
+//    }
+//
+//    // Update kinematics control every millisecond
+//    update_kinematics_control();
+//
+//    // Update demo sequence
+//    update_demo_sequence();
     /*
     if (control_counter % 1000 == 0) {
         // Print current velocities or other debug info

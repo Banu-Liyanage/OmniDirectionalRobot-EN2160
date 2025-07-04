@@ -1,0 +1,122 @@
+/*
+ * kinematics.c
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#include "kinematics.h"
+#include "config.h"
+#include "motors.h"
+#include "encoders.h"
+#include <math.h>
+
+// Mecanum wheel geometry constants
+#define WHEEL_RADIUS 39.0f          // Wheel radius in mm (Diameter 78mm)
+#define WHEEL_BASE_LENGTH 280.0f    // Distance between front and rear wheels (mm)
+#define WHEEL_BASE_WIDTH 380.0f     // Distance between left and right wheels (mm)
+#define L_PLUS_W ((WHEEL_BASE_LENGTH + WHEEL_BASE_WIDTH) / 2.0f)
+
+// Conversion factors
+#define MM_PER_S_TO_RAD_PER_S (1.0f / WHEEL_RADIUS)
+#define RAD_PER_S_TO_MM_PER_S (WHEEL_RADIUS)
+#define PWM_PER_RAD_PER_S 0.03768f // Need to tune this value
+
+// Global variables
+volatile RobotVelocity current_robot_velocity = {0, 0, 0};
+volatile RobotVelocity target_robot_velocity = {0, 0, 0};
+volatile RobotPosition current_robot_position = {0, 0, 0};
+volatile MotionCommand motion_command = {0, 0, 0, 0, 0, 0};
+
+// PID controllers for velocity control
+static PIDController pid_vx, pid_vy, pid_wz;
+
+// Motion control variables
+static float start_position_x = 0;
+static float start_position_y = 0;
+static float start_theta = 0;
+static uint32_t motion_start_time = 0;
+static uint32_t current_time = 0;
+
+// Demo sequence variables
+static uint8_t demo_step = 0;
+static uint32_t demo_timer = 0;
+static uint8_t demo_active = 0;
+
+void init_kinematics(void) {
+    // Initialize PID controllers for velocity control
+    init_pid_controller(&pid_vx, 0.245f, 0.132f, 0.05f, -1.0f, 1.0f);
+    init_pid_controller(&pid_vy, 0.180f, 0.11f, 0.05f, -0.8f, 0.8f);
+    init_pid_controller(&pid_wz, 0.15f, 0.08f, 0.03f, -0.4f, 0.4f);
+
+    // Reset all variables
+    current_robot_velocity.vx = 0;
+    current_robot_velocity.vy = 0;
+    current_robot_velocity.wz = 0;
+
+    target_robot_velocity.vx = 0;
+    target_robot_velocity.vy = 0;
+    target_robot_velocity.wz = 0;
+
+    current_robot_position.x = 0;
+    current_robot_position.y = 0;
+    current_robot_position.theta = 0;
+
+    motion_command.motion_active = 0;
+    motion_command.motion_complete = 1;
+
+    current_time = 0;
+    demo_active = 0;
+}
+
+void calculate_wheel_velocities(RobotVelocity robot_vel, float *wheel_velocities) {
+    /*
+     * Mecanum wheel inverse kinematics
+     * Converts robot velocities (vx, vy, wz) to individual wheel velocities
+     *
+     * Matrix form:
+     * [ω1]   1  [1   1  -(l1+l2)] [vx]
+     * [ω2] = -- [1  -1   l1+l2 ] [vy]
+     * [ω3]   R  [1  -1  -(l1+l2)] [ωz]
+     * [ω4]      [1   1   l1+l2 ]
+     *
+     */
+
+    float vx = robot_vel.vx;          // mm/s
+    float vy = robot_vel.vy;          // mm/s
+    float wz = robot_vel.wz;          // rad/s
+
+    // Apply inverse kinematics matrix
+    wheel_velocities[0] = (vx + vy - wz * L_PLUS_W) / WHEEL_RADIUS;
+    wheel_velocities[1] = (vx - vy + wz * L_PLUS_W) / WHEEL_RADIUS;
+    wheel_velocities[2] = (vx - vy - wz * L_PLUS_W) / WHEEL_RADIUS;
+    wheel_velocities[3] = (vx + vy + wz * L_PLUS_W) / WHEEL_RADIUS;
+}
+
+void calculate_robot_velocities(float *wheel_velocities, RobotVelocity *robot_vel) {
+    /*
+     * Mecanum wheel forward kinematics
+     * Converts individual wheel velocities to robot velocities (vx, vy, wz)
+     *
+     * Matrix form:
+     * [vx]   R  [1   1   1   1 ] [ω1]
+     * [vy] = -- [1  -1  -1   1 ] [ω2]
+     * [ωz]   4  [1   1   1   1 ] [ω3]
+     *           [--- --- --- ---] [ω4]
+     *           [l1+l2 l1+l2 l1+l2 l1+l2]
+
+     */
+
+    float w1 = wheel_velocities[0];
+    float w2 = wheel_velocities[1];
+    float w3 = wheel_velocities[2];
+    float w4 = wheel_velocities[3];
+
+    // Apply forward kinematics matrix
+    robot_vel->vx = (WHEEL_RADIUS / 4.0f) * (w1 + w2 + w3 + w4);
+    robot_vel->vy = (WHEEL_RADIUS / 4.0f) * (w1 - w2 - w3 + w4);
+    robot_vel->wz = (WHEEL_RADIUS / (4.0f * L_PLUS_W)) * (-w1 + w2 - w3 + w4);
+}
+
+
+

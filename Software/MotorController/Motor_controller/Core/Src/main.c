@@ -24,6 +24,8 @@
 #include "motors.h"
 #include "encoders.h"
 #include "kinematics.h"
+#include "bluetoothDebug.h"
+#include "delay.h"
 
 /* USER CODE END Includes */
 
@@ -44,23 +46,27 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
 
 TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim5;
+TIM_HandleTypeDef htim14;
 
 UART_HandleTypeDef huart2;
 UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
+uint32_t adc_values[4];
 
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM1_Init(void);
@@ -69,6 +75,7 @@ static void MX_TIM3_Init(void);
 static void MX_TIM4_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_USART3_UART_Init(void);
+static void MX_TIM14_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -108,6 +115,7 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   MX_TIM1_Init();
@@ -116,6 +124,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM5_Init();
   MX_USART3_UART_Init();
+  MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
@@ -127,72 +136,64 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim4, TIM_CHANNEL_ALL);
   HAL_TIM_Encoder_Start(&htim5, TIM_CHANNEL_ALL);
 
-  // Initialize kinematics system
-  init_kinematics();
+//  // Initialize kinematics system
+//  init_kinematics();
 
   // Reset encoders
   resetEncoders();
 
-  /* USER CODE END 2 */
+  // Init BLuetooth Debug
+  UART_Init(&huart2);
 
+  // Velocity timer
+  HAL_TIM_Base_Start_IT(&htim14);
+
+  HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
+  HAL_Delay(500);
+  HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 0);
+  HAL_Delay(500);
+
+//  HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, 1);
+//  HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, 0);
+//  HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, 1);
+//  HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, 0);
+
+  m1_target_W = 0;
+  m2_target_W = 0;
+  m3_target_W = 0;
+  m4_target_W = 0;
+
+  //TIM1->CCR1 = (uint32_t)3500;
+
+//setForwardLeftMotorPWM(0.3);
+//setForwardRightMotorPWM(0.6);
+//setRearLeftMotorPWM(0.7);
+//setRearRightMotorPWM(0.2);
+
+ HAL_Delay(3000);
+ setTargetVelocities(6, 3, 7, 2);
+
+  /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	 //HAL_Delay(40);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	 // Wait for demo sequence to complete, then execute custom movements
-	 static uint32_t custom_demo_timer = 0;
-	 static uint8_t custom_step = 0;
+	//int cunt = getRearRightEncoderCounts();
+	 //float current = 2.434;
+	//UART_Transmit_Float(&huart2, "i", current, 2);
+    //UART_Transmit_Int(&huart2, "C", cunt);
 
-	 custom_demo_timer++;
 
-	 // After 30 seconds of demo, start custom movements
-	 if (custom_demo_timer > 3000) {
-		 switch (custom_step) {
-			 case 0:
-				 // Move forward 1 meter at 300mm/s
-				 move_robot_distance_direction(1000, 0, 300);
-				 custom_step++;
-				 break;
 
-			 case 1:
-				 if (is_motion_complete()) {
-					 // Strafe right 500mm at 200mm/s
-					 move_robot_distance_direction(500, 270, 200); // 270° = right
-					 custom_step++;
-				 }
-				 break;
+	  UART_Transmit_WheelW(&huart2, m1_W, m4_W, m2_W, m3_W);
 
-			 case 2:
-				 if (is_motion_complete()) {
-					 // Rotate 180 degrees at 60 deg/s
-					 rotate_robot(180, 60);
-					 custom_step++;
-				 }
-				 break;
 
-			 case 3:
-				 if (is_motion_complete()) {
-					 // Move diagonally (45 degrees) 707mm at 250mm/s
-					 move_robot_distance_direction(707, 45, 250);
-					 custom_step++;
-				 }
-				 break;
-
-			 case 4:
-				 if (is_motion_complete()) {
-					 // Stop and reset
-					 stop_robot();
-					 custom_step = 0;
-					 custom_demo_timer = 0;
-				 }
-				 break;
-		 }
-	 }
-	 for (volatile int i = 0; i < 10000; i++);
   }
   /* USER CODE END 3 */
 }
@@ -275,13 +276,13 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = DISABLE;
-  hadc1.Init.ContinuousConvMode = DISABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DMAContinuousRequests = DISABLE;
+  hadc1.Init.DMAContinuousRequests = ENABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   if (HAL_ADC_Init(&hadc1) != HAL_OK)
   {
@@ -315,7 +316,6 @@ static void MX_TIM1_Init(void)
 
   /* USER CODE END TIM1_Init 0 */
 
-  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig = {0};
@@ -330,15 +330,6 @@ static void MX_TIM1_Init(void)
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
-  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
   if (HAL_TIM_PWM_Init(&htim1) != HAL_OK)
   {
     Error_Handler();
@@ -464,7 +455,7 @@ static void MX_TIM3_Init(void)
   htim3.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim3.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
-  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
+  sConfig.IC1Polarity = TIM_ICPOLARITY_FALLING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
   sConfig.IC1Filter = 0;
@@ -562,7 +553,7 @@ static void MX_TIM5_Init(void)
   htim5.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim5.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   sConfig.EncoderMode = TIM_ENCODERMODE_TI12;
-  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
+  sConfig.IC1Polarity = TIM_ICPOLARITY_FALLING;
   sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
   sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
   sConfig.IC1Filter = 0;
@@ -583,6 +574,37 @@ static void MX_TIM5_Init(void)
   /* USER CODE BEGIN TIM5_Init 2 */
 
   /* USER CODE END TIM5_Init 2 */
+
+}
+
+/**
+  * @brief TIM14 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM14_Init(void)
+{
+
+  /* USER CODE BEGIN TIM14_Init 0 */
+
+  /* USER CODE END TIM14_Init 0 */
+
+  /* USER CODE BEGIN TIM14_Init 1 */
+
+  /* USER CODE END TIM14_Init 1 */
+  htim14.Instance = TIM14;
+  htim14.Init.Prescaler = 1800-1;
+  htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim14.Init.Period = 500-1;
+  htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM14_Init 2 */
+
+  /* USER CODE END TIM14_Init 2 */
 
 }
 
@@ -653,6 +675,22 @@ static void MX_USART3_UART_Init(void)
 }
 
 /**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA2_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA2_Stream0_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA2_Stream0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA2_Stream0_IRQn);
+
+}
+
+/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -716,7 +754,18 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+ADC_HandleTypeDef* Get_HADC1_Ptr(void)
+{
+    return &hadc1;
+}
 
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+	if(htim == &htim14){
+		update_Encoder_Data();
+		updateMotors();
+	}
+}
 /* USER CODE END 4 */
 
 /**

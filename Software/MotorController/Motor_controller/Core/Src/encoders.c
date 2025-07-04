@@ -24,10 +24,10 @@ int16_t previous_RearLeft_count = 0;
 int16_t previous_RearRight_count = 0;
 
 
-volatile float ForwardLeft_W = 0;
-volatile float ForwardRight_W = 0;
-volatile float RearLeft_W = 0;
-volatile float RearRight_W = 0;
+volatile float m1_W = 0;
+volatile float m4_W = 0;
+volatile float m2_W = 0;
+volatile float m3_W = 0;
 
 
 int16_t getForwardLeftEncoderCounts() {
@@ -101,10 +101,10 @@ void update_Encoder_Data(){
 	float RearRight = RearRight_delta * RAD_PER_COUNT_REAR_RIGHT;
 
 
-	ForwardLeft_W = ForwardLeft * LOOP_FREQUENCY;
-	ForwardRight_W = ForwardRight * LOOP_FREQUENCY;
-	RearLeft_W = RearLeft * LOOP_FREQUENCY;
-	RearRight_W = RearRight * LOOP_FREQUENCY;
+	m1_W = ForwardLeft * LOOP_FREQUENCY;
+	m4_W = ForwardRight * LOOP_FREQUENCY;
+	m2_W = RearLeft * LOOP_FREQUENCY;
+	m3_W = RearRight * LOOP_FREQUENCY;
 
 }
 

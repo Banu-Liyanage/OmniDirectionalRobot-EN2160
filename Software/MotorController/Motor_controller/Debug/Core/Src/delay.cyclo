@@ -1,0 +1,2 @@
+../Core/Src/delay.c:12:6:Delay_Init	2
+../Core/Src/delay.c:23:6:delayMicroseconds	2

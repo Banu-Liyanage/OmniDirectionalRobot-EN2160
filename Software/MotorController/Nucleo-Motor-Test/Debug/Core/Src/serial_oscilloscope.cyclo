@@ -1,4 +1,0 @@
-../Core/Src/serial_oscilloscope.c:26:19:SerialOscilloscope_Init	3
-../Core/Src/serial_oscilloscope.c:45:19:SerialOscilloscope_SendData	6
-../Core/Src/serial_oscilloscope.c:75:19:SerialOscilloscope_SendLabeledData	7
-../Core/Src/serial_oscilloscope.c:105:9:SerialOscilloscope_IsTimeToSample	2

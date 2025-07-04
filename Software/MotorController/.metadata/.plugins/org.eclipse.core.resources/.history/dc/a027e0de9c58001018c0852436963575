@@ -1,0 +1,73 @@
+/*
+ * kinematics.h
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef KINEMATICS_H_
+#define KINEMATICS_H_
+
+#include <stdint.h>
+#include <math.h>
+
+// Robot velocity structure
+typedef struct {
+    float vx;    // Linear velocity in x direction (m/s)
+    float vy;    // Linear velocity in y direction (m/s)
+    float wz;    // Angular velocity around z axis (rad/s)
+} RobotVelocity;
+
+// Robot position structure
+typedef struct {
+    float x;     // Position in x direction (mm)
+    float y;     // Position in y direction (mm)
+    float theta; // Orientation angle (radians)
+} RobotPosition;
+
+// Motion command structure
+typedef struct {
+    float target_distance;   // Target distance to travel (mm)
+    float target_angle;      // Target direction angle (radians)
+    float target_speed;      // Target speed (mm/s)
+    float target_rotation;   // Target rotation angle (radians)
+    uint8_t motion_active;   // Flag to indicate if motion is active
+    uint8_t motion_complete; // Flag to indicate if motion is complete
+} MotionCommand;
+
+// PID controller structure
+typedef struct {
+    float kp;           // Proportional gain
+    float ki;           // Integral gain
+    float kd;           // Derivative gain
+    float integral;     // Integral term accumulator
+    float prev_error;   // Previous error for derivative calculation
+    float output_min;   // Minimum output limit
+    float output_max;   // Maximum output limit
+} PIDController;
+
+// Global variables
+extern volatile RobotVelocity current_robot_velocity;
+extern volatile RobotVelocity target_robot_velocity;
+extern volatile RobotPosition current_robot_position;
+extern volatile MotionCommand motion_command;
+
+// Function prototypes
+void init_kinematics(void);
+void update_kinematics_control(void);
+void calculate_wheel_velocities(RobotVelocity robot_vel, float *wheel_velocities);
+void calculate_robot_velocities(float *wheel_velocities, RobotVelocity *robot_vel);
+void update_robot_position(void);
+void set_robot_velocity(float vx, float vy, float wz);
+void move_robot_distance_direction(float distance, float angle_deg, float speed);
+void rotate_robot(float angle_deg, float angular_speed);
+void stop_robot(void);
+uint8_t is_motion_complete(void);
+void update_demo_sequence(void);
+
+// PID controller functions
+void init_pid_controller(PIDController *pid, float kp, float ki, float kd, float min_out, float max_out);
+float calculate_pid(PIDController *pid, float setpoint, float measured_value, float dt);
+void reset_pid(PIDController *pid);
+
+#endif /* KINEMATICS_H_ */

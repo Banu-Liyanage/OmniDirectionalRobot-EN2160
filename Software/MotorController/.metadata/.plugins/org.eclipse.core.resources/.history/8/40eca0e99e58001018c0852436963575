@@ -1,0 +1,42 @@
+/*
+ * kinematics.h
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef KINEMATICS_H_
+#define KINEMATICS_H_
+
+#include <stdint.h>
+#include <math.h>
+
+// Robot velocity structure
+typedef struct {
+    float vx;    // Linear velocity in x direction (m/s)
+    float vy;    // Linear velocity in y direction (m/s)
+    float wz;    // Angular velocity around z axis (rad/s)
+} RobotVelocity;
+
+// Robot position structure
+typedef struct {
+    float x;     // Position in x direction (mm)
+    float y;     // Position in y direction (mm)
+    float theta; // Orientation angle (radians)
+} RobotPosition;
+
+
+
+
+// Global variables
+extern volatile RobotVelocity current_robot_velocity;
+extern volatile RobotVelocity target_robot_velocity;
+extern volatile RobotPosition current_robot_position;
+
+
+void calculate_wheel_velocities(RobotVelocity robot_vel, float *wheel_velocities);
+void calculate_robot_velocities(float *wheel_velocities, RobotVelocity *robot_vel);
+
+
+
+#endif /* KINEMATICS_H_ */

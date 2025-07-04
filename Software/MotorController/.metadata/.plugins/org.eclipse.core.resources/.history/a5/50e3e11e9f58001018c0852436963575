@@ -1,0 +1,20 @@
+/*
+ * kinematics.c
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#include "kinematics.h"
+#include "config.h"
+#include "motors.h"
+#include "encoders.h"
+#include <math.h>
+
+
+
+// Global variables
+volatile RobotVelocity current_robot_velocity = {0, 0, 0};
+volatile RobotVelocity target_robot_velocity = {0, 0, 0};
+volatile RobotPosition current_robot_position = {0, 0, 0};
+

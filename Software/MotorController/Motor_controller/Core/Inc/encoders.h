@@ -10,10 +10,10 @@
 
 #include "main.h"
 
-extern volatile float ForwardLeft_W;
-extern volatile float ForwardRight_W;
-extern volatile float RearLeft_W;
-extern volatile float RearRight_W;
+extern volatile float m1_W;
+extern volatile float m4_W;
+extern volatile float m2_W;
+extern volatile float m3_W;
 
 int16_t getForwardLeftEncoderCounts();
 int16_t getForwardRightEncoderCounts();

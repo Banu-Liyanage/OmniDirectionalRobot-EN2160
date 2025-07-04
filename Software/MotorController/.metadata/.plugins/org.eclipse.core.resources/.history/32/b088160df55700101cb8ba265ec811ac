@@ -1,0 +1,18 @@
+/*
+ * controller.c
+ *
+ *  Created on: Jul 3, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "controller.h"
+#include "config.h"
+
+
+
+float m1_target_W = 0;
+float m2_target_W = 0;
+float m3_target_W = 0;
+float m4_target_W = 0;
+
