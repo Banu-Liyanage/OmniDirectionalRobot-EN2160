@@ -1,0 +1,16 @@
+/*
+ * profile.c
+ *
+ *  Created on: Jul 4, 2025
+ *      Author: PANKAJA
+ */
+
+#include "profile.h"
+
+// Reset the profile
+void Profile_Reset(Profile *profile) {
+    profile->position = 0;
+    profile->speed = 0;
+    profile->target_speed = 0;
+    profile->state = PS_IDLE;
+}

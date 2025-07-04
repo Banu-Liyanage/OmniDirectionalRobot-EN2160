@@ -7,7 +7,7 @@
 
 
 #include "encoders.h"
-#include "config.h"
+
 
 
 volatile float m_robot_distance = 0;
@@ -28,6 +28,9 @@ volatile float m1_W = 0;
 volatile float m4_W = 0;
 volatile float m2_W = 0;
 volatile float m3_W = 0;
+
+
+
 
 
 int16_t getForwardLeftEncoderCounts() {
@@ -100,11 +103,11 @@ void update_Encoder_Data(){
 	float RearLeft = RearLeft_delta * RAD_PER_COUNT_REAR_LEFT;
 	float RearRight = RearRight_delta * RAD_PER_COUNT_REAR_RIGHT;
 
+	current_wheel_W.front_left = ForwardLeft * LOOP_FREQUENCY;
+	current_wheel_W.rear_left = RearLeft * LOOP_FREQUENCY;
+	current_wheel_W.front_right = ForwardRight * LOOP_FREQUENCY;
+	current_wheel_W.rear_right = RearRight * LOOP_FREQUENCY;
 
-	m1_W = ForwardLeft * LOOP_FREQUENCY;
-	m4_W = ForwardRight * LOOP_FREQUENCY;
-	m2_W = RearLeft * LOOP_FREQUENCY;
-	m3_W = RearRight * LOOP_FREQUENCY;
 
 }
 

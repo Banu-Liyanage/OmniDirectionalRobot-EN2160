@@ -1,0 +1,117 @@
+/*
+ * encoders.c
+ *
+ *  Created on: May 12, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "encoders.h"
+#include "config.h"
+
+
+volatile float m_robot_distance = 0;
+volatile float m_robot_angle = 0;
+
+int16_t ForwardLeft_delta = 0;
+int16_t ForwardRight_delta = 0;
+int16_t RearLeft_delta = 0;
+int16_t RearRight_delta = 0;
+
+int16_t previous_ForwardLeft_count = 0;
+int16_t previous_ForwardRight_count = 0;
+int16_t previous_RearLeft_count = 0;
+int16_t previous_RearRight_count = 0;
+
+
+volatile float m1_W = 0;
+volatile float m4_W = 0;
+volatile float m2_W = 0;
+volatile float m3_W = 0;
+
+volatile WheelVelocities current_wheel_W = {0.0f, 0.0f, 0.0f, 0.0f};
+
+
+
+int16_t getForwardLeftEncoderCounts() {
+	return (int16_t) TIM2->CNT;
+}
+
+int16_t getForwardRightEncoderCounts() {
+	return (int16_t) TIM3->CNT;
+}
+
+int16_t getRearLeftEncoderCounts() {
+	return (int16_t) TIM4->CNT;
+}
+
+int16_t getRearRightEncoderCounts() {
+	return (int16_t) TIM5->CNT;
+}
+
+void resetEncoders() {
+	TIM2->CNT = (int16_t) 0;
+	TIM3->CNT = (int16_t) 0;
+	TIM4->CNT = (int16_t) 0;
+	TIM5->CNT = (int16_t) 0;
+
+	m_robot_distance = 0;
+	m_robot_angle = 0;
+
+	ForwardLeft_delta = 0;
+	ForwardRight_delta = 0;
+	RearLeft_delta = 0;
+	RearRight_delta = 0;
+
+	previous_ForwardLeft_count = 0;
+	previous_ForwardRight_count = 0;
+	previous_RearLeft_count = 0;
+	previous_RearRight_count = 0;
+
+}
+
+void resetEncodersinSystick() {
+	TIM2->CNT = (int16_t) 0;
+	TIM3->CNT = (int16_t) 0;
+	TIM4->CNT = (int16_t) 0;
+	TIM5->CNT = (int16_t) 0;
+}
+
+
+void update_Encoder_Data(){
+	int16_t ForwardLeft_count= getForwardLeftEncoderCounts();
+	int16_t ForwardRight_count = getForwardRightEncoderCounts();
+	int16_t RearLeft_count = getRearLeftEncoderCounts();
+	int16_t RearRight_count = getRearRightEncoderCounts();
+
+
+	ForwardLeft_delta = ForwardLeft_count - previous_ForwardLeft_count;
+	previous_ForwardLeft_count = ForwardLeft_count;
+
+	ForwardRight_delta = ForwardRight_count - previous_ForwardRight_count;
+	previous_ForwardRight_count = ForwardRight_count;
+
+	RearLeft_delta = RearLeft_count - previous_RearLeft_count;
+	previous_RearLeft_count = RearLeft_count;
+
+
+	RearRight_delta = RearRight_count - previous_RearRight_count;
+	previous_RearRight_count = RearRight_count;
+
+	float ForwardLeft = ForwardLeft_delta * RAD_PER_COUNT_FORWARD_LEFT;
+	float ForwardRight = ForwardRight_delta * RAD_PER_COUNT_FORWARD_RIGHT;
+	float RearLeft = RearLeft_delta * RAD_PER_COUNT_REAR_LEFT;
+	float RearRight = RearRight_delta * RAD_PER_COUNT_REAR_RIGHT;
+
+
+	m1_W = ForwardLeft * LOOP_FREQUENCY;
+	m4_W = ForwardRight * LOOP_FREQUENCY;
+	m2_W = RearLeft * LOOP_FREQUENCY;
+	m3_W = RearRight * LOOP_FREQUENCY;
+
+	current_wheel_W = {}
+
+}
+
+
+

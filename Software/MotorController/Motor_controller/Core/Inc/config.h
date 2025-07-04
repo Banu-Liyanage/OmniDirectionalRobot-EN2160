@@ -14,9 +14,33 @@
 #define PI 3.14159265358979323846f
 
 // Mecanum wheel geometry constants
-#define WHEEL_RADIUS 39.0f          // Wheel radius in mm (Diameter 78mm)
-#define WHEEL_BASE_LENGTH 280.0f    // Distance between front and rear wheels (mm)
-#define WHEEL_BASE_WIDTH 380.0f     // Distance between left and right wheels (mm)
+#define WHEEL_RADIUS 0.039f          // Wheel radius in meters(Diameter 78mm)
+#define ROBOT_WIDTH 0.38f            // Distance between left and right wheels (meters)
+#define ROBOT_LENGTH 0.28f           // Distance between front and rear wheels (meters)
+#define HALF_WIDTH (ROBOT_WIDTH / 2.0f)
+#define HALF_LENGTH (ROBOT_LENGTH / 2.0f)
+
+
+// Robot velocity structure
+typedef struct {
+    float vx;      // Linear velocity in x direction (m/s)
+    float vy;      // Linear velocity in y direction (m/s)
+    float omega;   // Angular velocity (rad/s)
+} RobotVelocity;
+
+// Wheel velocities structure
+typedef struct {
+    float front_left;   // m1 - Front left wheel velocity (rad/s)
+    float rear_left;    // m2 - Rear left wheel velocity (rad/s)
+    float rear_right;   // m3 - Rear right wheel velocity (rad/s)
+    float front_right;  // m4 - Front right wheel velocity (rad/s)
+} WheelVelocities;
+
+extern volatile RobotVelocity current_robot_velocity;
+
+extern volatile WheelVelocities current_wheel_W;
+extern WheelVelocities target_wheel_W;
+
 
 // Robot physical constants
 extern const float ROBOT_RADIUS;
@@ -27,6 +51,9 @@ extern const float DEGREES_PER_RADIAN;
 // Motion controller constants
 extern const float LOOP_FREQUENCY;
 extern const float LOOP_INTERVAL;
+
+extern const float CONTROLLER_LOOP_FREQUENCY;
+extern const float CONTROLLER_LOOP_INTERVAL;
 
 extern const float Kp_Vel;
 extern const float Ki_Vel;

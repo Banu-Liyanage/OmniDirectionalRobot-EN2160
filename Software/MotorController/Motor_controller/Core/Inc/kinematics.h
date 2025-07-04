@@ -10,15 +10,16 @@
 
 #include <stdint.h>
 #include <math.h>
-
-// Robot velocity structure
-typedef struct {
-    float vx;    // Linear velocity in x direction (m/s)
-    float vy;    // Linear velocity in y direction (m/s)
-    float wz;    // Angular velocity around z axis (rad/s)
-} RobotVelocity;
+#include "config.h"
+#include "motors.h"
+#include "encoders.h"
+#include <math.h>
 
 
+void mecanum_inverse_kinematics(RobotVelocity robot_vel, WheelVelocities* wheel_vel);
+void mecanum_forward_kinematics(WheelVelocities wheel_vel, RobotVelocity* robot_vel);
+
+void set_robot_velocity(float vx, float vy, float omega);
 
 
 #endif /* KINEMATICS_H_ */

@@ -23,6 +23,9 @@ const float DEGREES_PER_RADIAN = 57.295779513082320876798154814105;
 const float LOOP_FREQUENCY = 100;
 const float LOOP_INTERVAL = 0.01;
 
+const float CONTROLLER_LOOP_FREQUENCY = 50;
+const float CONTROLLER_LOOP_INTERVAL = 0.02;
+
 
 const float Kp_Vel = 0.22;// 0.2  - 3.69
 const float Ki_Vel = 2.15;
@@ -36,3 +39,12 @@ float clampf(float val, float min, float max) {
     if (val > max) return max;
     return val;
 }
+
+
+
+
+
+volatile RobotVelocity current_robot_velocity = {0.0f, 0.0f, 0.0f};
+
+volatile WheelVelocities current_wheel_W = {0.0f, 0.0f, 0.0f, 0.0f};
+WheelVelocities target_wheel_W = {0.0f, 0.0f, 0.0f, 0.0f};

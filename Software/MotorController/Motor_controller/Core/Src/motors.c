@@ -15,16 +15,14 @@ uint8_t complete = 0;
 extern UART_HandleTypeDef huart2;
 
 
-volatile float m1_target_W = 0;
-volatile float m2_target_W = 0;
-volatile float m3_target_W = 0;
-volatile float m4_target_W = 0;
+extern volatile WheelVelocities current_wheel_W;
+
+
 
 volatile float m1_int = 0;
 volatile float m2_int = 0;
 volatile float m3_int = 0;
 volatile float m4_int = 0;
-
 
 
 
@@ -137,10 +135,10 @@ void resetMotors(void) {
 
 void updateMotors(){
     // Calculate velocity errors
-    float m1_err = m1_target_W - m1_W;
-    float m2_err = m2_target_W - m2_W;
-    float m3_err = m3_target_W - m3_W;
-    float m4_err = m4_target_W - m4_W;
+	float m1_err = target_wheel_W.front_left - current_wheel_W.front_left;
+	float m2_err = target_wheel_W.rear_left - current_wheel_W.rear_left;
+	float m3_err = target_wheel_W.rear_right - current_wheel_W.rear_right;
+	float m4_err = target_wheel_W.rear_right - current_wheel_W.front_right;
 
 
 
@@ -212,10 +210,25 @@ void resetIntegralTerms(void) {
 
 
 void setTargetVelocities(float m1_target, float m2_target, float m3_target, float m4_target) {
-    m1_target_W = m1_target;
-    m2_target_W = m2_target;
-    m3_target_W = m3_target;
-    m4_target_W = m4_target;
+	target_wheel_W.front_left = m1_target;
+	target_wheel_W.rear_left = m2_target;
+	target_wheel_W.rear_right = m3_target;
+	target_wheel_W.front_right = m4_target;
+
+}
+
+void stopMotors(){
+	setTargetVelocities(0, 0, 0,0);
+	resetMotors();
+
+	current_wheel_W.front_left = 0.0f;
+	current_wheel_W.rear_left = 0.0f;
+	current_wheel_W.rear_right = 0.0f;
+	current_wheel_W.front_right = 0.0f;
+
+	resetMotors();
+
+
 }
 
 

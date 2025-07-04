@@ -1,0 +1,46 @@
+/*
+ * profile.c
+ *
+ *  Created on: Jul 4, 2025
+ *      Author: PANKAJA
+ */
+
+#include "profile.h"
+
+// Reset the profile
+void Profile_Reset(Profile *profile) {
+    profile->position = 0;
+    profile->speed = 0;
+    profile->target_speed = 0;
+    profile->state = PS_IDLE;
+}
+
+// Check if the profile has finished
+uint8_t Profile_IsFinished(const Profile *profile) {
+    return profile->state == PS_FINISHED;
+}
+
+// Start a profile
+void Profile_Start(Profile *profile, float distance, float top_speed, float final_speed, float acceleration) {
+    profile->sign = (distance < 0) ? -1 : 1;
+    if (distance < 0) distance = -distance;
+
+    if (distance < 1.0f) {
+        profile->state = PS_FINISHED;
+        return;
+    }
+
+    if (final_speed > top_speed) {
+        final_speed = top_speed;
+    }
+
+    profile->position = 0;
+    profile->final_position = distance;
+    profile->target_speed = profile->sign * fabsf(top_speed);
+    profile->final_speed = profile->sign * fabsf(final_speed);
+    profile->acceleration = fabsf(acceleration);
+    profile->one_over_acc = (profile->acceleration >= 1) ? (1.0f / profile->acceleration) : 1.0f;
+    profile->state = PS_ACCELERATING;
+}
+
+

@@ -26,6 +26,7 @@
 #include "kinematics.h"
 #include "bluetoothDebug.h"
 #include "delay.h"
+#include "profile.h"
 
 /* USER CODE END Includes */
 
@@ -53,6 +54,7 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim5;
+TIM_HandleTypeDef htim13;
 TIM_HandleTypeDef htim14;
 
 UART_HandleTypeDef huart2;
@@ -76,12 +78,17 @@ static void MX_TIM4_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_TIM14_Init(void);
+static void MX_TIM13_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+Profile x_profile;
+Profile y_profile;
+Profile W_profile;
+
 
 
 /* USER CODE END 0 */
@@ -125,6 +132,7 @@ int main(void)
   MX_TIM5_Init();
   MX_USART3_UART_Init();
   MX_TIM14_Init();
+  MX_TIM13_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
@@ -147,6 +155,7 @@ int main(void)
 
   // Velocity timer
   HAL_TIM_Base_Start_IT(&htim14);
+  HAL_TIM_Base_Start_IT(&htim13);
 
   HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
   HAL_Delay(500);
@@ -158,10 +167,14 @@ int main(void)
 //  HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, 1);
 //  HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, 0);
 
-  m1_target_W = 0;
-  m2_target_W = 0;
-  m3_target_W = 0;
-  m4_target_W = 0;
+
+  setTargetVelocities(0, 0, 0, 0);
+
+  Profile_Reset(&x_profile);
+
+  HAL_Delay(5000);
+
+  Profile_Move(&x_profile, 1, 0.1, 0, 0.05);
 
   //TIM1->CCR1 = (uint32_t)3500;
 
@@ -170,9 +183,14 @@ int main(void)
 //setRearLeftMotorPWM(0.7);
 //setRearRightMotorPWM(0.2);
 
- HAL_Delay(3000);
- setTargetVelocities(6, 3, 7, 2);
-
+// HAL_Delay(1000);
+// //setTargetVelocities(3, 3, 3, 3);
+//
+// //set_robot_velocity(0.125, 0, 0);
+// HAL_Delay(3000);
+//
+// set_robot_velocity(0, 0, 0);
+ //resetIntegralTerms();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -191,7 +209,7 @@ int main(void)
 
 
 
-	  UART_Transmit_WheelW(&huart2, m1_W, m4_W, m2_W, m3_W);
+	  //UART_Transmit_WheelW(&huart2, m1_W, m4_W, m2_W, m3_W);
 
 
   }
@@ -578,6 +596,37 @@ static void MX_TIM5_Init(void)
 }
 
 /**
+  * @brief TIM13 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM13_Init(void)
+{
+
+  /* USER CODE BEGIN TIM13_Init 0 */
+
+  /* USER CODE END TIM13_Init 0 */
+
+  /* USER CODE BEGIN TIM13_Init 1 */
+
+  /* USER CODE END TIM13_Init 1 */
+  htim13.Instance = TIM13;
+  htim13.Init.Prescaler = 1800-1;
+  htim13.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim13.Init.Period = 1000-1;
+  htim13.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim13.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim13) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM13_Init 2 */
+
+  /* USER CODE END TIM13_Init 2 */
+
+}
+
+/**
   * @brief TIM14 Initialization Function
   * @param None
   * @retval None
@@ -764,6 +813,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	if(htim == &htim14){
 		update_Encoder_Data();
 		updateMotors();
+		//UART_Transmit_Int(&huart2, "S", HAL_GetTick());
+	}
+	else if(htim == &htim13){
+		//UART_Transmit_Int(&huart2, "B", HAL_GetTick());
+		Profile_Update(&x_profile);
 	}
 }
 /* USER CODE END 4 */

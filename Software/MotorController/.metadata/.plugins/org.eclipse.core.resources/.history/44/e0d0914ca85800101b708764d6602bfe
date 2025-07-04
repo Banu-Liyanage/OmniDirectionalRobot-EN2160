@@ -1,0 +1,18 @@
+/*
+ * kinematics.h
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef KINEMATICS_H_
+#define KINEMATICS_H_
+
+#include <stdint.h>
+#include <math.h>
+
+
+
+
+
+#endif /* KINEMATICS_H_ */

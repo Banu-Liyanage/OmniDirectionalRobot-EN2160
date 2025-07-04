@@ -1,0 +1,18 @@
+/*
+ * profile.h
+ *
+ *  Created on: Jul 4, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_PROFILE_H_
+#define INC_PROFILE_H_
+
+typedef enum {
+    PS_IDLE = 0,
+    PS_ACCELERATING = 1,
+    PS_BRAKING = 2,
+    PS_FINISHED = 3
+} ProfileState;
+
+#endif /* INC_PROFILE_H_ */

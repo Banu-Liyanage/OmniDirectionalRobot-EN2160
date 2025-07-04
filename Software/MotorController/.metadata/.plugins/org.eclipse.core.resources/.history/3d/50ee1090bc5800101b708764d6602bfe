@@ -1,0 +1,21 @@
+/*
+ * profile.c
+ *
+ *  Created on: Jul 4, 2025
+ *      Author: PANKAJA
+ */
+
+#include "profile.h"
+
+// Reset the profile
+void Profile_Reset(Profile *profile) {
+    profile->position = 0;
+    profile->speed = 0;
+    profile->target_speed = 0;
+    profile->state = PS_IDLE;
+}
+
+// Check if the profile has finished
+uint8_t Profile_IsFinished(const Profile *profile) {
+    return profile->state == PS_FINISHED;
+}

@@ -17,10 +17,6 @@
 #define MAX_TIMER_COUNTS 7199
 
 
-extern volatile float m1_target_W;
-extern volatile float m2_target_W;
-extern volatile float m3_target_W;
-extern volatile float m4_target_W;
 
 extern volatile float m1_int;
 extern volatile float m2_int;

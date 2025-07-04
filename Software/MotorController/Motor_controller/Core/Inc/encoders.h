@@ -9,11 +9,14 @@
 #define INC_ENCODERS_H_
 
 #include "main.h"
+#include "config.h"
 
 extern volatile float m1_W;
 extern volatile float m4_W;
 extern volatile float m2_W;
 extern volatile float m3_W;
+
+extern volatile WheelVelocities current_wheel_W;
 
 int16_t getForwardLeftEncoderCounts();
 int16_t getForwardRightEncoderCounts();

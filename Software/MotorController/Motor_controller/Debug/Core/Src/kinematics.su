@@ -1,0 +1,3 @@
+../Core/Src/kinematics.c:30:6:mecanum_inverse_kinematics	24	static
+../Core/Src/kinematics.c:47:6:mecanum_forward_kinematics	40	static
+../Core/Src/kinematics.c:64:6:set_robot_velocity	56	static
