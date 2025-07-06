@@ -207,6 +207,7 @@ graph TD
 ```
 
 ### Motor Controller
+```mermaid
 graph TD
     A["Main Controller"]
     
@@ -246,7 +247,8 @@ graph TD
     C4 -->|"Measured Current"| C2
     E -->|"Quadrature Encoder Signals"| C5
     C5 -->|"Measured Velocity"| C1
-
+    
+```
 
 <!-- ### 🎯 **Software Architecture**
 
