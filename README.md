@@ -206,6 +206,48 @@ graph TD
     
 ```
 
+### Motor Controller
+graph TD
+    A["Main Controller"]
+    
+   
+        
+        subgraph "Motor Controller"
+            C["STM32F446RE MCU"]
+            C1["Velocity Control Loop<br/>(Outer Loop)"]
+            C2["Current Control Loop<br/>(Inner Loop)"]
+            C3["PWM Signal Generator<br/>(TIMx)"]
+            C4["Current Sensing<br/>(ADC Input)"]
+            C5["Encoder Interface<br/>(TIMx in Encoder Mode)"]
+        
+        subgraph "Motor Driver"
+            D["VNH5019 H-Bridge Driver"]
+            E["DC Motor"]
+        end
+
+   
+
+        
+    end
+
+    %% Communication flow via RS485
+    A -->|"Velocity / Distance Commands <br/> (via RS485)"| C
+    C -->|"Telemetry Data  <br/> (via RS485)"| A
+
+    %% Control loop flow
+    C --> C1
+    C1 -->|"Target Current Setpoint"| C2
+    C2 -->|"PWM Duty Cycle"| C3
+    C3 -->|"PWM Signal"| D
+    D -->|"Drives Motor"| E
+
+    %% Feedback paths
+    D -->|"Current Sense Output"| C4
+    C4 -->|"Measured Current"| C2
+    E -->|"Quadrature Encoder Signals"| C5
+    C5 -->|"Measured Velocity"| C1
+
+
 <!-- ### 🎯 **Software Architecture**
 
 | **Layer** | **Function** | **Technology** |
