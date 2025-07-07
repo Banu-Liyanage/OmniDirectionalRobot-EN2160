@@ -1,0 +1,27 @@
+/*
+ * controller.h
+ *
+ *  Created on: Jul 3, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_CONTROLLER_H_
+#define INC_CONTROLLER_H_
+
+#include "main.h"
+#include "config.h"
+
+typedef struct {
+    float x_error;
+    float y_error;
+    float z_error;
+    float previous_x_error;
+	float previous_y_error;
+	float previous_z_error;
+    float x_velocity;
+    float y_velocity;
+    float z;
+    uint8_t controllers_enabled;
+} Controller;
+
+#endif /* INC_CONTROLLER_H_ */

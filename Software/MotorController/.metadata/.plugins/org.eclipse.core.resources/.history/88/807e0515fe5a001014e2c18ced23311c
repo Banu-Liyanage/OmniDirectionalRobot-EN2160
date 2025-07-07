@@ -1,0 +1,26 @@
+/*
+ * controller.h
+ *
+ *  Created on: Jul 3, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_CONTROLLER_H_
+#define INC_CONTROLLER_H_
+
+#include "main.h"
+
+typedef struct {
+    float forward_error;
+    float rotational_error;
+    float previous_forward_error;
+    float previous_rotational_error;
+    float velocity;
+    float omega;
+    float left_motor_pwm;
+    float right_motor_pwm;
+    uint8_t controllers_enabled;
+    uint8_t feedforward_enabled;
+} Controller;
+
+#endif /* INC_CONTROLLER_H_ */

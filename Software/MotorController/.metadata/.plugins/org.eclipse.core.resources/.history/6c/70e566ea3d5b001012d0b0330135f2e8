@@ -1,0 +1,53 @@
+/*
+ * profile.h
+ *
+ *  Created on: Jul 4, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_PROFILE_H_
+#define INC_PROFILE_H_
+
+#include "stm32f4xx.h"
+#include "config.h"
+#include <math.h>
+
+typedef enum {
+    PS_IDLE = 0,
+    PS_ACCELERATING = 1,
+    PS_BRAKING = 2,
+    PS_FINISHED = 3
+} ProfileState;
+
+// Profile structure
+typedef struct {
+    volatile ProfileState state;
+    volatile float speed;
+    volatile float position;
+    int8_t sign;
+    float acceleration;
+    float one_over_acc;
+    float target_speed;
+    float final_speed;
+    float final_position;
+} Profile;
+
+// Declare two global instances
+extern Profile x_profile;
+extern Profile y_profile;
+extern Profile W_profile;
+
+void Profile_Reset(Profile *profile);
+uint8_t Profile_IsFinished(const Profile *profile);
+void Profile_Start(Profile *profile, float distance, float top_speed, float final_speed, float acceleration);
+
+float Profile_GetBrakingDistance(const Profile *profile);
+float Profile_GetPosition(const Profile *profile);
+void Profile_Update(Profile *profile);
+
+void Profile_Move(Profile *profile, float distance, float top_speed, float final_speed, float acceleration);
+void Profile_WaitUntilFinished(Profile *profile);
+
+
+
+#endif /* INC_PROFILE_H_ */

@@ -84,7 +84,7 @@ void Profile_Update(Profile *profile) {
         profile->state = PS_FINISHED;
         profile->target_speed = profile->final_speed;
     }
-    UART_Transmit_Float(&huart2, ">V", profile->speed, 2);
+    //UART_Transmit_Float(&huart2, ">V", profile->speed, 2);
 
 }
 
@@ -98,6 +98,11 @@ void Profile_WaitUntilFinished(Profile *profile) {
     while (profile->state != PS_FINISHED) {
         HAL_Delay(2);
     }
+}
+
+// Get the current speed
+float Profile_GetSpeed(const Profile *profile) {
+    return profile->speed;
 }
 
 

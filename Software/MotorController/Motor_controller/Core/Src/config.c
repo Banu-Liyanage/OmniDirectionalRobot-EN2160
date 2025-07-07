@@ -27,8 +27,17 @@ const float CONTROLLER_LOOP_FREQUENCY = 50;
 const float CONTROLLER_LOOP_INTERVAL = 0.02;
 
 
-const float Kp_Vel = 0.22;// 0.2  - 3.69
-const float Ki_Vel = 2.15;
+const float Kp_Vel = 0.1;// 0.22
+const float Ki_Vel = 2.15;//2.15;
+
+const float FWD_KP = 3.5;
+const float FWD_KD = 0.001;
+
+const float STRAFE_KP = 0;
+const float STRAFE_KD = 0;
+
+const float ROT_KP = 0;
+const float ROT_KD = 0;
 
 const float MAXINTCLAMP = 1;
 
@@ -45,6 +54,7 @@ float clampf(float val, float min, float max) {
 
 
 volatile RobotVelocity current_robot_velocity = {0.0f, 0.0f, 0.0f};
+
 
 volatile WheelVelocities current_wheel_W = {0.0f, 0.0f, 0.0f, 0.0f};
 WheelVelocities target_wheel_W = {0.0f, 0.0f, 0.0f, 0.0f};

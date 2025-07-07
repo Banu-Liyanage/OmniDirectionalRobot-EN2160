@@ -1,0 +1,45 @@
+/*
+ * controller.c
+ *
+ *  Created on: Jul 3, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "controller.h"
+#include "config.h"
+
+
+
+void Controller_Init(Controller *controller) {
+    // Initialize motor struct
+	controller->x_error = 0;
+	controller->y_error = 0;
+	controller->w_error = 0;
+
+	controller->previous_forward_error = 0;
+	controller->previous_rotational_error = 0;
+	controller->velocity = 0;
+	controller->omega = 0;
+	controller->left_motor_pwm = 0;
+	controller->right_motor_pwm = 0;
+	controller->controllers_enabled = 1;
+	controller->feedforward_enabled = 1;
+
+}
+
+//typedef struct {
+//    float x_error;
+//    float y_error;
+//    float z_error;
+//    float previous_x_error;
+//	float previous_y_error;
+//	float previous_z_error;
+//    float x_velocity;
+//    float y_velocity;
+//    float omega;
+//    uint8_t controllers_enabled;
+//} Controller;
+
+
+

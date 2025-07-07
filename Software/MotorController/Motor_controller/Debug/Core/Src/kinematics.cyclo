@@ -1,3 +1,4 @@
 ../Core/Src/kinematics.c:30:6:mecanum_inverse_kinematics	1
 ../Core/Src/kinematics.c:47:6:mecanum_forward_kinematics	1
 ../Core/Src/kinematics.c:64:6:set_robot_velocity	1
+../Core/Src/kinematics.c:78:6:calculate_robot_velocity	1

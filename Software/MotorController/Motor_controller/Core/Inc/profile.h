@@ -47,7 +47,7 @@ void Profile_Update(Profile *profile);
 
 void Profile_Move(Profile *profile, float distance, float top_speed, float final_speed, float acceleration);
 void Profile_WaitUntilFinished(Profile *profile);
-
+float Profile_GetSpeed(const Profile *profile);
 
 
 #endif /* INC_PROFILE_H_ */
