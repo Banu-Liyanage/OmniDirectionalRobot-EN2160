@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 1.5em;
+        }
+
+        /* Joystick Styles */
+        .joystick-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .joystick {
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            position: relative;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .joystick-handle {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+            border: 2px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .coordinates {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .bluetooth-section {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .status.connected {
+            background: rgba(76, 175, 80, 0.3);
+            color: #4caf50;
+        }
+
+        .status.disconnected {
+            background: rgba(244, 67, 54, 0.3);
+            color: #f44336;
+        }
+
+        /* Map Editor Styles */
+        .map-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .control-group label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .control-group input,
+        .control-group select {
+            padding: 8px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .grid-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .path-planning {
+            margin-top: 20px;
+            grid-column: 1 / -1;
+        }
+
+        .destination-input {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .destination-input input {
+            width: 60px;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+        }
+
+        .path-info {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+
+        .legend-color {
+            width: 15px;
+            height: 15px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .control-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .joystick {
+                width: 150px;
+                height: 150px;
+            }
+
+            .joystick-handle {
+                width: 45px;
+                height: 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Robot Control Center</h1>
+            <p>Omni-Directional Robot Control & Path Planning</p>
+        </div>
+
+        <div class="control-panel">
+            <!-- Manual Control Panel -->
+            <div class="panel">
+                <h2>🎮 Manual Control</h2>
+
+                <div class="bluetooth-section">
+                    <button class="btn" id="connectBtn" onclick="connectBluetooth()">Connect Robot</button>
+                    <div class="status disconnected" id="bluetoothStatus">Disconnected</div>
+                </div>
+
+                <div class="joystick-container">
+                    <div class="joystick" id="joystick">
+                        <div class="joystick-handle" id="joystickHandle"></div>
+                    </div>
+                    <div class="coordinates" id="coordinates">X: 0, Y: 0</div>
+                </div>
+            </div>
+
+            <!-- Map Editor Panel -->
+            <div class="panel">
+                <h2>🗺️ Map Editor</h2>
+
+                <div class="map-controls">
+                    <div class="control-group">
+                        <label>Map Size:</label>
+                        <select id="mapSize" onchange="updateMapSize()">
+                            <option value="10">10x10</option>
+                            <option value="15" selected>15x15</option>
+                            <option value="20">20x20</option>
+                            <option value="25">25x25</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Cell Size:</label>
+                        <input type="range" id="cellSize" min="15" max="30" value="20" onchange="updateCellSize()">
+                        <span id="cellSizeValue">20px</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Tool:</label>
+                        <select id="toolSelect" onchange="changeTool()">
+                            <option value="robot">Place Robot</option>
+                            <option value="obstacle">Add Obstacle</option>
+                            <option value="erase">Erase</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <button class="btn" onclick="clearMap()">Clear Map</button>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4caf50;"></div>
+                        <span>Robot</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f44336;"></div>
+                        <span>Obstacle</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #2196f3;"></div>
+                        <span>Path</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #ff9800;"></div>
+                        <span>Destination</span>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <canvas class="grid-canvas" id="mapCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Path Planning Section -->
+        <div class="panel path-planning">
+            <h2>🎯 Path Planning</h2>
+
+            <div class="destination-input">
+                <label>Destination:</label>
+                <input type="number" id="destX" placeholder="X" min="0" max="24">
+                <input type="number" id="destY" placeholder="Y" min="0" max="24">
+                <button class="btn" onclick="planPath()">Plan Path</button>
+                <button class="btn" onclick="executeMove()">Execute Move</button>
+            </div>
+
+            <div class="path-info" id="pathInfo">
+                Click "Plan Path" to calculate the optimal route to destination.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let bluetoothDevice = null;
+        let characteristic = null;
+        let isConnected = false;
+
+        // Map variables
+        let mapSize = 15;
+        let cellSize = 20;
+        let currentTool = 'robot';
+        let robotPosition = null;
+        let obstacles = new Set();
+        let currentPath = [];
+        let canvas, ctx;
+
+        // Joystick variables
+        let joystickActive = false;
+        let joystickCenter = { x: 0, y: 0 };
+        let currentCommand = { x: 0, y: 0 };
+
+        // Initialize the application
+        window.addEventListener('load', function () {
+            initializeJoystick();
+            initializeMap();
+
+            // Check for Bluetooth support
+            if (!navigator.bluetooth) {
+                document.getElementById('connectBtn').disabled = true;
+                document.getElementById('bluetoothStatus').textContent = 'Bluetooth not supported';
+            }
+        });
+
+        // Bluetooth Functions
+        async function connectBluetooth() {
+            try {
+                const device = await navigator.bluetooth.requestDevice({
+                    acceptAllDevices: true,
+                    optionalServices: ['battery_service']
+                });
+
+                bluetoothDevice = device;
+
+                const server = await device.gatt.connect();
+                document.getElementById('bluetoothStatus').textContent = 'Connected';
+                document.getElementById('bluetoothStatus').className = 'status connected';
+                document.getElementById('connectBtn').textContent = 'Disconnect';
+                document.getElementById('connectBtn').onclick = disconnectBluetooth;
+                isConnected = true;
+
+                console.log('Robot connected successfully');
+            } catch (error) {
+                console.error('Bluetooth connection failed:', error);
+                document.getElementById('bluetoothStatus').textContent = 'Connection failed';
+            }
+        }
+
+        function disconnectBluetooth() {
+            if (bluetoothDevice && bluetoothDevice.gatt.connected) {
+                bluetoothDevice.gatt.disconnect();
+            }
+
+            document.getElementById('bluetoothStatus').textContent = 'Disconnected';
+            document.getElementById('bluetoothStatus').className = 'status disconnected';
+            document.getElementById('connectBtn').textContent = 'Connect Robot';
+            document.getElementById('connectBtn').onclick = connectBluetooth;
+            isConnected = false;
+        }
+
+        function sendCommand(command) {
+            if (isConnected) {
+                // Send command to Python backend
+                fetch('/api/robot/command', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(command)
+                }).catch(error => {
+                    console.error('Failed to send command:', error);
+                });
+            }
+        }
+
+        // Joystick Functions
+        function initializeJoystick() {
+            const joystick = document.getElementById('joystick');
+            const handle = document.getElementById('joystickHandle');
+            const coordinates = document.getElementById('coordinates');
+
+            const joystickRect = joystick.getBoundingClientRect();
+            joystickCenter.x = joystickRect.width / 2;
+            joystickCenter.y = joystickRect.height / 2;
+
+            joystick.addEventListener('mousedown', startJoystick);
+            joystick.addEventListener('touchstart', startJoystick);
+
+            document.addEventListener('mousemove', moveJoystick);
+            document.addEventListener('touchmove', moveJoystick);
+
+            document.addEventListener('mouseup', stopJoystick);
+            document.addEventListener('touchend', stopJoystick);
+        }
+
+        function startJoystick(e) {
+            joystickActive = true;
+            e.preventDefault();
+        }
+
+        function moveJoystick(e) {
+            if (!joystickActive) return;
+
+            const joystick = document.getElementById('joystick');
+            const handle = document.getElementById('joystickHandle');
+            const coordinates = document.getElementById('coordinates');
+
+            const rect = joystick.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            let clientX, clientY;
+            if (e.type.includes('touch')) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+
+            let deltaX = clientX - centerX;
+            let deltaY = clientY - centerY;
+
+            const maxRadius = rect.width / 2 - 30;
+            const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+            if (distance > maxRadius) {
+                deltaX = (deltaX / distance) * maxRadius;
+                deltaY = (deltaY / distance) * maxRadius;
+            }
+
+            handle.style.transform = `translate(${deltaX}px, ${deltaY}px)`;
+
+            // Normalize values to -100 to 100
+            const normalizedX = Math.round((deltaX / maxRadius) * 100);
+            const normalizedY = Math.round((-deltaY / maxRadius) * 100); // Invert Y for intuitive control
+
+            currentCommand = { x: normalizedX, y: normalizedY };
+            coordinates.textContent = `X: ${normalizedX}, Y: ${normalizedY}`;
+
+            // Send command to robot
+            sendCommand({
+                type: 'joystick',
+                x: normalizedX,
+                y: normalizedY
+            });
+        }
+
+        function stopJoystick() {
+            if (!joystickActive) return;
+
+            joystickActive = false;
+            const handle = document.getElementById('joystickHandle');
+            const coordinates = document.getElementById('coordinates');
+
+            handle.style.transform = 'translate(0px, 0px)';
+            coordinates.textContent = 'X: 0, Y: 0';
+            currentCommand = { x: 0, y: 0 };
+
+            // Send stop command
+            sendCommand({
+                type: 'joystick',
+                x: 0,
+                y: 0
+            });
+        }
+
+        // Map Functions
+        function initializeMap() {
+            canvas = document.getElementById('mapCanvas');
+            ctx = canvas.getContext('2d');
+
+            canvas.addEventListener('click', handleMapClick);
+            updateMapSize();
+        }
+
+        function updateMapSize() {
+            mapSize = parseInt(document.getElementById('mapSize').value);
+            document.getElementById('destX').max = mapSize - 1;
+            document.getElementById('destY').max = mapSize - 1;
+            obstacles.clear();
+            robotPosition = null;
+            currentPath = [];
+            drawMap();
+        }
+
+        function updateCellSize() {
+            cellSize = parseInt(document.getElementById('cellSize').value);
+            document.getElementById('cellSizeValue').textContent = cellSize + 'px';
+            drawMap();
+        }
+
+        function changeTool() {
+            currentTool = document.getElementById('toolSelect').value;
+        }
+
+        function clearMap() {
+            obstacles.clear();
+            robotPosition = null;
+            currentPath = [];
+            drawMap();
+        }
+
+        function handleMapClick(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) / cellSize);
+            const y = Math.floor((e.clientY - rect.top) / cellSize);
+
+            if (x >= 0 && x < mapSize && y >= 0 && y < mapSize) {
+                if (currentTool === 'robot') {
+                    robotPosition = { x, y };
+                } else if (currentTool === 'obstacle') {
+                    obstacles.add(`${x},${y}`);
+                } else if (currentTool === 'erase') {
+                    obstacles.delete(`${x},${y}`);
+                    if (robotPosition && robotPosition.x === x && robotPosition.y === y) {
+                        robotPosition = null;
+                    }
+                }
+                drawMap();
+            }
+        }
+
+        function drawMap() {
+            const totalWidth = mapSize * cellSize;
+            const totalHeight = mapSize * cellSize;
+
+            canvas.width = totalWidth;
+            canvas.height = totalHeight;
+            canvas.style.width = totalWidth + 'px';
+            canvas.style.height = totalHeight + 'px';
+
+            // Clear canvas
+            ctx.clearRect(0, 0, totalWidth, totalHeight);
+
+            // Draw grid
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= mapSize; i++) {
+                // Vertical lines
+                ctx.beginPath();
+                ctx.moveTo(i * cellSize, 0);
+                ctx.lineTo(i * cellSize, totalHeight);
+                ctx.stroke();
+
+                // Horizontal lines
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellSize);
+                ctx.lineTo(totalWidth, i * cellSize);
+                ctx.stroke();
+            }
+
+            // Draw obstacles
+            ctx.fillStyle = '#f44336';
+            obstacles.forEach(obstacle => {
+                const [x, y] = obstacle.split(',').map(Number);
+                ctx.fillRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
+            });
+
+            // Draw path
+            if (currentPath.length > 0) {
+                ctx.fillStyle = '#2196f3';
+                currentPath.forEach(point => {
+                    ctx.fillRect(point.x * cellSize + 1, point.y * cellSize + 1, cellSize - 2, cellSize - 2);
+                });
+            }
+
+            // Draw robot
+            if (robotPosition) {
+                ctx.fillStyle = '#4caf50';
+                ctx.fillRect(robotPosition.x * cellSize + 1, robotPosition.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            }
+
+            // Draw destination if set
+            const destX = parseInt(document.getElementById('destX').value);
+            const destY = parseInt(document.getElementById('destY').value);
+            if (!isNaN(destX) && !isNaN(destY) && destX >= 0 && destX < mapSize && destY >= 0 && destY < mapSize) {
+                ctx.fillStyle = '#ff9800';
+                ctx.fillRect(destX * cellSize + 1, destY * cellSize + 1, cellSize - 2, cellSize - 2);
+            }
+        }
+
+        // Path Planning Functions
+        function planPath() {
+            if (!robotPosition) {
+                alert('Please place the robot on the map first');
+                return;
+            }
+
+            const destX = parseInt(document.getElementById('destX').value);
+            const destY = parseInt(document.getElementById('destY').value);
+
+            if (isNaN(destX) || isNaN(destY)) {
+                alert('Please enter valid destination coordinates');
+                return;
+            }
+
+            if (destX < 0 || destX >= mapSize || destY < 0 || destY >= mapSize) {
+                alert('Destination coordinates are out of bounds');
+                return;
+            }
+
+            // Send map and path planning request to backend
+            const mapData = {
+                size: mapSize,
+                robot: robotPosition,
+                destination: { x: destX, y: destY },
+                obstacles: Array.from(obstacles).map(obs => {
+                    const [x, y] = obs.split(',').map(Number);
+                    return { x, y };
+                })
+            };
+
+            fetch('/api/path/plan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mapData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        currentPath = data.path;
+                        drawMap();
+
+                        const pathInfo = document.getElementById('pathInfo');
+                        pathInfo.innerHTML = `
+                        <strong>Path Found!</strong><br>
+                        Distance: ${data.distance} units<br>
+                        Steps: ${data.path.length}<br>
+                        Path: ${data.path.map(p => `(${p.x},${p.y})`).join(' → ')}
+                    `;
+                    } else {
+                        document.getElementById('pathInfo').innerHTML = `
+                        <strong>No Path Found!</strong><br>
+                        ${data.error || 'The destination is unreachable.'}
+                    `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Path planning failed:', error);
+                    document.getElementById('pathInfo').innerHTML = `
+                    <strong>Path Planning Failed!</strong><br>
+                    Please ensure the backend server is running.
+                `;
+                });
+        }
+
+        function executeMove() {
+            if (currentPath.length === 0) {
+                alert('Please plan a path first');
+                return;
+            }
+
+            if (!isConnected) {
+                alert('Please connect to the robot first');
+                return;
+            }
+
+            // Send path execution command
+            sendCommand({
+                type: 'path',
+                path: currentPath
+            });
+
+            document.getElementById('pathInfo').innerHTML = `
+                <strong>Executing Path...</strong><br>
+                Robot is moving to destination.<br>
+                Path: ${currentPath.map(p => `(${p.x},${p.y})`).join(' → ')}
+            `;
+        }
+
+        // Initialize map drawing
+        setTimeout(() => {
+            drawMap();
+        }, 100);
+    </script>
+</body>
+
+</html>
