@@ -584,10 +584,10 @@
             initializeMap();
 
             // Check for Bluetooth support
-            if (!navigator.bluetooth) {
-                document.getElementById('connectBtn').disabled = true;
-                document.getElementById('bluetoothStatus').textContent = 'Bluetooth not supported';
-            }
+            // if (!navigator.bluetooth) {
+            //     document.getElementById('connectBtn').disabled = true;
+            //     document.getElementById('bluetoothStatus').textContent = 'Bluetooth not supported';
+            // }
         });
 
         // Bluetooth Functions
@@ -901,6 +901,45 @@
         setTimeout(() => {
             drawMap();
         }, 100);
+        function connectSerial() {
+            const port = document.getElementById('comPort').value;
+            const baud = document.getElementById('baudRate').value;
+            const statusDiv = document.getElementById('serialStatus');
+
+            if (!port) {
+                alert('Please select a COM port.');
+                return;
+            }
+
+            statusDiv.textContent = 'Connecting...';
+            statusDiv.className = 'status connecting';
+
+            fetch('/api/robot/connect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: port, baudrate: baud })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        statusDiv.textContent = 'Connected';
+                        statusDiv.className = 'status connected';
+                        window.isConnected = true;
+                    } else {
+                        statusDiv.textContent = 'Disconnected';
+                        statusDiv.className = 'status disconnected';
+                        alert(data.error || 'Connection failed.');
+                        window.isConnected = false;
+                    }
+                })
+                .catch(err => {
+                    statusDiv.textContent = 'Disconnected';
+                    statusDiv.className = 'status disconnected';
+                    alert('Error connecting: ' + err);
+                    window.isConnected = false;
+                });
+        }
+
     </script>
 </body>
 

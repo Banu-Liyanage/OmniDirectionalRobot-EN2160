@@ -566,11 +566,12 @@ def connect_robot():
     """Connect to robot via Serial"""
     data = request.json
     address = data.get("address")
+    baudrate = data.get("baudrate", 9600)  # Add this line
 
     if not address:
         return jsonify({"success": False, "error": "Serial port address required"})
 
-    success = robot_controller.connect_serial(address)
+    success = robot_controller.connect_serial(address, int(baudrate))  # Pass baudrate
     return jsonify({"success": success})
 
 
