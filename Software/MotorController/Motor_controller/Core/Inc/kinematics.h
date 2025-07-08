@@ -17,9 +17,10 @@
 
 
 void mecanum_inverse_kinematics(RobotVelocity robot_vel, WheelVelocities* wheel_vel);
-void mecanum_forward_kinematics(WheelVelocities wheel_vel, RobotVelocity* robot_vel);
+void mecanum_forward_kinematics(WheelVelocities wheel_vel, volatile RobotVelocity* robot_vel);
 
 void set_robot_velocity(float vx, float vy, float omega);
+void calculate_robot_velocity();
 
 
 #endif /* KINEMATICS_H_ */

@@ -7,8 +7,10 @@
 
 
 #include "encoders.h"
+#include "kinematics.h"
+#include "bluetoothDebug.h"
 
-
+extern UART_HandleTypeDef huart2;
 
 volatile float m_robot_distance = 0;
 volatile float m_robot_angle = 0;
@@ -24,12 +26,8 @@ int16_t previous_RearLeft_count = 0;
 int16_t previous_RearRight_count = 0;
 
 
-volatile float m1_W = 0;
-volatile float m4_W = 0;
-volatile float m2_W = 0;
-volatile float m3_W = 0;
-
-
+float m_x_change = 0;
+float m_rot_change = 0;
 
 
 
@@ -103,11 +101,18 @@ void update_Encoder_Data(){
 	float RearLeft = RearLeft_delta * RAD_PER_COUNT_REAR_LEFT;
 	float RearRight = RearRight_delta * RAD_PER_COUNT_REAR_RIGHT;
 
+//	current_wheel_W.front_left = ForwardLeft * LOOP_FREQUENCY;
+//	current_wheel_W.rear_left = RearLeft * LOOP_FREQUENCY;
+//	current_wheel_W.front_right = ForwardRight * LOOP_FREQUENCY;
+//	current_wheel_W.rear_right = RearRight * LOOP_FREQUENCY;
+
 	current_wheel_W.front_left = ForwardLeft * LOOP_FREQUENCY;
 	current_wheel_W.rear_left = RearLeft * LOOP_FREQUENCY;
 	current_wheel_W.front_right = ForwardRight * LOOP_FREQUENCY;
 	current_wheel_W.rear_right = RearRight * LOOP_FREQUENCY;
 
+	calculate_robot_velocity();
+	UART_Transmit_Float(&huart2, ">X", current_robot_velocity.vx, 2);
 
 }
 

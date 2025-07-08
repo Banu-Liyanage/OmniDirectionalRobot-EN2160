@@ -58,6 +58,16 @@ extern const float CONTROLLER_LOOP_INTERVAL;
 extern const float Kp_Vel;
 extern const float Ki_Vel;
 
+extern const float FWD_KP;
+extern const float FWD_KD;
+
+extern const float STRAFE_KP;
+extern const float STRAFE_KD;
+
+extern const float ROT_KP;
+extern const float ROT_KD;
+
+
 extern const float MAXINTCLAMP;
 
 // Motor control constants

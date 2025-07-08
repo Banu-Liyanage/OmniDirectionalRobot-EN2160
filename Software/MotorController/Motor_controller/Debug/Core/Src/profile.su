@@ -6,3 +6,4 @@
 ../Core/Src/profile.c:60:6:Profile_Update	24	static
 ../Core/Src/profile.c:92:6:Profile_Move	32	static
 ../Core/Src/profile.c:97:6:Profile_WaitUntilFinished	16	static
+../Core/Src/profile.c:104:7:Profile_GetSpeed	16	static

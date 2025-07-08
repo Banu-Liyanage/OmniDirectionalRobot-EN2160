@@ -44,7 +44,7 @@ void mecanum_inverse_kinematics(RobotVelocity robot_vel, WheelVelocities* wheel_
  * vy = (R/4) * (-ω1 + ω2 - ω3 + ω4)
  * ω  = (R/4(L+W)) * (-ω1 - ω2 + ω3 + ω4)
  */
-void mecanum_forward_kinematics(WheelVelocities wheel_vel, RobotVelocity* robot_vel) {
+void mecanum_forward_kinematics(WheelVelocities wheel_vel, volatile RobotVelocity* robot_vel) {
     float R_over_4 = WHEEL_RADIUS / 4.0f;
     float L_plus_W = HALF_LENGTH + HALF_WIDTH;
 
@@ -73,6 +73,10 @@ void set_robot_velocity(float vx, float vy, float omega) {
                        wheel_targets.rear_left,    // m2
                        wheel_targets.rear_right,   // m3
                        wheel_targets.front_right); // m4
+}
+
+void calculate_robot_velocity(){
+	mecanum_forward_kinematics(current_wheel_W, &current_robot_velocity);
 }
 
 

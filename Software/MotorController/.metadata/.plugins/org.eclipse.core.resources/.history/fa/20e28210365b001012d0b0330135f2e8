@@ -1,0 +1,95 @@
+/*
+ * controller.c
+ *
+ *  Created on: Jul 3, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "controller.h"
+#include "config.h"
+
+
+
+void Controller_Init(Controller *controller) {
+    // Initialize motor struct
+	controller->x_error = 0;
+	controller->y_error = 0;
+	controller->w_error = 0;
+	controller->previous_x_error = 0;
+	controller->previous_y_error = 0;
+	controller->previous_w_error = 0;
+
+	controller->x_velocity = 0;
+	controller->y_velocity = 0;
+	controller->omega = 0;
+
+	controller->controllers_enabled = 1;
+}
+
+
+void Controller_ResetControllers(Controller *controller) {
+	controller->x_error = 0;
+		controller->y_error = 0;
+		controller->w_error = 0;
+		controller->previous_x_error = 0;
+		controller->previous_y_error = 0;
+		controller->previous_w_error = 0;
+}
+
+
+void UpdateControllers(Controller *controller, float x_velocity, float y_velocity,  float omega, float steering_adjustment) {
+    float forward_output, strafe_output, rotational_output;
+//    float left_speed, right_speed;
+//
+    controller->x_velocity = x_velocity;
+    controller->y_velocity = y_velocity;
+    controller->omega = omega;
+//
+    float x_increment = x_velocity * CONTROLLER_LOOP_INTERVAL;
+    controller->x_error += x_increment - current_robot_velocity.vx * CONTROLLER_LOOP_INTERVAL;
+    float x_diff = controller->x_error - controller->previous_x_error;
+    controller->previous_x_error = controller->x_error;
+    forward_output = FWD_KP * controller->x_error + FWD_KD * x_diff;
+
+    float y_increment = y_velocity * CONTROLLER_LOOP_INTERVAL;
+	controller->y_error += x_increment - current_robot_velocity.vy * CONTROLLER_LOOP_INTERVAL;
+	float y_diff = controller->y_error - controller->previous_y_error;
+	controller->previous_y_error = controller->y_error;
+	strafe_output = STRAFE_KP * controller->z_error + STRAFE_KD * y_diff;
+        //x_output = K
+	float w_increment = omega * CONTROLLER_LOOP_INTERVAL;
+	controller->w_error += w_increment - current_robot_velocity.omega * CONTROLLER_LOOP_INTERVAL;
+	float w_diff = controller->w_error - controller->previous_w_error;
+	controller->previous_w_error = controller->w_error;
+	rotational_output = ROT_KP * controller->omega + ROT_KD * w_diff;
+
+//
+//    // Forward motion control
+//    float forward_increment = velocity * CONTROLLER_LOOP_INTERVAL;
+//    controller->forward_error += forward_increment - robot_fwd_change();
+//    float forward_diff = controller->forward_error - controller->previous_forward_error;
+//    controller->previous_forward_error = controller->forward_error;
+//    forward_output = FWD_KP * controller->forward_error + FWD_KD * forward_diff;
+//
+//    // Rotational control
+//    float rotational_increment = omega * CONTROLLER_LOOP_INTERVAL;
+//    controller->rotational_error += rotational_increment - robot_rot_change();
+//    controller->rotational_error -= steering_adjustment;
+//    float rotational_diff = controller->rotational_error - controller->previous_rotational_error;
+//    controller->previous_rotational_error = controller->rotational_error;
+//    rotational_output = ROT_KP * controller->rotational_error + ROT_KD * rotational_diff;
+//
+//    // Combine forward and rotational outputs
+//    left_output = forward_output - rotational_output;
+//    right_output = forward_output + rotational_output;
+//
+//
+//    if (controller->controllers_enabled) {
+//    	setMotorLPWM(left_output);
+//        setMotorRPWM(right_output);
+//    }
+
+
+}
+
