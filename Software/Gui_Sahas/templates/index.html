@@ -465,6 +465,8 @@
                         <button class="control-btn" onmousedown="startMove(-1, 1)" onmouseup="stopMove()">↙</button>
                         <button class="control-btn" onmousedown="startMove(0, 1)" onmouseup="stopMove()">↓</button>
                         <button class="control-btn" onmousedown="startMove(1, 1)" onmouseup="stopMove()">↘</button>
+                        <button class="control-btn" onclick="rotateLeft()">⟲</button>
+                        <button class="control-btn" onclick="rotateRight()">⟳</button>
                     </div>
                     <div class="coordinates" id="coordinates">Direction: STOP</div>
                 </div>
@@ -550,8 +552,6 @@
 
     <script>
         // Global variables
-        let bluetoothDevice = null;
-        let characteristic = null;
         let isConnected = false;
 
         // Map variables
@@ -589,57 +589,61 @@
             //     document.getElementById('bluetoothStatus').textContent = 'Bluetooth not supported';
             // }
         });
+        // --- ADD for serial over HC-05 instead of Bluetooth ---
+        window.isConnected = false;
 
-        // Bluetooth Functions
-        async function connectBluetooth() {
-            try {
-                const device = await navigator.bluetooth.requestDevice({
-                    acceptAllDevices: true,
-                    optionalServices: ['battery_service']
+        function connectSerial() {
+            const port = document.getElementById('comPort').value;
+            const baud = parseInt(document.getElementById('baudRate').value, 10);
+            const statusDiv = document.getElementById('serialStatus');
+            if (!port) return alert('Please select a COM port.');
+
+            statusDiv.textContent = 'Connecting...';
+            statusDiv.className = 'status connecting';
+
+            fetch('/api/robot/connect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: port, baudrate: baud })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        statusDiv.textContent = 'Connected';
+                        statusDiv.className = 'status connected';
+                        window.isConnected = true;
+                    } else {
+                        statusDiv.textContent = 'Disconnected';
+                        statusDiv.className = 'status disconnected';
+                        window.isConnected = false;
+                        alert(data.error || 'Connection failed.');
+                    }
+                })
+                .catch(err => {
+                    statusDiv.textContent = 'Disconnected';
+                    statusDiv.className = 'status disconnected';
+                    window.isConnected = false;
+                    console.error('Serial connect error:', err);
                 });
-
-                bluetoothDevice = device;
-
-                const server = await device.gatt.connect();
-                document.getElementById('bluetoothStatus').textContent = 'Connected';
-                document.getElementById('bluetoothStatus').className = 'status connected';
-                document.getElementById('connectBtn').textContent = 'Disconnect';
-                document.getElementById('connectBtn').onclick = disconnectBluetooth;
-                isConnected = true;
-
-                console.log('Robot connected successfully');
-            } catch (error) {
-                console.error('Bluetooth connection failed:', error);
-                document.getElementById('bluetoothStatus').textContent = 'Connection failed';
-            }
-        }
-
-        function disconnectBluetooth() {
-            if (bluetoothDevice && bluetoothDevice.gatt.connected) {
-                bluetoothDevice.gatt.disconnect();
-            }
-
-            document.getElementById('bluetoothStatus').textContent = 'Disconnected';
-            document.getElementById('bluetoothStatus').className = 'status disconnected';
-            document.getElementById('connectBtn').textContent = 'Connect Robot';
-            document.getElementById('connectBtn').onclick = connectBluetooth;
-            isConnected = false;
         }
 
         function sendCommand(command) {
-            if (isConnected) {
-                // Send command to Python backend
-                fetch('/api/robot/command', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(command)
-                }).catch(error => {
-                    console.error('Failed to send command:', error);
-                });
+            if (!window.isConnected) {
+                console.warn('Serial not connected — dropping', command);
+                return;
             }
+            console.debug('→ sending', command);
+            fetch('/api/robot/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(command)
+            })
+                .then(res => res.json())
+                .then(data => console.debug('← got', data))
+                .catch(e => console.error('Send failed:', e));
         }
+        // — end ADD
+
 
         // Controller Functions
         function startMove(x, y) {
@@ -652,24 +656,23 @@
 
             document.getElementById('coordinates').textContent = `Direction: ${directionName}`;
 
-            // Send continuous movement command
+            // Send the proper joystick command (matches backend)
             sendCommand({
-                type: 'direction',
-                direction: directionName.toLowerCase(),
+                type: 'joystick',
                 x: x,
                 y: y
             });
 
-            // Optional: Send command repeatedly while button is held
+            // Optional: Keep sending if button is held down (for real-time movement)
             moveInterval = setInterval(() => {
                 sendCommand({
-                    type: 'direction',
-                    direction: directionName.toLowerCase(),
+                    type: 'joystick',
                     x: x,
                     y: y
                 });
             }, 100);
         }
+
 
         function stopMove() {
             if (moveInterval) {
@@ -682,12 +685,24 @@
 
             // Send stop command
             sendCommand({
-                type: 'direction',
-                direction: 'stop',
+                type: 'joystick',
                 x: 0,
                 y: 0
             });
         }
+        function rotateLeft() {
+            sendCommand({
+                type: 'rotate',
+                direction: 'left'
+            });
+        }
+        function rotateRight() {
+            sendCommand({
+                type: 'rotate',
+                direction: 'right'
+            });
+        }
+
 
         // Map Functions
         function initializeMap() {

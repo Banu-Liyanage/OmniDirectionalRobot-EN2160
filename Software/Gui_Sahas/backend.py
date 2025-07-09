@@ -29,15 +29,23 @@ class RobotController:
         self.command_interval = 0.1  # Minimum time between commands (100ms)
 
     def connect_serial(self, port: str, baudrate: int = 9600) -> bool:
-        """Connect to robot via Serial"""
         try:
+            if self.serial_port and self.serial_port.is_open:
+                self.serial_port.close()
+
             self.serial_port = serial.Serial(port, baudrate, timeout=1)
+            time.sleep(2)  # allow Arduino reset
+            self.serial_port.reset_input_buffer()
+            self.serial_port.reset_output_buffer()
+
             self.is_connected = True
             self.robot_address = port
-            logger.info(f"Connected to robot on port {port}")
+            logger.info(f"Connected to {port}@{baudrate}")
+            self.send_command({"type": "test", "message": "connection_ok"})
             return True
         except Exception as e:
-            logger.error(f"Serial connection failed: {e}")
+            logger.error("Serial connect failed: %s", e)
+            self.is_connected = False
             return False
 
     def disconnect_serial(self):
@@ -49,23 +57,34 @@ class RobotController:
             logger.info("Disconnected from robot")
 
     def send_command(self, command: Dict) -> bool:
-        """Send command to robot with rate limiting"""
-        if not self.is_connected:
-            logger.warning("Not connected to robot")
+        print("DEBUG: Attempting to send", command)
+        if (
+            not self.is_connected
+            or not self.serial_port
+            or not self.serial_port.is_open
+        ):
+            print("DEBUG: Not connected or port closed")
             return False
 
-        current_time = time.time()
-        if current_time - self.last_command_time < self.command_interval:
-            return True  # Skip command to avoid flooding
+        now = time.time()
+        if now - self.last_command_time < self.command_interval:
+            print("DEBUG: Rate-limited")
+            return True
 
         try:
-            command_str = json.dumps(command) + "\n"
-            self.serial_port.write(command_str.encode())
-            self.last_command_time = current_time
-            logger.info(f"Sent command: {command}")
+            s = json.dumps(command) + "\n"
+            print("DEBUG: → serial:", s.strip())
+            self.serial_port.write(s.encode("utf-8"))
+            self.serial_port.flush()
+            self.last_command_time = now
+
+            time.sleep(0.05)
+            if self.serial_port.in_waiting:
+                resp = self.serial_port.readline().decode().strip()
+                print("DEBUG: ← serial:", resp)
             return True
         except Exception as e:
-            logger.error(f"Failed to send command: {e}")
+            logger.error("Send failed: %s", e)
             return False
 
     def send_directional_command(self, x: int, y: int, action: str = "move"):
@@ -612,19 +631,19 @@ def stop_robot():
 
 @app.route("/api/robot/command", methods=["POST"])
 def send_robot_command():
-    """Send command to robot (legacy endpoint)"""
-    data = request.json
-
-    if data.get("type") == "joystick":
-        x = data.get("x", 0)
-        y = data.get("y", 0)
-        success = robot_controller.send_directional_command(x, y)
-    elif data.get("type") == "path":
-        path = data.get("path", [])
-        success = robot_controller.send_path_command(path)
+    cmd = request.json or {}
+    t = cmd.get("type")
+    if t == "joystick":
+        x, y = int(cmd.get("x", 0)), int(cmd.get("y", 0))
+        success = robot_controller.send_joystick_command(x, y)
+    elif t == "rotate":
+        success = robot_controller.send_rotate_command(cmd.get("direction", "left"))
+    elif t == "path":
+        success = robot_controller.send_path_command(cmd.get("path", []))
+    elif t == "stop":
+        success = robot_controller.send_stop_command()
     else:
-        return jsonify({"success": False, "error": "Unknown command type"})
-
+        success = robot_controller.send_command(cmd)
     return jsonify({"success": success})
 
 
