@@ -128,6 +128,10 @@ class RobotController:
 
         return self.send_command(command)
 
+    def send_rotate_command(self, direction: str) -> bool:
+        command = {"type": "rotate", "direction": direction, "timestamp": time.time()}
+        return self.send_command(command)
+
     def send_stop_command(self):
         """Send stop command"""
         command = {
@@ -637,7 +641,8 @@ def send_robot_command():
         x, y = int(cmd.get("x", 0)), int(cmd.get("y", 0))
         success = robot_controller.send_joystick_command(x, y)
     elif t == "rotate":
-        success = robot_controller.send_rotate_command(cmd.get("direction", "left"))
+        direction = cmd.get("direction", "left")
+        success = robot_controller.send_rotate_command(direction)
     elif t == "path":
         success = robot_controller.send_path_command(cmd.get("path", []))
     elif t == "stop":
