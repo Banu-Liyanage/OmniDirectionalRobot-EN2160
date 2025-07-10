@@ -30,10 +30,12 @@ float inv_radius = 1.0f / WHEEL_RADIUS;
 void mecanum_inverse_kinematics(RobotVelocity robot_vel, WheelVelocities* wheel_vel) {
 
     // Calculate wheel angular velocities (rad/s)
-    wheel_vel->front_left  = inv_radius * (robot_vel.vx - robot_vel.vy - L_plus_W * robot_vel.omega);
-    wheel_vel->rear_left   = inv_radius * (robot_vel.vx + robot_vel.vy - L_plus_W * robot_vel.omega);
-    wheel_vel->rear_right  = inv_radius * (robot_vel.vx - robot_vel.vy + L_plus_W * robot_vel.omega);
-    wheel_vel->front_right = inv_radius * (robot_vel.vx + robot_vel.vy + L_plus_W * robot_vel.omega);
+
+	wheel_vel->front_left  = inv_radius * (robot_vel.vx - robot_vel.vy - L_plus_W * robot_vel.omega);
+	wheel_vel->front_right = inv_radius * (robot_vel.vx + robot_vel.vy + L_plus_W * robot_vel.omega);
+	wheel_vel->rear_left   = inv_radius * (robot_vel.vx + robot_vel.vy - L_plus_W * robot_vel.omega);
+	wheel_vel->rear_right  = inv_radius * (robot_vel.vx - robot_vel.vy + L_plus_W * robot_vel.omega);
+
 }
 
 /**
@@ -44,19 +46,31 @@ void mecanum_inverse_kinematics(RobotVelocity robot_vel, WheelVelocities* wheel_
  * vy = (R/4) * (-ω1 + ω2 - ω3 + ω4)
  * ω  = (R/4(L+W)) * (-ω1 - ω2 + ω3 + ω4)
  */
+//void mecanum_forward_kinematics(WheelVelocities wheel_vel, volatile RobotVelocity* robot_vel) {
+//    float R_over_4 = WHEEL_RADIUS / 4.0f;
+//    float L_plus_W = HALF_LENGTH + HALF_WIDTH;
+//
+//    // Calculate robot velocities
+//    robot_vel->vx = R_over_4 * (wheel_vel.front_left + wheel_vel.rear_left +
+//                                wheel_vel.rear_right + wheel_vel.front_right);
+//
+//    robot_vel->vy = R_over_4 * (-wheel_vel.front_left + wheel_vel.rear_left -
+//                                wheel_vel.rear_right + wheel_vel.front_right);
+//
+//    robot_vel->omega = R_over_4 / L_plus_W * (-wheel_vel.front_left - wheel_vel.rear_left +
+//                                              wheel_vel.rear_right + wheel_vel.front_right);
+//}
+
 void mecanum_forward_kinematics(WheelVelocities wheel_vel, volatile RobotVelocity* robot_vel) {
     float R_over_4 = WHEEL_RADIUS / 4.0f;
     float L_plus_W = HALF_LENGTH + HALF_WIDTH;
 
     // Calculate robot velocities
-    robot_vel->vx = R_over_4 * (wheel_vel.front_left + wheel_vel.rear_left +
-                                wheel_vel.rear_right + wheel_vel.front_right);
+    robot_vel->vx = R_over_4 * (wheel_vel.front_left + wheel_vel.front_right + wheel_vel.rear_left + wheel_vel.rear_right);
 
-    robot_vel->vy = R_over_4 * (-wheel_vel.front_left + wheel_vel.rear_left -
-                                wheel_vel.rear_right + wheel_vel.front_right);
+    robot_vel->vy = R_over_4 * (-wheel_vel.front_left + wheel_vel.front_right + wheel_vel.rear_left - wheel_vel.rear_right);
 
-    robot_vel->omega = R_over_4 / L_plus_W * (-wheel_vel.front_left - wheel_vel.rear_left +
-                                              wheel_vel.rear_right + wheel_vel.front_right);
+    robot_vel->omega = R_over_4 / L_plus_W * (-wheel_vel.front_left + wheel_vel.front_right - wheel_vel.rear_left + wheel_vel.rear_right);
 }
 
 

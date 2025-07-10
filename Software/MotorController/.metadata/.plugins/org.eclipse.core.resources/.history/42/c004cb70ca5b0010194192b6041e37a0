@@ -1,0 +1,82 @@
+/*
+ * kinematics.c
+ *
+ *  Created on: May 15, 2025
+ *      Author: PANKAJA
+ */
+
+#include "kinematics.h"
+
+
+extern volatile RobotVelocity current_robot_velocity;
+
+float L_plus_W = HALF_LENGTH + HALF_WIDTH;
+float inv_radius = 1.0f / WHEEL_RADIUS;
+/**
+ * Inverse Kinematics: Convert robot velocity to wheel velocities
+ *
+ * Mecanum wheel configuration:
+ * Front Left (m1):  (+) roller angle
+ * Rear Left (m2):   (-) roller angle
+ * Rear Right (m3):  (+) roller angle
+ * Front Right (m4): (-) roller angle
+ *
+ * Kinematic equations:
+ * ω1 = (1/R) * (vx - vy - (L+W)*ω)  // Front Left
+ * ω2 = (1/R) * (vx + vy - (L+W)*ω)  // Rear Left
+ * ω3 = (1/R) * (vx - vy + (L+W)*ω)  // Rear Right
+ * ω4 = (1/R) * (vx + vy + (L+W)*ω)  // Front Right
+ */
+void mecanum_inverse_kinematics(RobotVelocity robot_vel, WheelVelocities* wheel_vel) {
+
+    // Calculate wheel angular velocities (rad/s)
+    wheel_vel->front_left  = inv_radius * (robot_vel.vx - robot_vel.vy - L_plus_W * robot_vel.omega);
+    wheel_vel->rear_left   = inv_radius * (robot_vel.vx + robot_vel.vy - L_plus_W * robot_vel.omega);
+    wheel_vel->rear_right  = inv_radius * (robot_vel.vx - robot_vel.vy + L_plus_W * robot_vel.omega);
+    wheel_vel->front_right = inv_radius * (robot_vel.vx + robot_vel.vy + L_plus_W * robot_vel.omega);
+}
+
+/**
+ * Forward Kinematics: Convert wheel velocities to robot velocity
+ *
+ * Inverse of the kinematic matrix:
+ * vx = (R/4) * (ω1 + ω2 + ω3 + ω4)
+ * vy = (R/4) * (-ω1 + ω2 - ω3 + ω4)
+ * ω  = (R/4(L+W)) * (-ω1 - ω2 + ω3 + ω4)
+ */
+void mecanum_forward_kinematics(WheelVelocities wheel_vel, volatile RobotVelocity* robot_vel) {
+    float R_over_4 = WHEEL_RADIUS / 4.0f;
+    float L_plus_W = HALF_LENGTH + HALF_WIDTH;
+
+    // Calculate robot velocities
+    robot_vel->vx = R_over_4 * (wheel_vel.front_left + wheel_vel.rear_left +
+                                wheel_vel.rear_right + wheel_vel.front_right);
+
+    robot_vel->vy = R_over_4 * (-wheel_vel.front_left + wheel_vel.rear_left -
+                                wheel_vel.rear_right + wheel_vel.front_right);
+
+    robot_vel->omega = R_over_4 / L_plus_W * (-wheel_vel.front_left - wheel_vel.rear_left +
+                                              wheel_vel.rear_right + wheel_vel.front_right);
+}
+
+
+
+void set_robot_velocity(float vx, float vy, float omega) {
+    RobotVelocity desired_vel = {vx, vy, omega};
+    WheelVelocities wheel_targets;
+
+    // Convert robot velocity to wheel velocities
+    mecanum_inverse_kinematics(desired_vel, &wheel_targets);
+
+    // Set target velocities for the motor controller
+    setTargetVelocities(wheel_targets.front_left,  // m1
+                       wheel_targets.rear_left,    // m2
+                       wheel_targets.rear_right,   // m3
+                       wheel_targets.front_right); // m4
+}
+
+void calculate_robot_velocity(){
+	mecanum_forward_kinematics(current_wheel_W, &current_robot_velocity);
+}
+
+

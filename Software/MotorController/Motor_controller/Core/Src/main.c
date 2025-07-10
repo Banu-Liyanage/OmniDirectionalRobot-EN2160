@@ -63,6 +63,9 @@ UART_HandleTypeDef huart3;
 
 /* USER CODE BEGIN PV */
 uint32_t adc_values[4];
+uint8_t rx_idx;
+uint8_t rx_buff[100];
+uint8_t rx_data[2];
 
 /* USER CODE END PV */
 
@@ -92,7 +95,7 @@ Profile W_profile;
 
 Controller controller;
 
-
+//uint8_t rx_data;
 
 /* USER CODE END 0 */
 
@@ -174,12 +177,18 @@ int main(void)
 
 
   setTargetVelocities(0, 0, 0, 0);
-
   Profile_Reset(&x_profile);
+  Profile_Reset(&y_profile);
 
   HAL_Delay(1000);
 
   Profile_Move(&x_profile, 2, 0.3, 0, 0.1);
+  //Profile_Move(&x_profile, 0, 0, 0, 0);
+  //Profile_Move(&y_profile, 1, 0.1, 0, 0.05);
+
+  HAL_Delay(1000);
+
+  HAL_UART_Receive_IT(&huart3, rx_data, 1);
 
   //TIM1->CCR1 = (uint32_t)3500;
 
@@ -205,6 +214,7 @@ int main(void)
 
 // set_robot_velocity(0, 0, 0);
  //resetIntegralTerms();
+  int i = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -219,7 +229,10 @@ int main(void)
 	//int cunt = getRearRightEncoderCounts();
 	 //float current = 2.434;
 	//UART_Transmit_Float(&huart2, "i", current, 2);
-    //UART_Transmit_Int(&huart2, "C", cunt);
+    UART_Transmit_Int(&huart2, "S", i);
+    UART_Transmit_Int(&huart3, "S", i);
+    i++;
+    HAL_Delay(1000);
 
 
 
@@ -834,9 +847,27 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		//UART_Transmit_Int(&huart2, "B", HAL_GetTick());
 
 		Profile_Update(&x_profile);
-		UpdateControllers(&controller, Profile_GetSpeed(&x_profile), 0,  0, 0);
+		Profile_Update(&y_profile);
+		UpdateControllers(&controller, Profile_GetSpeed(&x_profile), Profile_GetSpeed(&y_profile),  0, 0);
 
 	}
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  if (huart == &huart3)
+  {
+    // Transmit received data via USART2
+
+
+    HAL_UART_Transmit(&huart2, rx_data, 1, HAL_MAX_DELAY);
+	//UART_Transmit_Int(&huart2, "RT", 69);
+
+    HAL_GPIO_TogglePin(Status_LED_GPIO_Port, Status_LED_Pin);
+
+    // Restart reception
+    HAL_UART_Receive_IT(&huart3, rx_data, 1);
+  }
 }
 /* USER CODE END 4 */
 

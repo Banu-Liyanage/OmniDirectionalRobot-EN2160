@@ -33,7 +33,7 @@ const float Ki_Vel = 2.15;//2.15;
 const float FWD_KP = 3.5;
 const float FWD_KD = 0.001;
 
-const float STRAFE_KP = 0;
+const float STRAFE_KP = 3;
 const float STRAFE_KD = 0;
 
 const float ROT_KP = 0;
