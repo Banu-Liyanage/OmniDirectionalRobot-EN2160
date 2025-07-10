@@ -1024,13 +1024,10 @@ def set_velocity_profile():
         msg1 = f"{velocity_type}_velocity_{max_vel}\n"
         msg2 = f"{velocity_type}_acceleration_{acc}\n"
 
-        robot_controller.serial_port.write(msg1.encode('utf-8'))
+        robot_controller.serial_port.write(msg1.encode("utf-8"))
         time.sleep(0.05)
-        robot_controller.serial_port.write(msg2.encode('utf-8'))
+        robot_controller.serial_port.write(msg2.encode("utf-8"))
 
-        return jsonify({
-            "success": True,
-            "messages_sent": [msg1.strip(), msg2.strip()]
-        })
+        return jsonify({"success": True, "messages_sent": [msg1.strip(), msg2.strip()]})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
