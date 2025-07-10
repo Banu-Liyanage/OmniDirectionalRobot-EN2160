@@ -958,3 +958,39 @@ if __name__ == "__main__":
 
     # Run the Flask app
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+
+@app.route("/api/robot/velocity", methods=["POST"])
+def set_velocity_profile():
+    """
+    Accepts: {
+      "type": "motion" | "strafe" | "rotation",
+      "max_velocity": 100,
+      "acceleration": 50
+    }
+    Sends over Bluetooth:
+      type_velocity_<value>
+      type_acceleration_<value>
+    """
+    data = request.json
+    velocity_type = data.get("type")
+    max_vel = data.get("max_velocity")
+    acc = data.get("acceleration")
+
+    if not robot_controller.is_connected:
+        return jsonify({"success": False, "error": "Robot not connected"}), 400
+
+    try:
+        msg1 = f"{velocity_type}_velocity_{max_vel}\n"
+        msg2 = f"{velocity_type}_acceleration_{acc}\n"
+
+        robot_controller.serial_port.write(msg1.encode('utf-8'))
+        time.sleep(0.05)
+        robot_controller.serial_port.write(msg2.encode('utf-8'))
+
+        return jsonify({
+            "success": True,
+            "messages_sent": [msg1.strip(), msg2.strip()]
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
