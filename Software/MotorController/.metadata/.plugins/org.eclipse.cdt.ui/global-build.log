@@ -1,5 +1,6 @@
-15:54:15 **** Incremental Build of configuration Debug for project Motor_controller ****
+18:36:38 **** Incremental Build of configuration Debug for project Motor_controller ****
 make -j20 all 
+arm-none-eabi-gcc "../Core/Src/RS485.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/RS485.d" -MT"Core/Src/RS485.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/RS485.o"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Motor_controller.elf
@@ -7,34 +8,34 @@ Finished building target: Motor_controller.elf
 arm-none-eabi-size  Motor_controller.elf 
 arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
    text	   data	    bss	    dec	    hex	filename
-  31392	     20	   2772	  34184	   8588	Motor_controller.elf
+  31220	     20	   2772	  34012	   84dc	Motor_controller.elf
 Finished building: default.size.stdout
  
 Finished building: Motor_controller.list
  
-15:54:18 **** Incremental Build of configuration Debug for project Motor_controller ****
+18:45:35 **** Incremental Build of configuration Debug for project Motor_controller ****
 make -j20 all 
-arm-none-eabi-size  Motor_controller.elf 
-   text	   data	    bss	    dec	    hex	filename
-  31392	     20	   2772	  34184	   8588	Motor_controller.elf
-Finished building: default.size.stdout
- 
-15:55:09 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
+arm-none-eabi-gcc "../Core/Src/RS485.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/RS485.d" -MT"Core/Src/RS485.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/RS485.o"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:254:11: warning: implicit declaration of function 'SendTelemetryData'; did you mean 'SendTelemetryPacket'? [-Wimplicit-function-declaration]
+  254 |           SendTelemetryData();
+      |           ^~~~~~~~~~~~~~~~~
+      |           SendTelemetryPacket
 arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Motor_controller.elf
  
 arm-none-eabi-size  Motor_controller.elf 
 arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
    text	   data	    bss	    dec	    hex	filename
-  31416	     20	   2772	  34208	   85a0	Motor_controller.elf
+  31316	     20	   2772	  34108	   853c	Motor_controller.elf
 Finished building: default.size.stdout
  
 Finished building: Motor_controller.list
  
-15:55:53 **** Incremental Build of configuration Debug for project Motor_controller ****
+18:45:58 **** Incremental Build of configuration Debug for project Motor_controller ****
 make -j20 all 
+arm-none-eabi-gcc "../Core/Src/RS485.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/RS485.d" -MT"Core/Src/RS485.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/RS485.o"
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Motor_controller.elf
@@ -42,40 +43,40 @@ Finished building target: Motor_controller.elf
 arm-none-eabi-size  Motor_controller.elf 
 arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
    text	   data	    bss	    dec	    hex	filename
-  31392	     20	   2772	  34184	   8588	Motor_controller.elf
+  31316	     20	   2772	  34108	   853c	Motor_controller.elf
 Finished building: default.size.stdout
  
 Finished building: Motor_controller.list
  
-15:56:24 **** Incremental Build of configuration Debug for project Motor_controller ****
+18:49:00 **** Incremental Build of configuration Debug for project Motor_controller ****
 make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/RS485.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/RS485.d" -MT"Core/Src/RS485.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/RS485.o"
 arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Motor_controller.elf
  
 arm-none-eabi-size  Motor_controller.elf 
 arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
    text	   data	    bss	    dec	    hex	filename
-  31352	     20	   2772	  34144	   8560	Motor_controller.elf
+  31300	     20	   2772	  34092	   852c	Motor_controller.elf
 Finished building: default.size.stdout
  
 Finished building: Motor_controller.list
  
-16:00:32 **** Incremental Build of configuration Debug for project Motor_controller ****
+18:49:13 **** Incremental Build of configuration Debug for project Motor_controller ****
 make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/RS485.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/RS485.d" -MT"Core/Src/RS485.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/RS485.o"
 arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: Motor_controller.elf
  
 arm-none-eabi-size  Motor_controller.elf 
 arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
    text	   data	    bss	    dec	    hex	filename
-  31376	     20	   2772	  34168	   8578	Motor_controller.elf
+  31300	     20	   2772	  34092	   852c	Motor_controller.elf
 Finished building: default.size.stdout
  
 Finished building: Motor_controller.list
  
-16:03:50 **** Incremental Build of configuration Debug for project Motor_controller ****
+18:49:58 **** Incremental Build of configuration Debug for project Motor_controller ****
 make -j20 all 
 arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
@@ -84,84 +85,7 @@ Finished building target: Motor_controller.elf
 arm-none-eabi-size  Motor_controller.elf 
 arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
    text	   data	    bss	    dec	    hex	filename
-  31480	     20	   2772	  34272	   85e0	Motor_controller.elf
-Finished building: default.size.stdout
- 
-Finished building: Motor_controller.list
- 
-16:04:55 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Motor_controller.elf
- 
-arm-none-eabi-size  Motor_controller.elf 
-arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
-   text	   data	    bss	    dec	    hex	filename
-  31480	     20	   2772	  34272	   85e0	Motor_controller.elf
-Finished building: default.size.stdout
- 
-Finished building: Motor_controller.list
- 
-16:06:07 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Motor_controller.elf
- 
-arm-none-eabi-size  Motor_controller.elf 
-arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
-   text	   data	    bss	    dec	    hex	filename
-  31444	     28	   2772	  34244	   85c4	Motor_controller.elf
-Finished building: default.size.stdout
- 
-Finished building: Motor_controller.list
- 
-16:06:36 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Motor_controller.elf
- 
-arm-none-eabi-size  Motor_controller.elf 
-arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
-   text	   data	    bss	    dec	    hex	filename
-  31444	     28	   2772	  34244	   85c4	Motor_controller.elf
-Finished building: default.size.stdout
- 
-Finished building: Motor_controller.list
- 
-16:39:11 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Motor_controller.elf
- 
-arm-none-eabi-size  Motor_controller.elf 
-arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
-   text	   data	    bss	    dec	    hex	filename
-  31480	     20	   2772	  34272	   85e0	Motor_controller.elf
-Finished building: default.size.stdout
- 
-Finished building: Motor_controller.list
- 
-16:45:17 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
-arm-none-eabi-size  Motor_controller.elf 
-   text	   data	    bss	    dec	    hex	filename
-  31480	     20	   2772	  34272	   85e0	Motor_controller.elf
-Finished building: default.size.stdout
- 
-16:45:42 **** Incremental Build of configuration Debug for project Motor_controller ****
-make -j20 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F446xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -u _printf_float -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc -o "Motor_controller.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\PANKAJA\OneDrive\Projects\OmniDirectionalRobot-EN2160\Software\MotorController\Motor_controller\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Motor_controller.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: Motor_controller.elf
- 
-arm-none-eabi-size  Motor_controller.elf 
-arm-none-eabi-objdump -h -S Motor_controller.elf  > "Motor_controller.list"
-   text	   data	    bss	    dec	    hex	filename
-  31480	     20	   2772	  34272	   85e0	Motor_controller.elf
+  31300	     20	   2772	  34092	   852c	Motor_controller.elf
 Finished building: default.size.stdout
  
 Finished building: Motor_controller.list
