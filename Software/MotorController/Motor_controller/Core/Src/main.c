@@ -179,12 +179,16 @@ int main(void)
   setTargetVelocities(0, 0, 0, 0);
   Profile_Reset(&x_profile);
   Profile_Reset(&y_profile);
+  Profile_Reset(&W_profile);
 
   HAL_Delay(1000);
 
-  //Profile_Move(&x_profile, 2, 0.3, 0, 0.1);
-  //Profile_Move(&x_profile, 0, 0, 0, 0);
-  Profile_Move(&y_profile, 1, 0.1, 0, 0.05);
+  //Profile_Move(&x_profile, 2, 0.25, 0, 0.05);
+  Profile_Move(&x_profile, 0, 0, 0, 0);
+  //Profile_Move(&y_profile, 2, 0.25, 0, 0.05);
+  Profile_Move(&y_profile, 0, 0, 0, 0);
+
+  Profile_Move(&W_profile, 1, 0.1, 0, 0.05);
 
   HAL_Delay(1000);
 
@@ -848,7 +852,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 		Profile_Update(&x_profile);
 		Profile_Update(&y_profile);
-		UpdateControllers(&controller, Profile_GetSpeed(&x_profile), Profile_GetSpeed(&y_profile),  0, 0);
+		Profile_Update(&W_profile);
+		UpdateControllers(&controller, Profile_GetSpeed(&x_profile), Profile_GetSpeed(&y_profile),  Profile_GetSpeed(&W_profile), 0);
 
 	}
 }

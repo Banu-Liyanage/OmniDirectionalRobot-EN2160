@@ -36,7 +36,7 @@ const float FWD_KD = 0.001;
 const float STRAFE_KP = 3;
 const float STRAFE_KD = 0;
 
-const float ROT_KP = 0;
+const float ROT_KP = 3;
 const float ROT_KD = 0;
 
 const float MAXINTCLAMP = 1;

@@ -91,7 +91,7 @@ void Profile_Update(Profile *profile) {
 // Move a profile (blocking call)
 void Profile_Move(Profile *profile, float distance, float top_speed, float final_speed, float acceleration) {
     Profile_Start(profile, distance, top_speed, final_speed, acceleration);
-    Profile_WaitUntilFinished(profile);
+    //Profile_WaitUntilFinished(profile);
 }
 // Wait until the profile finishes
 void Profile_WaitUntilFinished(Profile *profile) {
