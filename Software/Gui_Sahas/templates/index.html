@@ -290,21 +290,31 @@
         }
 
         .map-container {
-            width: 100%;
-            height: 400px;
+            margin: 0 auto;
+            width: auto;
+            /* Or: width: fit-content; */
+            height: auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 8px;
-            position: relative;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            /* Remove any padding */
         }
 
         .grid-canvas {
-            width: 100%;
-            height: 100%;
+            display: block;
+            width: unset;
+            height: unset;
+            /* Remove min-width/min-height if present */
             cursor: crosshair;
+            background: none;
         }
+
 
         .path-planning {
             margin-top: 20px;
@@ -448,7 +458,7 @@
 
                     <div style="display: flex; gap: 10px; margin-bottom: 15px;">
                         <button class="btn" id="connectBtn" onclick="connectSerial()">Connect Robot</button>
-                        <button class="btn" id="refreshBtn" onclick="refreshPorts()">Refresh Ports</button>
+
                     </div>
 
                     <div class="status disconnected" id="serialStatus">Disconnected</div>
@@ -478,34 +488,19 @@
 
                 <div class="map-controls">
                     <div class="control-group">
-                        <label>Map Size:</label>
-                        <select id="mapSize" onchange="updateMapSize()">
-                            <option value="10">10x10</option>
-                            <option value="15" selected>15x15</option>
-                            <option value="20">20x20</option>
-                            <option value="25">25x25</option>
-                        </select>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Cell Size:</label>
-                        <input type="range" id="cellSize" min="15" max="30" value="20" onchange="updateCellSize()">
-                        <span id="cellSizeValue">20px</span>
-                    </div>
-
-                    <div class="control-group">
                         <label>Tool:</label>
                         <select id="toolSelect" onchange="changeTool()">
                             <option value="robot">Place Robot</option>
                             <option value="obstacle">Add Obstacle</option>
+                            <option value="destination">Set Destination</option>
                             <option value="erase">Erase</option>
                         </select>
                     </div>
-
                     <div class="control-group">
                         <button class="btn danger" onclick="clearMap()">Clear Map</button>
                     </div>
                 </div>
+
 
                 <div class="legend">
                     <div class="legend-item">
@@ -554,9 +549,10 @@
         // Global variables
         let isConnected = false;
 
+        let rawPath = [];      // The full original pat
         // Map variables
-        let mapSize = 15;
-        let cellSize = 20;
+        let mapSize = 50;
+        let cellSize = 16;
         let currentTool = 'robot';
         let robotPosition = null;
         let obstacles = new Set();
@@ -566,6 +562,61 @@
         // Controller variables
         let currentDirection = null;
         let moveInterval = null;
+        const DIR_STOP = 0x0000;
+        const DIR_FORWARD = 0x0001;
+        const DIR_FORWARD_RIGHT = 0x0002;
+        const DIR_RIGHT = 0x0003;
+        const DIR_BACKWARD_RIGHT = 0x0004;
+        const DIR_BACKWARD = 0x0005;
+        const DIR_BACKWARD_LEFT = 0x0006;
+        const DIR_LEFT = 0x0007;
+        const DIR_FORWARD_LEFT = 0x0008;
+        const DIR_ROTATE_CW = 0x0009;
+        const directionMap = {
+            '0,-1': DIR_FORWARD,         // e.g. 1
+            '1,-1': DIR_FORWARD_RIGHT,   // e.g. 2
+            '1,0': DIR_RIGHT,            // e.g. 3
+            '1,1': DIR_BACKWARD_RIGHT,   // e.g. 4
+            '0,1': DIR_BACKWARD,         // e.g. 5
+            '-1,1': DIR_BACKWARD_LEFT,   // e.g. 6
+            '-1,0': DIR_LEFT,            // e.g. 7
+            '-1,-1': DIR_FORWARD_LEFT,   // e.g. 8
+            '0,0': DIR_STOP              // e.g. 0
+        };
+        function groupPathSegments(path) {
+            if (path.length <= 1) return path.slice();
+
+            const grouped = [path[0]]; // Always include start
+            let prevDx = null;
+            let prevDy = null;
+
+            for (let i = 1; i < path.length; i++) {
+                const dx = path[i].x - path[i - 1].x;
+                const dy = path[i].y - path[i - 1].y;
+                // If direction changes, add previous point as a macro point
+                if (dx !== prevDx || dy !== prevDy) {
+                    grouped.push(path[i - 1]);
+                    prevDx = dx;
+                    prevDy = dy;
+                }
+            }
+            // Always include the last point
+            grouped.push(path[path.length - 1]);
+            return grouped;
+        }
+
+        function pathToDirectionList(path) {
+            // Convert a path of {x,y} objects into direction codes
+            const dirs = [];
+            for (let i = 1; i < path.length; ++i) {
+                const dx = path[i].x - path[i - 1].x;
+                const dy = path[i].y - path[i - 1].y;
+                const key = `${dx},${dy}`;
+                // Replace with your actual code IDs, for now hardcode 1-8 as in your firmware
+                dirs.push(directionMap[key] ?? 0); // 0 for STOP
+            }
+            return dirs;
+        }
 
         // Direction mappings
         const directions = {
@@ -710,22 +761,6 @@
             ctx = canvas.getContext('2d');
 
             canvas.addEventListener('click', handleMapClick);
-            updateMapSize();
-        }
-
-        function updateMapSize() {
-            mapSize = parseInt(document.getElementById('mapSize').value);
-            document.getElementById('destX').max = mapSize - 1;
-            document.getElementById('destY').max = mapSize - 1;
-            obstacles.clear();
-            robotPosition = null;
-            currentPath = [];
-            drawMap();
-        }
-
-        function updateCellSize() {
-            cellSize = parseInt(document.getElementById('cellSize').value);
-            document.getElementById('cellSizeValue').textContent = cellSize + 'px';
             drawMap();
         }
 
@@ -737,6 +772,8 @@
             obstacles.clear();
             robotPosition = null;
             currentPath = [];
+            document.getElementById('destX').value = "";
+            document.getElementById('destY').value = "";
             drawMap();
         }
 
@@ -750,6 +787,10 @@
                     robotPosition = { x, y };
                 } else if (currentTool === 'obstacle') {
                     obstacles.add(`${x},${y}`);
+                } else if (currentTool === 'destination') {
+                    // Set the destination input boxes
+                    document.getElementById('destX').value = x;
+                    document.getElementById('destY').value = y;
                 } else if (currentTool === 'erase') {
                     obstacles.delete(`${x},${y}`);
                     if (robotPosition && robotPosition.x === x && robotPosition.y === y) {
@@ -764,10 +805,11 @@
             const totalWidth = mapSize * cellSize;
             const totalHeight = mapSize * cellSize;
 
-            canvas.width = totalWidth;
-            canvas.height = totalHeight;
-            canvas.style.width = totalWidth + 'px';
-            canvas.style.height = totalHeight + 'px';
+            canvas.width = mapSize * cellSize;
+            canvas.height = mapSize * cellSize;
+            canvas.style.width = (mapSize * cellSize) + 'px';
+            canvas.style.height = (mapSize * cellSize) + 'px';
+
 
             // Clear canvas
             ctx.clearRect(0, 0, totalWidth, totalHeight);
@@ -798,17 +840,22 @@
             });
 
             // Draw path
-            if (currentPath.length > 0) {
-                ctx.fillStyle = '#4a90e2';
-                currentPath.forEach(point => {
-                    ctx.fillRect(point.x * cellSize + 1, point.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            if (rawPath.length > 0) {
+                ctx.fillStyle = 'rgba(30, 144, 255, 0.2)';  // Faint DodgerBlue
+                rawPath.forEach(point => {
+                    ctx.fillRect(point.x * cellSize + 2, point.y * cellSize + 2, cellSize - 4, cellSize - 4);
                 });
             }
-
-            // Draw robot
             if (robotPosition) {
-                ctx.fillStyle = '#27ae60';
+                ctx.fillStyle = '#27ae60'; // Green color for the robot
                 ctx.fillRect(robotPosition.x * cellSize + 1, robotPosition.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            }
+            // Draw macro (grouped) path (solid blue, slightly smaller so it's on top)
+            if (currentPath.length > 0) {
+                ctx.fillStyle = '#4a90e2';  // Your solid blue
+                currentPath.forEach(point => {
+                    ctx.fillRect(point.x * cellSize + 4, point.y * cellSize + 4, cellSize - 8, cellSize - 8);
+                });
             }
 
             // Draw destination if set
@@ -861,16 +908,17 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log("Received path:", data.path);
-                        currentPath = data.path;
+                        // Use macro_path for demonstration if available
+                        rawPath = data.path || [];
+                        currentPath = groupPathSegments(rawPath);
                         drawMap();
 
                         const pathInfo = document.getElementById('pathInfo');
                         pathInfo.innerHTML = `
                         <strong>PATH FOUND</strong><br>
                         Distance: ${data.distance} units<br>
-                        Steps: ${data.path.length}<br>
-                        Path: ${data.path.map(p => `(${p.x},${p.y})`).join(' → ')}
+                        Steps: ${currentPath.length}<br>
+                        Path: ${currentPath.map(p => `(${p.x},${p.y})`).join(' → ')}
                     `;
                     } else {
                         document.getElementById('pathInfo').innerHTML = `
@@ -899,11 +947,18 @@
                 return;
             }
 
-            // Send path execution command
-            sendCommand({
-                type: 'path',
-                path: currentPath
-            });
+            // Convert currentPath to list of direction codes
+            const dirCodes = pathToDirectionList(currentPath);
+
+            fetch('/api/robot/path', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ path: dirCodes })
+            }).then(res => res.json())
+                .then(data => {
+                    // Handle result/confirmation if needed
+                    console.log('Path execution result:', data);
+                });
 
             document.getElementById('pathInfo').innerHTML = `
                 <strong>EXECUTING PATH</strong><br>
@@ -916,44 +971,6 @@
         setTimeout(() => {
             drawMap();
         }, 100);
-        function connectSerial() {
-            const port = document.getElementById('comPort').value;
-            const baud = document.getElementById('baudRate').value;
-            const statusDiv = document.getElementById('serialStatus');
-
-            if (!port) {
-                alert('Please select a COM port.');
-                return;
-            }
-
-            statusDiv.textContent = 'Connecting...';
-            statusDiv.className = 'status connecting';
-
-            fetch('/api/robot/connect', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ address: port, baudrate: baud })
-            })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        statusDiv.textContent = 'Connected';
-                        statusDiv.className = 'status connected';
-                        window.isConnected = true;
-                    } else {
-                        statusDiv.textContent = 'Disconnected';
-                        statusDiv.className = 'status disconnected';
-                        alert(data.error || 'Connection failed.');
-                        window.isConnected = false;
-                    }
-                })
-                .catch(err => {
-                    statusDiv.textContent = 'Disconnected';
-                    statusDiv.className = 'status disconnected';
-                    alert('Error connecting: ' + err);
-                    window.isConnected = false;
-                });
-        }
 
     </script>
 </body>

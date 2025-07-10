@@ -1,0 +1,54 @@
+from flask import Flask, request, jsonify
+import serial
+import time
+
+app = Flask(__name__)
+
+SERIAL_PORT = 'COM12'  # Change as needed
+BAUD_RATE = 9600
+
+ser = None
+
+def open_serial():
+    global ser
+    if ser is None or not ser.is_open:
+        try:
+            ser = serial.Serial(SERIAL_PORT, BAUD_RATE, timeout=1)
+            print(f"✅ Serial port {SERIAL_PORT} opened.")
+        except Exception as e:
+            ser = None
+            print(f"⚠️ Could not open serial port {SERIAL_PORT}: {e}")
+
+# Try to open the port at startup
+open_serial()
+
+@app.route('/send', methods=['POST'])
+def send_path():
+    open_serial()
+    if ser is None or not ser.is_open:
+        return jsonify({"error": f"Serial port {SERIAL_PORT} not available"}), 500
+
+    data = request.get_json(force=True)
+    path = data.get("path", [])
+
+    # Validate path format: list of pairs
+    if not isinstance(path, list) or any(
+        not isinstance(coord, (list, tuple)) or len(coord) != 2 for coord in path
+    ):
+        return jsonify({"error": "Invalid path format, expected list of [x,y] pairs"}), 400
+
+    try:
+        for coord in path:
+            x, y = coord
+            command = f"{x},{y}\n"
+            ser.write(command.encode())
+            ser.flush()
+            time.sleep(0.01)  # small delay for device to process
+    except Exception as e:
+        return jsonify({"error": f"Failed to write to serial port: {e}"}), 500
+
+    return jsonify({"status": "success", "steps_sent": len(path)}), 200
+
+if __name__ == '__main__':
+    print(f"🚀 Bluetooth server running at http://localhost:5000")
+    app.run(port=5000)
