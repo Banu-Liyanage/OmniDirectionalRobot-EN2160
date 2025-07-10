@@ -549,6 +549,7 @@
         // Global variables
         let isConnected = false;
 
+        let rawPath = [];      // The full original pat
         // Map variables
         let mapSize = 50;
         let cellSize = 16;
@@ -582,6 +583,27 @@
             '-1,-1': DIR_FORWARD_LEFT,   // e.g. 8
             '0,0': DIR_STOP              // e.g. 0
         };
+        function groupPathSegments(path) {
+            if (path.length <= 1) return path.slice();
+
+            const grouped = [path[0]]; // Always include start
+            let prevDx = null;
+            let prevDy = null;
+
+            for (let i = 1; i < path.length; i++) {
+                const dx = path[i].x - path[i - 1].x;
+                const dy = path[i].y - path[i - 1].y;
+                // If direction changes, add previous point as a macro point
+                if (dx !== prevDx || dy !== prevDy) {
+                    grouped.push(path[i - 1]);
+                    prevDx = dx;
+                    prevDy = dy;
+                }
+            }
+            // Always include the last point
+            grouped.push(path[path.length - 1]);
+            return grouped;
+        }
 
         function pathToDirectionList(path) {
             // Convert a path of {x,y} objects into direction codes
@@ -818,17 +840,22 @@
             });
 
             // Draw path
-            if (currentPath.length > 0) {
-                ctx.fillStyle = '#4a90e2';
-                currentPath.forEach(point => {
-                    ctx.fillRect(point.x * cellSize + 1, point.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            if (rawPath.length > 0) {
+                ctx.fillStyle = 'rgba(30, 144, 255, 0.2)';  // Faint DodgerBlue
+                rawPath.forEach(point => {
+                    ctx.fillRect(point.x * cellSize + 2, point.y * cellSize + 2, cellSize - 4, cellSize - 4);
                 });
             }
-
-            // Draw robot
             if (robotPosition) {
-                ctx.fillStyle = '#27ae60';
+                ctx.fillStyle = '#27ae60'; // Green color for the robot
                 ctx.fillRect(robotPosition.x * cellSize + 1, robotPosition.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            }
+            // Draw macro (grouped) path (solid blue, slightly smaller so it's on top)
+            if (currentPath.length > 0) {
+                ctx.fillStyle = '#4a90e2';  // Your solid blue
+                currentPath.forEach(point => {
+                    ctx.fillRect(point.x * cellSize + 4, point.y * cellSize + 4, cellSize - 8, cellSize - 8);
+                });
             }
 
             // Draw destination if set
@@ -881,16 +908,17 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        console.log("Received path:", data.path);
-                        currentPath = data.path;
+                        // Use macro_path for demonstration if available
+                        rawPath = data.path || [];
+                        currentPath = groupPathSegments(rawPath);
                         drawMap();
 
                         const pathInfo = document.getElementById('pathInfo');
                         pathInfo.innerHTML = `
                         <strong>PATH FOUND</strong><br>
                         Distance: ${data.distance} units<br>
-                        Steps: ${data.path.length}<br>
-                        Path: ${data.path.map(p => `(${p.x},${p.y})`).join(' → ')}
+                        Steps: ${currentPath.length}<br>
+                        Path: ${currentPath.map(p => `(${p.x},${p.y})`).join(' → ')}
                     `;
                     } else {
                         document.getElementById('pathInfo').innerHTML = `
