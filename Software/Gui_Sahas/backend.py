@@ -929,6 +929,46 @@ def autonavigate():
         return jsonify({"success": False, "error": str(e)})
 
 
+@app.route("/api/robot/velocity_profile", methods=["POST"])
+def set_velocity_profile():
+    data = request.json
+    profile_type = data.get("type")
+    vmax = int(data.get("vmax", 0))
+    acc = int(data.get("acc", 0))
+
+    logger.info(f"Received velocity profile: {profile_type} | vmax={vmax}, acc={acc}")
+
+    if not robot_controller.is_connected:
+        return jsonify({"success": False, "error": "Serial port not available"})
+
+    if vmax < 0 or acc < 0:
+        return jsonify({"success": False, "error": "vmax and acc must be non-negative"})
+
+    # Command mapping
+    cmd_map = {
+        "motion": (CMD_MOTION_PROFILE, CMD_MOTION_PROFILE + 1),
+        "strafe": (CMD_STRAFE_PROFILE, CMD_STRAFE_PROFILE + 1),
+        "rotation": (CMD_ROTATION_PROFILE, CMD_ROTATION_PROFILE + 1),
+    }
+
+    cmd_ids = cmd_map.get(profile_type)
+    if not cmd_ids:
+        return jsonify({"success": False, "error": "Invalid profile type"})
+
+    try:
+        # Each command is 4 bytes: [CMD_ID][VALUE] = 2 x uint16
+        packet_vmax = struct.pack("<HH", cmd_ids[0], vmax)
+        packet_acc = struct.pack("<HH", cmd_ids[1], acc)
+
+        ok1 = robot_controller._write_packet(packet_vmax)
+        ok2 = robot_controller._write_packet(packet_acc)
+
+        return jsonify({"success": ok1 and ok2})
+    except Exception as e:
+        logger.error(f"Failed to send velocity profile: {e}")
+        return jsonify({"success": False, "error": str(e)})
+
+
 # Error handlers
 @app.errorhandler(404)
 def not_found(error):
