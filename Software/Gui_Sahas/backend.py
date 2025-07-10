@@ -8,13 +8,42 @@ import serial
 from typing import List, Dict, Tuple, Optional
 import logging
 import math
+import struct
+from protocol_ids import *
 
 app = Flask(__name__)
 CORS(app)
 
+DIRECTION_MAP = {
+    (0, 0): DIR_STOP,
+    (0, -1): DIR_FORWARD,
+    (1, -1): DIR_FORWARD_RIGHT,
+    (1, 0): DIR_RIGHT,
+    (1, 1): DIR_BACKWARD_RIGHT,
+    (0, 1): DIR_BACKWARD,
+    (-1, 1): DIR_BACKWARD_LEFT,
+    (-1, 0): DIR_LEFT,
+    (-1, -1): DIR_FORWARD_LEFT,
+    # Add as needed
+}
+INVERSE_DIRECTION_MAP = {v: k for k, v in DIRECTION_MAP.items()}
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+def build_packet(cmd, value):
+    # For 16-bit command and 16/32-bit values, adjust as per your protocol
+    return struct.pack("<HH", cmd, value)
+
+
+def parse_packet(data):
+    # Expecting pairs: [CMD][VALUE] e.g. 4 bytes per packet
+    if len(data) >= 4:
+        cmd, value = struct.unpack("<HH", data[:4])
+        return cmd, value
+    return None, None
 
 
 class RobotController:
@@ -22,26 +51,23 @@ class RobotController:
         self.serial_port = None
         self.is_connected = False
         self.robot_address = None
-        self.current_position = None
-        self.current_direction = {"x": 0, "y": 0}
+        self.current_direction = DIR_STOP
         self.movement_active = False
         self.last_command_time = 0
-        self.command_interval = 0.1  # Minimum time between commands (100ms)
+        self.command_interval = 0.1
 
     def connect_serial(self, port: str, baudrate: int = 9600) -> bool:
         try:
             if self.serial_port and self.serial_port.is_open:
                 self.serial_port.close()
-
             self.serial_port = serial.Serial(port, baudrate, timeout=1)
-            time.sleep(2)  # allow Arduino reset
+            time.sleep(2)
             self.serial_port.reset_input_buffer()
             self.serial_port.reset_output_buffer()
-
             self.is_connected = True
             self.robot_address = port
             logger.info(f"Connected to {port}@{baudrate}")
-            self.send_command({"type": "test", "message": "connection_ok"})
+            # Optional: send a motion start or test packet if you want
             return True
         except Exception as e:
             logger.error("Serial connect failed: %s", e)
@@ -49,117 +75,66 @@ class RobotController:
             return False
 
     def disconnect_serial(self):
-        """Disconnect from robot"""
         if self.serial_port and self.serial_port.is_open:
             self.serial_port.close()
             self.is_connected = False
             self.robot_address = None
             logger.info("Disconnected from robot")
 
-    def send_command(self, command: Dict) -> bool:
-        print("DEBUG: Attempting to send", command)
-        if (
-            not self.is_connected
-            or not self.serial_port
-            or not self.serial_port.is_open
-        ):
-            print("DEBUG: Not connected or port closed")
+    def _write_packet(self, packet: bytes):
+        if not (self.is_connected and self.serial_port and self.serial_port.is_open):
+            logger.warning("Not connected or port closed")
             return False
-
         now = time.time()
         if now - self.last_command_time < self.command_interval:
-            print("DEBUG: Rate-limited")
+            logger.debug("Rate-limited")
             return True
-
         try:
-            s = json.dumps(command) + "\n"
-            print("DEBUG: → serial:", s.strip())
-            self.serial_port.write(s.encode("utf-8"))
+            self.serial_port.write(packet)
             self.serial_port.flush()
             self.last_command_time = now
-
-            time.sleep(0.05)
-            if self.serial_port.in_waiting:
-                resp = self.serial_port.readline().decode().strip()
-                print("DEBUG: ← serial:", resp)
             return True
         except Exception as e:
             logger.error("Send failed: %s", e)
             return False
 
-    def send_directional_command(self, x: int, y: int, action: str = "move"):
-        """Send directional movement command for 8-button controller"""
-        # Normalize the input values
-        x = max(-1, min(1, x))
-        y = max(-1, min(1, y))
+    def send_direction(self, dir_id: int):
+        # Example: Send [CMD_DIRECTION, dir_id]
+        packet = struct.pack("<HH", CMD_DIRECTION, dir_id)
+        self.current_direction = dir_id
+        self.movement_active = dir_id != DIR_STOP
+        return self._write_packet(packet)
 
-        # Map direction to readable names
-        direction_map = {
-            (-1, -1): "northwest",
-            (0, -1): "north",
-            (1, -1): "northeast",
-            (-1, 0): "west",
-            (0, 0): "stop",
-            (1, 0): "east",
-            (-1, 1): "southwest",
-            (0, 1): "south",
-            (1, 1): "southeast",
-        }
+    def send_speed(self, speed: int):
+        # Example: Send [CMD_SPEED, speed]
+        packet = struct.pack("<HH", CMD_SPEED, speed)
+        return self._write_packet(packet)
 
-        direction_name = direction_map.get((x, y), "unknown")
-
-        # Calculate speed based on direction (diagonal moves might be slower)
-        speed = 1.0
-        if x != 0 and y != 0:  # Diagonal movement
-            speed = 0.7  # Reduce speed for diagonal moves
-
-        command = {
-            "type": "directional",
-            "action": action,
-            "x": x,
-            "y": y,
-            "direction": direction_name,
-            "speed": speed,
-            "timestamp": time.time(),
-        }
-
-        self.current_direction = {"x": x, "y": y}
-        self.movement_active = x != 0 or y != 0
-
-        return self.send_command(command)
-
-    def send_rotate_command(self, direction: str) -> bool:
-        command = {"type": "rotate", "direction": direction, "timestamp": time.time()}
-        return self.send_command(command)
-
-    def send_stop_command(self):
-        """Send stop command"""
-        command = {
-            "type": "directional",
-            "action": "stop",
-            "x": 0,
-            "y": 0,
-            "direction": "stop",
-            "speed": 0,
-            "timestamp": time.time(),
-        }
-
-        self.current_direction = {"x": 0, "y": 0}
+    def send_stop(self):
+        # Example: Send [CMD_STOP, 0]
+        packet = struct.pack("<HH", CMD_STOP, 0)
+        self.current_direction = DIR_STOP
         self.movement_active = False
+        return self._write_packet(packet)
 
-        return self.send_command(command)
+    def send_imu(self, imu_x: int, imu_y: int, imu_rot: int):
+        # Example: Send [CMD_IMU_X, imu_x], [CMD_IMU_Y, imu_y], [CMD_IMU_ROTATION, imu_rot]
+        p1 = struct.pack("<HH", CMD_IMU_X, imu_x)
+        p2 = struct.pack("<HH", CMD_IMU_Y, imu_y)
+        p3 = struct.pack("<HH", CMD_IMU_ROTATION, imu_rot)
+        return self._write_packet(p1 + p2 + p3)
 
-    def send_joystick_command(self, x: int, y: int):
-        """Legacy joystick command - maps to directional command"""
-        return self.send_directional_command(x, y)
+    def send_rotate_command(self, clockwise: bool = True):
+        # Use DIR_ROTATE_CW or DIR_ROTATE_CCW (if defined)
+        dir_id = (
+            DIR_ROTATE_CW if clockwise else DIR_ROTATE_CCW
+        )  # Define DIR_ROTATE_CCW if needed
+        return self.send_direction(dir_id)
 
-    def send_path_command(self, path: List[Dict]):
-        """Send path execution command"""
-        command = {"type": "path", "path": path, "timestamp": time.time()}
-        return self.send_command(command)
+    # Add this after DIRECTION_MAP:
 
+    # Update get_current_direction_info()
     def get_current_direction_info(self) -> Dict:
-        """Get current direction information"""
         direction_names = {
             (-1, -1): "↖ Northwest",
             (0, -1): "↑ North",
@@ -172,7 +147,8 @@ class RobotController:
             (1, 1): "↘ Southeast",
         }
 
-        x, y = self.current_direction["x"], self.current_direction["y"]
+        dir_id = self.current_direction
+        x, y = INVERSE_DIRECTION_MAP.get(dir_id, (0, 0))
         return {
             "x": x,
             "y": y,
@@ -607,30 +583,49 @@ def disconnect_robot():
 
 @app.route("/api/robot/move", methods=["POST"])
 def move_robot():
-    """Handle directional movement from 8-button controller"""
     data = request.json
-
-    x = data.get("x", 0)
-    y = data.get("y", 0)
-    action = data.get("action", "move")
-
-    if action == "stop":
-        success = robot_controller.send_stop_command()
-    else:
-        success = robot_controller.send_directional_command(x, y, action)
-
-    return jsonify(
-        {"success": success, "direction": robot_controller.get_current_direction_info()}
-    )
+    x = int(data.get("x", 0))
+    y = int(data.get("y", 0))
+    dir_id = DIRECTION_MAP.get((x, y), DIR_STOP)
+    success = robot_controller.send_direction(dir_id)
+    return jsonify({"success": success, "direction": dir_id})
 
 
 @app.route("/api/robot/stop", methods=["POST"])
 def stop_robot():
-    """Stop robot movement"""
-    success = robot_controller.send_stop_command()
-    return jsonify(
-        {"success": success, "direction": robot_controller.get_current_direction_info()}
-    )
+    success = robot_controller.send_stop()
+    return jsonify({"success": success})
+
+
+@app.route("/api/robot/speed", methods=["POST"])
+def set_speed():
+    data = request.json
+    speed = int(data.get("speed", 0))
+    success = robot_controller.send_speed(speed)
+    return jsonify({"success": success})
+
+
+@app.route("/api/robot/rotate", methods=["POST"])
+def rotate_robot():
+    data = request.json
+    clockwise = bool(data.get("clockwise", True))
+    success = robot_controller.send_rotate_command(clockwise)
+    return jsonify({"success": success})
+
+
+@app.route("/api/robot/path", methods=["POST"])
+def send_path():
+    data = request.json
+    path = data.get("path", [])
+    # Path is a list of direction codes: [1, 2, 3, ...]
+    success = True
+    for dir_id in path:
+        ok = robot_controller.send_direction(dir_id)
+        time.sleep(0.05)  # Adjust for robot reaction/processing
+        if not ok:
+            success = False
+            break
+    return jsonify({"success": success})
 
 
 @app.route("/api/robot/command", methods=["POST"])
@@ -639,16 +634,29 @@ def send_robot_command():
     t = cmd.get("type")
     if t == "joystick":
         x, y = int(cmd.get("x", 0)), int(cmd.get("y", 0))
-        success = robot_controller.send_joystick_command(x, y)
+        dir_id = DIRECTION_MAP.get((x, y), DIR_STOP)
+        success = robot_controller.send_direction(dir_id)
     elif t == "rotate":
         direction = cmd.get("direction", "left")
-        success = robot_controller.send_rotate_command(direction)
+        # Support string direction if desired, or default to True/False for CW/CCW
+        if direction == "right":
+            success = robot_controller.send_rotate_command(clockwise=True)
+        else:
+            success = robot_controller.send_rotate_command(clockwise=False)
     elif t == "path":
-        success = robot_controller.send_path_command(cmd.get("path", []))
+        logger.warning(
+            "DEPRECATED: Do not use /api/robot/command for path execution. Use /api/robot/path with direction codes!"
+        )
+        return jsonify(
+            {
+                "success": False,
+                "error": "Path execution via this endpoint is deprecated.",
+            }
+        )
     elif t == "stop":
-        success = robot_controller.send_stop_command()
+        success = robot_controller.send_stop()
     else:
-        success = robot_controller.send_command(cmd)
+        success = False
     return jsonify({"success": success})
 
 
@@ -806,7 +814,7 @@ robot_simulator = RobotSimulator()
 @app.route("/api/robot/simulate", methods=["POST"])
 def simulate_robot():
     """Simulate robot movement for testing"""
-    data = request.jsons
+    data = request.json
 
     if data.get("type") == "path":
         path = data.get("path", [])
