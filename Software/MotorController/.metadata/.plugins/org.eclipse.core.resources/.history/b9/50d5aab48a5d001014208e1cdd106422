@@ -1,0 +1,71 @@
+/*
+ * RS485.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "RS485.h"
+#include "stm32f4xx_hal.h"
+
+extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart2;
+
+
+// Execute received command
+void ExecuteCommand(uint8_t command, uint8_t value)
+{
+    char debugMsg[100];
+
+    // Clamp velocity value
+    if (value > MAX_VELOCITY) value = MAX_VELOCITY;
+    if (value < MIN_VELOCITY) value = MIN_VELOCITY;
+
+    switch (command)
+    {
+        case CMD_FORWARD:
+            // All motors forward
+        	HAL_GPIO_TogglePin(Status_LED_GPIO_Port, Status_LED_GPIO_Pin)
+            break;
+
+        case CMD_BACKWARD:
+            // All motors backward
+            break;
+
+        case CMD_LEFT:
+            break;
+
+        case CMD_RIGHT:
+            // Strafe right
+            break;
+
+        case CMD_FORWARD_LEFT:
+            // Diagonal forward-left
+            break;
+
+        case CMD_FORWARD_RIGHT:
+            // Diagonal forward-right
+
+            break;
+
+        case CMD_BACKWARD_LEFT:
+            // Diagonal backward-left
+            break;
+
+        case CMD_BACKWARD_RIGHT:
+            // Diagonal backward-right
+
+            break;
+
+        case CMD_VELOCITY:
+            // Set current velocity for future commands
+            currentVelocity = value;
+            return; // Don't update motors, just store velocity
+
+        default:
+
+            return;
+    }
+
+}

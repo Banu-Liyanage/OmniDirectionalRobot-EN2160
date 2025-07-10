@@ -29,6 +29,7 @@
 #include "profile.h"
 #include "controller.h"
 #include "motion.h"
+#include "RS485.h"
 
 /* USER CODE END Includes */
 
@@ -100,6 +101,12 @@ Motion motion;
 
 //uint8_t rx_data;
 
+uint8_t rxBuffer[2];
+uint8_t rxIndex = 0;
+float currentVelocity = DEFAULT_VELOCITY;
+uint8_t commandReceived = 0;
+
+
 /* USER CODE END 0 */
 
 /**
@@ -162,6 +169,9 @@ int main(void)
   // Init BLuetooth Debug
   UART_Init(&huart2);
 
+  // Start UART receive interrupt
+  HAL_UART_Receive_IT(&huart3, &rxBuffer[rxIndex], 1);
+
   // Velocity timer
   HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start_IT(&htim13);
@@ -181,7 +191,7 @@ int main(void)
   Controller_ResetControllers(&controller);
   Motion_ResetDriveSystem(&motion);
 
-  HAL_Delay(4000);
+  HAL_Delay(5000);
 
 //Profile_Move(&x_profile, 2, 0.25, 0, 0.05);
 //  Profile_Move(&y_profile, 4, 0.6, 0, 0.05);
@@ -191,12 +201,12 @@ int main(void)
 //  Profile_Move(&y_profile, 0, 0, 0, 0);
 //  Profile_Move(&W_profile, 0, 0, 0, 0);
 
- Motion_X(&motion, 3);
+ //Motion_X(&motion, 3);
  //Motion_Y(&motion, -1);
 
   HAL_Delay(1000);
 
-  HAL_UART_Receive_IT(&huart3, rx_data, 1);
+  //HAL_UART_Receive_IT(&huart3, rx_data, 1);
 
   //TIM1->CCR1 = (uint32_t)3500;
 
@@ -222,7 +232,7 @@ int main(void)
 
 // set_robot_velocity(0, 0, 0);
  //resetIntegralTerms();
-  int i = 0;
+  //int i = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -237,11 +247,12 @@ int main(void)
 	//int cunt = getRearRightEncoderCounts();
 	 //float current = 2.434;
 	//UART_Transmit_Float(&huart2, "i", current, 2);
-    UART_Transmit_Int(&huart2, "S", i);
-    UART_Transmit_Int(&huart3, "S", i);
-    i++;
-    HAL_Delay(1000);
-
+//    UART_Transmit_Int(&huart2, "S", i);
+//    UART_Transmit_Int(&huart3, "S", i);
+//    i++;
+//    HAL_Delay(1000);
+	  SendTelemetryData();
+	  HAL_Delay(100);
 
 
 	  //UART_Transmit_WheelW(&huart2, m1_W, m4_W, m2_W, m3_W);
@@ -863,22 +874,51 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 
 	}
 }
-
+int j = 0;
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-  if (huart == &huart3)
-  {
-    // Transmit received data via USART2
+	if (huart->Instance == USART3)
+	    {
+//		HAL_GPIO_TogglePin(LED_RX_GPIO_Port, LED_RX_Pin);
+	        rxIndex++;
+	        j++;
+	        HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
 
+	        if (rxIndex >= 2)
+	        {
+	            // Complete command received
+	            commandReceived = 1;
+	            rxIndex = 0;
+	            if (commandReceived)
+				{
+	            	UART_Transmit_Int(&huart2, "R", rxBuffer[0]);
+					ExecuteCommand(rxBuffer[0], rxBuffer[1]);
+					commandReceived = 0;
+				}
 
-    HAL_UART_Transmit(&huart2, rx_data, 1, HAL_MAX_DELAY);
-	//UART_Transmit_Int(&huart2, "RT", 69);
+	            // Echo back the received command
+	            //HAL_UART_Transmit(&huart2, rxBuffer, 2, 100);
 
-    HAL_GPIO_TogglePin(Status_LED_GPIO_Port, Status_LED_Pin);
+	        }
 
-    // Restart reception
-    HAL_UART_Receive_IT(&huart3, rx_data, 1);
-  }
+	        // Continue receiving
+	        HAL_UART_Receive_IT(&huart3, &rxBuffer[rxIndex], 1);
+	    }
+//
+
+//  if (huart == &huart3)
+//  {
+//    // Transmit received data via USART2
+//
+//
+//    HAL_UART_Transmit(&huart2, rx_data, 1, HAL_MAX_DELAY);
+//	//UART_Transmit_Int(&huart2, "RT", 69);
+//
+//    HAL_GPIO_TogglePin(Status_LED_GPIO_Port, Status_LED_Pin);
+//
+//    // Restart reception
+//    HAL_UART_Receive_IT(&huart3, rx_data, 1);
+//  }
 }
 /* USER CODE END 4 */
 

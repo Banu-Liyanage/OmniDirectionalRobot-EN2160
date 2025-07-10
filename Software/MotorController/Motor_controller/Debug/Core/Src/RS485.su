@@ -1,0 +1,3 @@
+../Core/Src/RS485.c:18:6:ExecuteCommand	16	static
+../Core/Src/RS485.c:78:6:SendTelemetryPacket	24	static
+../Core/Src/RS485.c:95:6:SendTelemetryData	8	static
