@@ -14,6 +14,7 @@ from protocol_ids import *
 app = Flask(__name__)
 CORS(app)
 
+
 DIRECTION_MAP = {
     (0, 0): DIR_STOP,
     (0, -1): DIR_FORWARD,
