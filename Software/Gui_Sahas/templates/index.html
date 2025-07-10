@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Control Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: #ffffff;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .control-panel {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border-radius: 12px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        .panel h2 {
+            margin-bottom: 25px;
+            color: #ffffff;
+            font-size: 1.4em;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #4a90e2;
+            padding-bottom: 10px;
+        }
+
+        /* Serial Connection Section */
+        .serial-section {
+            margin-bottom: 25px;
+        }
+
+        .serial-config {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .config-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .config-group label {
+            font-weight: 500;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .config-group select,
+        .config-group input {
+            padding: 8px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            font-size: 14px;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(74, 144, 226, 0.4);
+        }
+
+        .btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn.danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn.danger:hover {
+            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+        }
+
+        .btn.success {
+            background: linear-gradient(45deg, #27ae60, #229954);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .btn.success:hover {
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status.connected {
+            background: rgba(39, 174, 96, 0.2);
+            color: #27ae60;
+            border: 1px solid #27ae60;
+        }
+
+        .status.disconnected {
+            background: rgba(231, 76, 60, 0.2);
+            color: #e74c3c;
+            border: 1px solid #e74c3c;
+        }
+
+        .status.connecting {
+            background: rgba(243, 156, 18, 0.2);
+            color: #f39c12;
+            border: 1px solid #f39c12;
+        }
+
+        /* 8-Button Controller Styles */
+        .controller-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .controller {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            gap: 15px;
+            width: 200px;
+            height: 200px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #34495e, #2c3e50);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(45deg, #4a90e2, #357abd);
+        }
+
+        .control-btn:active {
+            transform: translateY(0);
+            background: linear-gradient(45deg, #27ae60, #229954);
+        }
+
+        .control-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .coordinates {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+            min-width: 180px;
+        }
+
+        /* Map Editor Styles */
+        .map-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-weight: 500;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .control-group input,
+        .control-group select {
+            padding: 10px 12px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            font-size: 14px;
+        }
+
+        .control-group input:focus,
+        .control-group select:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .grid-canvas {
+            width: 100%;
+            height: 100%;
+            cursor: crosshair;
+        }
+
+        .path-planning {
+            margin-top: 20px;
+            grid-column: 1 / -1;
+        }
+
+        .destination-input {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .destination-input label {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 13px;
+        }
+
+        .destination-input input {
+            width: 70px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 6px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            font-size: 14px;
+        }
+
+        .path-info {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            line-height: 1.6;
+        }
+
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .control-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .controller {
+                width: 180px;
+                height: 180px;
+                gap: 10px;
+            }
+
+            .control-btn {
+                font-size: 14px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .serial-config {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Robot Control Center</h1>
+            <p>Omni-Directional Robot Control & Path Planning System </p>
+        </div>
+
+        <div class="control-panel">
+            <!-- Manual Control Panel -->
+            <div class="panel">
+                <h2>Manual Control</h2>
+
+                <div class="serial-section">
+                    <div class="serial-config">
+                        <div class="config-group">
+                            <label>COM Port:</label>
+                            <select id="comPort">
+                                <option value="">Select Port</option>
+                                <option value="COM1">COM1</option>
+                                <option value="COM2">COM2</option>
+                                <option value="COM3">COM3</option>
+                                <option value="COM4">COM4</option>
+                                <option value="COM5">COM5</option>
+                                <option value="COM6">COM6</option>
+                                <option value="COM7">COM7</option>
+                                <option value="COM8">COM8</option>
+                                <option value="COM9">COM9</option>
+                                <option value="COM10">COM10</option>
+                                <option value="/dev/ttyUSB0">/dev/ttyUSB0</option>
+                                <option value="/dev/ttyUSB1">/dev/ttyUSB1</option>
+                                <option value="/dev/ttyACM0">/dev/ttyACM0</option>
+                                <option value="/dev/ttyACM1">/dev/ttyACM1</option>
+                            </select>
+                        </div>
+                        <div class="config-group">
+                            <label>Baud Rate:</label>
+                            <select id="baudRate">
+                                <option value="9600">9600</option>
+                                <option value="19200">19200</option>
+                                <option value="38400">38400</option>
+                                <option value="57600">57600</option>
+                                <option value="115200" selected>115200</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button class="btn" id="connectBtn" onclick="connectSerial()">Connect Robot</button>
+                        <button class="btn" id="refreshBtn" onclick="refreshPorts()">Refresh Ports</button>
+                    </div>
+
+                    <div class="status disconnected" id="serialStatus">Disconnected</div>
+                </div>
+
+                <div class="controller-container">
+                    <div class="controller">
+                        <button class="control-btn" onmousedown="startMove(-1, -1)" onmouseup="stopMove()">↖</button>
+                        <button class="control-btn" onmousedown="startMove(0, -1)" onmouseup="stopMove()">↑</button>
+                        <button class="control-btn" onmousedown="startMove(1, -1)" onmouseup="stopMove()">↗</button>
+                        <button class="control-btn" onmousedown="startMove(-1, 0)" onmouseup="stopMove()">←</button>
+                        <button class="control-btn danger" onmousedown="stopMove()" onmouseup="stopMove()">STOP</button>
+                        <button class="control-btn" onmousedown="startMove(1, 0)" onmouseup="stopMove()">→</button>
+                        <button class="control-btn" onmousedown="startMove(-1, 1)" onmouseup="stopMove()">↙</button>
+                        <button class="control-btn" onmousedown="startMove(0, 1)" onmouseup="stopMove()">↓</button>
+                        <button class="control-btn" onmousedown="startMove(1, 1)" onmouseup="stopMove()">↘</button>
+                        <button class="control-btn" onclick="rotateLeft()">⟲</button>
+                        <button class="control-btn" onclick="rotateRight()">⟳</button>
+                    </div>
+                    <div class="coordinates" id="coordinates">Direction: STOP</div>
+                </div>
+            </div>
+
+            <!-- Map Editor Panel -->
+            <div class="panel">
+                <h2>Map Editor</h2>
+
+                <div class="map-controls">
+                    <div class="control-group">
+                        <label>Map Size:</label>
+                        <select id="mapSize" onchange="updateMapSize()">
+                            <option value="10">10x10</option>
+                            <option value="15" selected>15x15</option>
+                            <option value="20">20x20</option>
+                            <option value="25">25x25</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Cell Size:</label>
+                        <input type="range" id="cellSize" min="15" max="30" value="20" onchange="updateCellSize()">
+                        <span id="cellSizeValue">20px</span>
+                    </div>
+
+                    <div class="control-group">
+                        <label>Tool:</label>
+                        <select id="toolSelect" onchange="changeTool()">
+                            <option value="robot">Place Robot</option>
+                            <option value="obstacle">Add Obstacle</option>
+                            <option value="erase">Erase</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <button class="btn danger" onclick="clearMap()">Clear Map</button>
+                    </div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #27ae60;"></div>
+                        <span>Robot</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e74c3c;"></div>
+                        <span>Obstacle</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #4a90e2;"></div>
+                        <span>Path</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f39c12;"></div>
+                        <span>Destination</span>
+                    </div>
+                </div>
+
+                <div class="map-container">
+                    <canvas class="grid-canvas" id="mapCanvas"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Path Planning Section -->
+        <div class="panel path-planning">
+            <h2>Path Planning</h2>
+
+            <div class="destination-input">
+                <label>Destination:</label>
+                <input type="number" id="destX" placeholder="X" min="0" max="24">
+                <input type="number" id="destY" placeholder="Y" min="0" max="24">
+                <button class="btn" onclick="planPath()">Plan Path</button>
+                <button class="btn success" onclick="executeMove()">Execute Move</button>
+            </div>
+
+            <div class="path-info" id="pathInfo">
+                Click "Plan Path" to calculate the optimal route to destination.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let isConnected = false;
+
+        // Map variables
+        let mapSize = 15;
+        let cellSize = 20;
+        let currentTool = 'robot';
+        let robotPosition = null;
+        let obstacles = new Set();
+        let currentPath = [];
+        let canvas, ctx;
+
+        // Controller variables
+        let currentDirection = null;
+        let moveInterval = null;
+
+        // Direction mappings
+        const directions = {
+            '0,-1': 'NORTH',
+            '1,-1': 'NORTHEAST',
+            '1,0': 'EAST',
+            '1,1': 'SOUTHEAST',
+            '0,1': 'SOUTH',
+            '-1,1': 'SOUTHWEST',
+            '-1,0': 'WEST',
+            '-1,-1': 'NORTHWEST'
+        };
+
+        // Initialize the application
+        window.addEventListener('load', function () {
+            initializeMap();
+
+            // Check for Bluetooth support
+            // if (!navigator.bluetooth) {
+            //     document.getElementById('connectBtn').disabled = true;
+            //     document.getElementById('bluetoothStatus').textContent = 'Bluetooth not supported';
+            // }
+        });
+        // --- ADD for serial over HC-05 instead of Bluetooth ---
+        window.isConnected = false;
+
+        function connectSerial() {
+            const port = document.getElementById('comPort').value;
+            const baud = parseInt(document.getElementById('baudRate').value, 10);
+            const statusDiv = document.getElementById('serialStatus');
+            if (!port) return alert('Please select a COM port.');
+
+            statusDiv.textContent = 'Connecting...';
+            statusDiv.className = 'status connecting';
+
+            fetch('/api/robot/connect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: port, baudrate: baud })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        statusDiv.textContent = 'Connected';
+                        statusDiv.className = 'status connected';
+                        window.isConnected = true;
+                    } else {
+                        statusDiv.textContent = 'Disconnected';
+                        statusDiv.className = 'status disconnected';
+                        window.isConnected = false;
+                        alert(data.error || 'Connection failed.');
+                    }
+                })
+                .catch(err => {
+                    statusDiv.textContent = 'Disconnected';
+                    statusDiv.className = 'status disconnected';
+                    window.isConnected = false;
+                    console.error('Serial connect error:', err);
+                });
+        }
+
+        function sendCommand(command) {
+            if (!window.isConnected) {
+                console.warn('Serial not connected — dropping', command);
+                return;
+            }
+            console.debug('→ sending', command);
+            fetch('/api/robot/command', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(command)
+            })
+                .then(res => res.json())
+                .then(data => console.debug('← got', data))
+                .catch(e => console.error('Send failed:', e));
+        }
+        // — end ADD
+
+
+        // Controller Functions
+        function startMove(x, y) {
+            if (moveInterval) {
+                clearInterval(moveInterval);
+            }
+
+            currentDirection = `${x},${y}`;
+            const directionName = directions[currentDirection] || 'STOP';
+
+            document.getElementById('coordinates').textContent = `Direction: ${directionName}`;
+
+            // Send the proper joystick command (matches backend)
+            sendCommand({
+                type: 'joystick',
+                x: x,
+                y: y
+            });
+
+            // Optional: Keep sending if button is held down (for real-time movement)
+            moveInterval = setInterval(() => {
+                sendCommand({
+                    type: 'joystick',
+                    x: x,
+                    y: y
+                });
+            }, 100);
+        }
+
+
+        function stopMove() {
+            if (moveInterval) {
+                clearInterval(moveInterval);
+                moveInterval = null;
+            }
+
+            currentDirection = null;
+            document.getElementById('coordinates').textContent = 'Direction: STOP';
+
+            // Send stop command
+            sendCommand({
+                type: 'joystick',
+                x: 0,
+                y: 0
+            });
+        }
+        function rotateLeft() {
+            sendCommand({
+                type: 'rotate',
+                direction: 'left'
+            });
+        }
+        function rotateRight() {
+            sendCommand({
+                type: 'rotate',
+                direction: 'right'
+            });
+        }
+
+
+        // Map Functions
+        function initializeMap() {
+            canvas = document.getElementById('mapCanvas');
+            ctx = canvas.getContext('2d');
+
+            canvas.addEventListener('click', handleMapClick);
+            updateMapSize();
+        }
+
+        function updateMapSize() {
+            mapSize = parseInt(document.getElementById('mapSize').value);
+            document.getElementById('destX').max = mapSize - 1;
+            document.getElementById('destY').max = mapSize - 1;
+            obstacles.clear();
+            robotPosition = null;
+            currentPath = [];
+            drawMap();
+        }
+
+        function updateCellSize() {
+            cellSize = parseInt(document.getElementById('cellSize').value);
+            document.getElementById('cellSizeValue').textContent = cellSize + 'px';
+            drawMap();
+        }
+
+        function changeTool() {
+            currentTool = document.getElementById('toolSelect').value;
+        }
+
+        function clearMap() {
+            obstacles.clear();
+            robotPosition = null;
+            currentPath = [];
+            drawMap();
+        }
+
+        function handleMapClick(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) / cellSize);
+            const y = Math.floor((e.clientY - rect.top) / cellSize);
+
+            if (x >= 0 && x < mapSize && y >= 0 && y < mapSize) {
+                if (currentTool === 'robot') {
+                    robotPosition = { x, y };
+                } else if (currentTool === 'obstacle') {
+                    obstacles.add(`${x},${y}`);
+                } else if (currentTool === 'erase') {
+                    obstacles.delete(`${x},${y}`);
+                    if (robotPosition && robotPosition.x === x && robotPosition.y === y) {
+                        robotPosition = null;
+                    }
+                }
+                drawMap();
+            }
+        }
+
+        function drawMap() {
+            const totalWidth = mapSize * cellSize;
+            const totalHeight = mapSize * cellSize;
+
+            canvas.width = totalWidth;
+            canvas.height = totalHeight;
+            canvas.style.width = totalWidth + 'px';
+            canvas.style.height = totalHeight + 'px';
+
+            // Clear canvas
+            ctx.clearRect(0, 0, totalWidth, totalHeight);
+
+            // Draw grid
+            ctx.strokeStyle = '#ccc';
+            ctx.lineWidth = 1;
+
+            for (let i = 0; i <= mapSize; i++) {
+                // Vertical lines
+                ctx.beginPath();
+                ctx.moveTo(i * cellSize, 0);
+                ctx.lineTo(i * cellSize, totalHeight);
+                ctx.stroke();
+
+                // Horizontal lines
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellSize);
+                ctx.lineTo(totalWidth, i * cellSize);
+                ctx.stroke();
+            }
+
+            // Draw obstacles
+            ctx.fillStyle = '#e74c3c';
+            obstacles.forEach(obstacle => {
+                const [x, y] = obstacle.split(',').map(Number);
+                ctx.fillRect(x * cellSize + 1, y * cellSize + 1, cellSize - 2, cellSize - 2);
+            });
+
+            // Draw path
+            if (currentPath.length > 0) {
+                ctx.fillStyle = '#4a90e2';
+                currentPath.forEach(point => {
+                    ctx.fillRect(point.x * cellSize + 1, point.y * cellSize + 1, cellSize - 2, cellSize - 2);
+                });
+            }
+
+            // Draw robot
+            if (robotPosition) {
+                ctx.fillStyle = '#27ae60';
+                ctx.fillRect(robotPosition.x * cellSize + 1, robotPosition.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            }
+
+            // Draw destination if set
+            const destX = parseInt(document.getElementById('destX').value);
+            const destY = parseInt(document.getElementById('destY').value);
+            if (!isNaN(destX) && !isNaN(destY) && destX >= 0 && destX < mapSize && destY >= 0 && destY < mapSize) {
+                ctx.fillStyle = '#f39c12';
+                ctx.fillRect(destX * cellSize + 1, destY * cellSize + 1, cellSize - 2, cellSize - 2);
+            }
+        }
+
+        // Path Planning Functions
+        function planPath() {
+            if (!robotPosition) {
+                alert('Please place the robot on the map first');
+                return;
+            }
+
+            const destX = parseInt(document.getElementById('destX').value);
+            const destY = parseInt(document.getElementById('destY').value);
+
+            if (isNaN(destX) || isNaN(destY)) {
+                alert('Please enter valid destination coordinates');
+                return;
+            }
+
+            if (destX < 0 || destX >= mapSize || destY < 0 || destY >= mapSize) {
+                alert('Destination coordinates are out of bounds');
+                return;
+            }
+
+            // Send map and path planning request to backend
+            const mapData = {
+                size: mapSize,
+                robot: robotPosition,
+                destination: { x: destX, y: destY },
+                obstacles: Array.from(obstacles).map(obs => {
+                    const [x, y] = obs.split(',').map(Number);
+                    return { x, y };
+                })
+            };
+
+            fetch('/api/path/plan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(mapData)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        console.log("Received path:", data.path);
+                        currentPath = data.path;
+                        drawMap();
+
+                        const pathInfo = document.getElementById('pathInfo');
+                        pathInfo.innerHTML = `
+                        <strong>PATH FOUND</strong><br>
+                        Distance: ${data.distance} units<br>
+                        Steps: ${data.path.length}<br>
+                        Path: ${data.path.map(p => `(${p.x},${p.y})`).join(' → ')}
+                    `;
+                    } else {
+                        document.getElementById('pathInfo').innerHTML = `
+                        <strong>NO PATH FOUND</strong><br>
+                        ${data.error || 'The destination is unreachable.'}
+                    `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Path planning failed:', error);
+                    document.getElementById('pathInfo').innerHTML = `
+                    <strong>PATH PLANNING FAILED</strong><br>
+                    Please ensure the backend server is running.
+                `;
+                });
+        }
+
+        function executeMove() {
+            if (currentPath.length === 0) {
+                alert('Please plan a path first');
+                return;
+            }
+
+            if (!isConnected) {
+                alert('Please connect to the robot first');
+                return;
+            }
+
+            // Send path execution command
+            sendCommand({
+                type: 'path',
+                path: currentPath
+            });
+
+            document.getElementById('pathInfo').innerHTML = `
+                <strong>EXECUTING PATH</strong><br>
+                Robot is moving to destination.<br>
+                Path: ${currentPath.map(p => `(${p.x},${p.y})`).join(' → ')}
+            `;
+        }
+
+        // Initialize map drawing
+        setTimeout(() => {
+            drawMap();
+        }, 100);
+        function connectSerial() {
+            const port = document.getElementById('comPort').value;
+            const baud = document.getElementById('baudRate').value;
+            const statusDiv = document.getElementById('serialStatus');
+
+            if (!port) {
+                alert('Please select a COM port.');
+                return;
+            }
+
+            statusDiv.textContent = 'Connecting...';
+            statusDiv.className = 'status connecting';
+
+            fetch('/api/robot/connect', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ address: port, baudrate: baud })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        statusDiv.textContent = 'Connected';
+                        statusDiv.className = 'status connected';
+                        window.isConnected = true;
+                    } else {
+                        statusDiv.textContent = 'Disconnected';
+                        statusDiv.className = 'status disconnected';
+                        alert(data.error || 'Connection failed.');
+                        window.isConnected = false;
+                    }
+                })
+                .catch(err => {
+                    statusDiv.textContent = 'Disconnected';
+                    statusDiv.className = 'status disconnected';
+                    alert('Error connecting: ' + err);
+                    window.isConnected = false;
+                });
+        }
+
+    </script>
+</body>
+
+</html>
