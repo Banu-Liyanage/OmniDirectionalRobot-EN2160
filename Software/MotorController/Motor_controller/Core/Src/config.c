@@ -34,10 +34,10 @@ const float FWD_KP = 3.5;
 const float FWD_KD = 0.001;
 
 const float STRAFE_KP = 3;
-const float STRAFE_KD = 0;
+const float STRAFE_KD = 0.001;
 
 const float ROT_KP = 3;
-const float ROT_KD = 0;
+const float ROT_KD = 0.001;
 
 const float MAXINTCLAMP = 1;
 
@@ -49,7 +49,15 @@ float clampf(float val, float min, float max) {
     return val;
 }
 
+float vmax_X = 0.25f; //ms-1
+float vmax_Y = 0.25f; //ms-1
+float wmax_Z = 0.1f; // rads-1
+float vmax_diagonal = 0.35f;
 
+float amax_X = 0.05f; //ms-2
+float amax_Y = 0.05f;//ms-2
+float amax_Z = 0.05f;//ms-2
+float amaz_diagonal = 0.071f;
 
 
 

@@ -1,3 +1,6 @@
-../Core/Src/controller.c:13:6:Controller_Init	16	static
-../Core/Src/controller.c:30:6:Controller_ResetControllers	16	static
-../Core/Src/controller.c:40:6:UpdateControllers	72	static
+../Core/Src/controller.c:14:6:Controller_Init	16	static
+../Core/Src/controller.c:31:6:Controller_ResetControllers	16	static
+../Core/Src/controller.c:41:6:UpdateControllers	72	static
+../Core/Src/controller.c:73:6:Controller_Stop	8	static
+../Core/Src/controller.c:80:6:Controller_EnableControllers	16	static
+../Core/Src/controller.c:87:6:Controller_DisableControllers	16	static

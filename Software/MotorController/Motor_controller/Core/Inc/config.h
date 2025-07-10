@@ -90,12 +90,13 @@ extern const float MAXINTCLAMP;
 #define MM_PER_COUNT_REAR_RIGHT      (WHEEL_CIRCUMFERENCE / (ENCODER_COUNTS_PER_REVOLUTION))
 
 
-extern volatile float m1_W;
-extern volatile float m4_W;
-extern volatile float m2_W;
-extern volatile float m3_W;
+extern float vmax_X;
+extern float vmax_Y;
+extern float wmax_Z;
 
-
+extern float amax_X;
+extern float amax_Y;
+extern float amax_Z;
 
 float clampf(float val, float min, float max);
 

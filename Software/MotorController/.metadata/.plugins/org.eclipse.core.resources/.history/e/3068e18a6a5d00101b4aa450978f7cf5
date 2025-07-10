@@ -1,0 +1,37 @@
+/*
+ * motion.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "motion.h"
+
+
+void Motion_Init(Motion *motion, Controller *controller, Profile *x_profile, Profile *y_profile, Profile *W_profile) {
+    motion->controller = *controller;
+    motion->x_profile = *x_profile;
+    motion->y_profile = *y_profile;
+    motion->W_profile = *W_profile;
+}
+
+
+void Motion_ResetDriveSystem(Motion *motion) {
+	Motion_Stop(motion);
+	Motion_DisableDrive(motion);
+    resetEncoders();
+    Profile_Reset(&(motion->x_profile));
+    Profile_Reset(&(motion->y_profile));
+    Profile_Reset(&(motion->W_profile));
+    Controller_ResetControllers(&(motion->controller));
+    Controller_EnableControllers(&(motion->controller));
+}
+
+void Motion_Stop(Motion *motion) {
+	Controller_Stop();
+}
+
+void Motion_DisableDrive(Motion *motion) {
+	Controller_DisableControllers(&(motion->controller));
+}

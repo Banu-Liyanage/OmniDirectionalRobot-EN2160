@@ -26,5 +26,9 @@ typedef struct {
 
 void Controller_Init(Controller *controller);
 void UpdateControllers(Controller *controller, float x_velocity, float y_velocity,  float omega, float steering_adjustment);
+void Controller_Stop();
+void Controller_ResetControllers(Controller *controller);
+void Controller_EnableControllers(Controller *controller);
+void Controller_DisableControllers(Controller *controller);
 
 #endif /* INC_CONTROLLER_H_ */

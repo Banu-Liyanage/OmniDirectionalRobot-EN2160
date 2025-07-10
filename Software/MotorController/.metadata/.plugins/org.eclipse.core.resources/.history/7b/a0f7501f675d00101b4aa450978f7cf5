@@ -1,0 +1,17 @@
+/*
+ * motion.h
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_MOTION_H_
+#define INC_MOTION_H_
+
+extern Profile x_profile;
+extern Profile y_profile;
+extern Profile W_profile;
+
+extern Controller controller;
+
+#endif /* INC_MOTION_H_ */

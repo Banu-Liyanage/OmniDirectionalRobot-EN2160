@@ -1,0 +1,31 @@
+/*
+ * motion.h
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_MOTION_H_
+#define INC_MOTION_H_
+
+#include "profile.h"
+#include "controller.h"
+
+extern Profile x_profile;
+extern Profile y_profile;
+extern Profile W_profile;
+
+extern Controller controller;
+
+
+typedef struct {
+    Controller controller;
+    Profile x_profile;
+    Profile y_profile;
+    Profile W_profile;
+} Motion;
+
+void Motion_Init(Motion *motion, Controller *controller, Profile *x_profile, Profile *y_profile, Profile *W_profile);
+void Motion_Stop(Motion *motion);
+
+#endif /* INC_MOTION_H_ */

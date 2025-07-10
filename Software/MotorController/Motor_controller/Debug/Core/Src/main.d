@@ -33,6 +33,7 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Core/Inc/motors.h ../Core/Inc/main.h ../Core/Inc/encoders.h \
  ../Core/Inc/config.h ../Core/Inc/kinematics.h ../Core/Inc/motors.h \
  ../Core/Inc/encoders.h ../Core/Inc/bluetoothDebug.h ../Core/Inc/delay.h \
+ ../Core/Inc/profile.h ../Core/Inc/controller.h ../Core/Inc/motion.h \
  ../Core/Inc/profile.h ../Core/Inc/controller.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
@@ -75,5 +76,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/encoders.h:
 ../Core/Inc/bluetoothDebug.h:
 ../Core/Inc/delay.h:
+../Core/Inc/profile.h:
+../Core/Inc/controller.h:
+../Core/Inc/motion.h:
 ../Core/Inc/profile.h:
 ../Core/Inc/controller.h:

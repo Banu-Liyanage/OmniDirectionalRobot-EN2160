@@ -1,0 +1,45 @@
+/*
+ * motion.h
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+#ifndef INC_MOTION_H_
+#define INC_MOTION_H_
+
+#include "profile.h"
+#include "controller.h"
+#include "encoders.h"
+
+extern Profile x_profile;
+extern Profile y_profile;
+extern Profile W_profile;
+
+extern Controller controller;
+
+
+typedef struct {
+    Controller controller;
+    Profile x_profile;
+    Profile y_profile;
+    Profile W_profile;
+} Motion;
+
+void Motion_Init(Motion *motion, Controller *controller, Profile *x_profile, Profile *y_profile, Profile *W_profile);
+void Motion_Stop(Motion *motion);
+void Motion_DisableDrive(Motion *motion);
+
+float Motion_XPosition(Motion *motion);
+float Motion_YPosition(Motion *motion);
+float Motion_XVelocity(Motion *motion);
+float Motion_YVelocity(Motion *motion);
+float Motion_XAcceleration(Motion *motion);
+float Motion_YAcceleration(Motion *motion);
+void Motion_SetTargetXVelocity(Motion *motion, float velocity);
+void Motion_SetTargetYVelocity(Motion *motion, float velocity);
+float Motion_Angle(Motion *motion);
+float Motion_Omega(Motion *motion);
+float Motion_Alpha(Motion *motion);
+
+#endif /* INC_MOTION_H_ */

@@ -1,0 +1,16 @@
+/*
+ * motion.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "motion.h"
+
+
+void Motion_Init(Motion *motion, Controller *controller, Profile *, Profile *rotation) {
+    motion->controller = *controller;
+    motion->forward = *forward;
+    motion->rotation = *rotation;
+}

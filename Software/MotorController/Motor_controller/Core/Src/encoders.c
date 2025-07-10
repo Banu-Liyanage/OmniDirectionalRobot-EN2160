@@ -112,7 +112,7 @@ void update_Encoder_Data(){
 	current_wheel_W.rear_right = RearRight * LOOP_FREQUENCY;
 
 	calculate_robot_velocity();
-	//UART_Transmit_Float(&huart2, ">y", current_robot_velocity.vy, 3);
+	//UART_Transmit_Float(&huart2, ">z", current_robot_velocity.omega, 3);
 
 }
 

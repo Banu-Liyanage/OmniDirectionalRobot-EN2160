@@ -28,6 +28,7 @@
 #include "delay.h"
 #include "profile.h"
 #include "controller.h"
+#include "motion.h"
 
 /* USER CODE END Includes */
 
@@ -94,6 +95,8 @@ Profile y_profile;
 Profile W_profile;
 
 Controller controller;
+
+Motion motion;
 
 //uint8_t rx_data;
 
@@ -169,26 +172,27 @@ int main(void)
   HAL_Delay(500);
 
   Controller_Init(&controller);
-
-//  HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, 1);
-//  HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, 0);
-//  HAL_GPIO_WritePin(M1_INA_GPIO_Port, M1_INA_Pin, 1);
-//  HAL_GPIO_WritePin(M1_INB_GPIO_Port, M1_INB_Pin, 0);
-
-
   setTargetVelocities(0, 0, 0, 0);
   Profile_Reset(&x_profile);
   Profile_Reset(&y_profile);
   Profile_Reset(&W_profile);
 
-  HAL_Delay(1000);
+  Motion_Init(&motion, &controller, &x_profile, &y_profile, &W_profile);
+  Controller_ResetControllers(&controller);
+  Motion_ResetDriveSystem(&motion);
 
-  //Profile_Move(&x_profile, 2, 0.25, 0, 0.05);
-  Profile_Move(&x_profile, 0, 0, 0, 0);
-  //Profile_Move(&y_profile, 2, 0.25, 0, 0.05);
-  Profile_Move(&y_profile, 0, 0, 0, 0);
+  HAL_Delay(4000);
 
-  Profile_Move(&W_profile, 1, 0.1, 0, 0.05);
+//Profile_Move(&x_profile, 2, 0.25, 0, 0.05);
+//  Profile_Move(&y_profile, 4, 0.6, 0, 0.05);
+//Profile_Move(&W_profile, 4, 0.6, 0, 0.05);
+//
+//  Profile_Move(&x_profile, 0, 0, 0, 0);
+//  Profile_Move(&y_profile, 0, 0, 0, 0);
+//  Profile_Move(&W_profile, 0, 0, 0, 0);
+
+ Motion_X(&motion, 3);
+ //Motion_Y(&motion, -1);
 
   HAL_Delay(1000);
 
@@ -850,10 +854,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 	else if(htim == &htim13){
 		//UART_Transmit_Int(&huart2, "B", HAL_GetTick());
 
-		Profile_Update(&x_profile);
-		Profile_Update(&y_profile);
-		Profile_Update(&W_profile);
-		UpdateControllers(&controller, Profile_GetSpeed(&x_profile), Profile_GetSpeed(&y_profile),  Profile_GetSpeed(&W_profile), 0);
+//		Profile_Update(&x_profile);
+//		Profile_Update(&y_profile);
+//		Profile_Update(&W_profile);
+		Motion_Update(&motion);
+//		UpdateControllers(&controller, Profile_GetSpeed(&x_profile), Profile_GetSpeed(&y_profile),  Profile_GetSpeed(&W_profile), 0);
+		UpdateControllers(&controller, Motion_XVelocity(&motion), Motion_YVelocity(&motion),  Motion_Omega(&motion), 0);
 
 	}
 }

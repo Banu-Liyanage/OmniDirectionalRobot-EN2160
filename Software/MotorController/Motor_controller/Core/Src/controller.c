@@ -9,6 +9,7 @@
 #include "controller.h"
 #include "config.h"
 #include "kinematics.h"
+#include "motors.h"
 
 void Controller_Init(Controller *controller) {
     // Initialize motor struct
@@ -29,11 +30,11 @@ void Controller_Init(Controller *controller) {
 
 void Controller_ResetControllers(Controller *controller) {
 	controller->x_error = 0;
-		controller->y_error = 0;
-		controller->w_error = 0;
-		controller->previous_x_error = 0;
-		controller->previous_y_error = 0;
-		controller->previous_w_error = 0;
+	controller->y_error = 0;
+	controller->w_error = 0;
+	controller->previous_x_error = 0;
+	controller->previous_y_error = 0;
+	controller->previous_w_error = 0;
 }
 
 
@@ -63,8 +64,26 @@ void UpdateControllers(Controller *controller, float x_velocity, float y_velocit
 	controller->previous_w_error = controller->w_error;
 	rotational_output = ROT_KP * controller->omega + ROT_KD * w_diff;
 
-
-	set_robot_velocity(forward_output, strafe_output, rotational_output);
-
+	if (controller->controllers_enabled) {
+		set_robot_velocity(forward_output, strafe_output, rotational_output);
+	}
 }
 
+
+void Controller_Stop(){
+	resetMotors();
+}
+
+/**
+ * Enable motor controllers.
+ */
+void Controller_EnableControllers(Controller *controller) {
+    controller->controllers_enabled = 1;
+}
+
+/**
+ * Disable motor controllers.
+ */
+void Controller_DisableControllers(Controller *controller) {
+    controller->controllers_enabled = 0;
+}
