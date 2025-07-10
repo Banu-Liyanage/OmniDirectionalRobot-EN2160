@@ -492,6 +492,7 @@
                         <select id="toolSelect" onchange="changeTool()">
                             <option value="robot">Place Robot</option>
                             <option value="obstacle">Add Obstacle</option>
+                            <option value="destination">Set Destination</option>
                             <option value="erase">Erase</option>
                         </select>
                     </div>
@@ -749,6 +750,8 @@
             obstacles.clear();
             robotPosition = null;
             currentPath = [];
+            document.getElementById('destX').value = "";
+            document.getElementById('destY').value = "";
             drawMap();
         }
 
@@ -762,6 +765,10 @@
                     robotPosition = { x, y };
                 } else if (currentTool === 'obstacle') {
                     obstacles.add(`${x},${y}`);
+                } else if (currentTool === 'destination') {
+                    // Set the destination input boxes
+                    document.getElementById('destX').value = x;
+                    document.getElementById('destY').value = y;
                 } else if (currentTool === 'erase') {
                     obstacles.delete(`${x},${y}`);
                     if (robotPosition && robotPosition.x === x && robotPosition.y === y) {
