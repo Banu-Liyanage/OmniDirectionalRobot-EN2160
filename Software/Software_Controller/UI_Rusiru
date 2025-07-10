@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤖 Smart Robot Navigator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 800px;
+            width: 100%;
+            animation: slideIn 0.6s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .header p {
+            color: #718096;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+
+        .grid-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 2px;
+            background: #e2e8f0;
+            padding: 10px;
+            border-radius: 15px;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cell {
+            width: 40px;
+            height: 40px;
+            background: #ffffff;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cell:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .cell.start {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .cell.end {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .cell.obstacle {
+            background: linear-gradient(135deg, #2d3748, #1a202c);
+            border-color: #4a5568;
+        }
+
+        .cell.path {
+            background: linear-gradient(135deg, #fbd38d, #f6ad55);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 15px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4299e1, #3182ce);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #48bb78, #38a169);
+            color: white;
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #ed8936, #dd6b20);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            color: white;
+        }
+
+        .status-bar {
+            background: linear-gradient(135deg, #f7fafc, #edf2f7);
+            padding: 15px 20px;
+            border-radius: 12px;
+            border-left: 4px solid #4299e1;
+            margin-bottom: 20px;
+            font-weight: 500;
+            color: #2d3748;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 1px solid #cbd5e0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .connection-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #e53e3e;
+            margin-left: 10px;
+            animation: blink 2s infinite;
+        }
+
+        .connection-indicator.connected {
+            background: #48bb78;
+            animation: none;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .cell {
+                width: 30px;
+                height: 30px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Smart Robot Navigator</h1>
+            <p>Advanced pathfinding with A* algorithm</p>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-value" id="pathLength">0</div>
+                <div class="stat-label">Path Length</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="obstacleCount">0</div>
+                <div class="stat-label">Obstacles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="searchTime">0ms</div>
+                <div class="stat-label">Search Time</div>
+            </div>
+        </div>
+
+        <div class="status-bar" id="statusBar">
+            Click to set start point → end point → obstacles
+        </div>
+
+        <div class="grid-container">
+            <div class="grid" id="grid"></div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" onclick="findPath()">
+                ⚡ Find Path
+            </button>
+            <button class="btn btn-success" onclick="connectBluetooth()">
+                📶 Connect Robot <span class="connection-indicator" id="connectionIndicator"></span>
+            </button>
+            <button class="btn btn-warning" onclick="sendPath()">
+                🚀 Send Path
+            </button>
+            <button class="btn" onclick="clearPath()" style="background: linear-gradient(135deg, #805ad5, #6b46c1); color: white;">
+                🧹 Clear Path
+            </button>
+            <button class="btn btn-danger" onclick="resetMap()">
+                🔄 Reset Map
+            </button>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #48bb78, #38a169);"></div>
+                <span>Start (S)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #e53e3e, #c53030);"></div>
+                <span>End (E)</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #2d3748, #1a202c);"></div>
+                <span>Obstacle</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: linear-gradient(135deg, #fbd38d, #f6ad55);"></div>
+                <span>Path</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for messages -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">Message</h3>
+            <p id="modalMessage"></p>
+            <button class="btn btn-primary" onclick="closeModal()" style="margin-top: 20px;">OK</button>
+        </div>
+    </div>
+
+    <script>
+        const GRID_SIZE = 10;
+        let grid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(0));
+        let start = null;
+        let end = null;
+        let path = null;
+        let isConnected = false;
+        let mode = 'start'; // 'start', 'end', 'obstacle'
+
+        // Initialize grid
+        function initGrid() {
+            const gridElement = document.getElementById('grid');
+            gridElement.innerHTML = '';
+            
+            for (let y = 0; y < GRID_SIZE; y++) {
+                for (let x = 0; x < GRID_SIZE; x++) {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.dataset.x = x;
+                    cell.dataset.y = y;
+                    cell.addEventListener('click', () => handleCellClick(x, y));
+                    gridElement.appendChild(cell);
+                }
+            }
+        }
+
+        function handleCellClick(x, y) {
+            if (mode === 'start' && !start) {
+                start = [x, y];
+                mode = 'end';
+                updateStatus("Start set! Now click to set the end point.");
+            } else if (mode === 'end' && !end) {
+                end = [x, y];
+                mode = 'obstacle';
+                updateStatus("End set! Now click to place/remove obstacles.");
+            } else if (mode === 'obstacle') {
+                // Toggle obstacle
+                grid[y][x] = grid[y][x] === 1 ? 0 : 1;
+                updateObstacleCount();
+            }
+            
+            drawGrid();
+        }
+
+        function drawGrid() {
+            const cells = document.querySelectorAll('.cell');
+            
+            cells.forEach(cell => {
+                const x = parseInt(cell.dataset.x);
+                const y = parseInt(cell.dataset.y);
+                
+                // Reset classes
+                cell.className = 'cell';
+                cell.textContent = '';
+                
+                // Set cell type
+                if (grid[y][x] === 1) {
+                    cell.classList.add('obstacle');
+                } else if (start && start[0] === x && start[1] === y) {
+                    cell.classList.add('start');
+                    cell.textContent = 'S';
+                } else if (end && end[0] === x && end[1] === y) {
+                    cell.classList.add('end');
+                    cell.textContent = 'E';
+                } else if (path && path.some(p => p[0] === x && p[1] === y)) {
+                    if (!(start && start[0] === x && start[1] === y) && 
+                        !(end && end[0] === x && end[1] === y)) {
+                        cell.classList.add('path');
+                    }
+                }
+            });
+        }
+
+       function heuristic(a, b) {
+    const dx = Math.abs(a[0] - b[0]);
+    const dy = Math.abs(a[1] - b[1]);
+    return Math.max(dx, dy);
+}
+
+
+        function astar(grid, start, goal) {
+    const neighbors = [
+        [0, 1],  [1, 0],  [-1, 0],  [0, -1],   // straight moves
+        [1, 1],  [1, -1], [-1, 1], [-1, -1]    // diagonal moves
+    ];
+    const openSet = [[0 + heuristic(start, goal), 0, start, []]];
+    const visited = new Set();
+
+    while (openSet.length > 0) {
+        openSet.sort((a, b) => a[0] - b[0]);
+        const [estTotal, cost, current, path] = openSet.shift();
+
+        const currentKey = `${current[0]},${current[1]}`;
+        if (visited.has(currentKey)) continue;
+        visited.add(currentKey);
+
+        const newPath = [...path, current];
+
+        if (current[0] === goal[0] && current[1] === goal[1]) {
+            return newPath;
+        }
+
+        for (const [dx, dy] of neighbors) {
+            const neighbor = [current[0] + dx, current[1] + dy];
+
+            if (
+                neighbor[0] >= 0 && neighbor[0] < GRID_SIZE &&
+                neighbor[1] >= 0 && neighbor[1] < GRID_SIZE
+            ) {
+                if (grid[neighbor[1]][neighbor[0]] === 0) {
+                    const distX = Math.abs(neighbor[0] - current[0]);
+                    const distY = Math.abs(neighbor[1] - current[1]);
+                    const moveCost = (distX === 1 && distY === 1) ? Math.SQRT2 : 1;
+
+                    openSet.push([
+                        cost + moveCost + heuristic(neighbor, goal),
+                        cost + moveCost,
+                        neighbor,
+                        newPath
+                    ]);
+                }
+            }
+        }
+    }
+    return null;
+}
+
+
+        function findPath() {
+            if (!start || !end) {
+                showModal("Error", "Please set both start and end points first!");
+                return;
+            }
+
+            const startTime = performance.now();
+            path = astar(grid, start, end);
+            const endTime = performance.now();
+            
+            const searchTime = Math.round(endTime - startTime);
+            document.getElementById('searchTime').textContent = searchTime + 'ms';
+
+            if (!path) {
+                showModal("No Path Found", "No valid path exists between start and end points!");
+                document.getElementById('pathLength').textContent = '0';
+            } else {
+                updateStatus("Path found! Ready to send to robot.");
+                document.getElementById('pathLength').textContent = path.length - 1;
+                showModal("Success", `Path found with ${path.length - 1} steps!`);
+            }
+            
+            drawGrid();
+        }
+
+        function connectBluetooth() {
+            // Simulate bluetooth connection
+            setTimeout(() => {
+                isConnected = !isConnected;
+                const indicator = document.getElementById('connectionIndicator');
+                
+                if (isConnected) {
+                    indicator.classList.add('connected');
+                    updateStatus("Robot connected successfully!");
+                    showModal("Connected", "Successfully connected to robot!");
+                } else {
+                    indicator.classList.remove('connected');
+                    updateStatus("Robot disconnected.");
+                    showModal("Disconnected", "Robot has been disconnected.");
+                }
+            }, 1000);
+        }
+
+        function sendPath() {
+    if (!isConnected) {
+        showModal("Error", "Please connect to the robot first!");
+        return;
+    }
+
+    if (!path || path.length === 0) {
+        showModal("Error", "No path available to send. Please find a path first!");
+        return;
+    }
+
+    updateStatus("Sending path to robot...");
+
+    fetch('http://localhost:5000/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ path: path }) // Send the path array as JSON
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Failed to send path to backend");
+        }
+        return response.json();
+    })
+    .then(data => {
+        updateStatus("Path sent successfully! Robot is moving...");
+        showModal("Success", `Path sent to robot with ${data.steps_sent} steps.`);
+    })
+    .catch(error => {
+        console.error(error);
+        updateStatus("Failed to send path.");
+        showModal("Error", "Could not send path to the robot. Is the backend running?");
+    });
+}
+function clearPath() {
+            path = null;
+            document.getElementById('pathLength').textContent = '0';
+            document.getElementById('searchTime').textContent = '0ms';
+            updateStatus("Path cleared. Click 'Find Path' to generate a new path.");
+            drawGrid();
+        }
+
+        function resetMap() {
+            grid = Array(GRID_SIZE).fill().map(() => Array(GRID_SIZE).fill(0));
+            start = null;
+            end = null;
+            path = null;
+            mode = 'start';
+            
+            document.getElementById('pathLength').textContent = '0';
+            document.getElementById('obstacleCount').textContent = '0';
+            document.getElementById('searchTime').textContent = '0ms';
+            
+            updateStatus("Map reset. Click to set start point.");
+            drawGrid();
+        }
+
+        function updateStatus(message) {
+            document.getElementById('statusBar').textContent = message;
+        }
+
+        function updateObstacleCount() {
+            const count = grid.flat().filter(cell => cell === 1).length;
+            document.getElementById('obstacleCount').textContent = count;
+        }
+
+        function showModal(title, message) {
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalMessage').textContent = message;
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Initialize the application
+        window.addEventListener('load', () => {
+            initGrid();
+            drawGrid();
+        });
+
+        // Close modal when clicking outside
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('modal')) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
