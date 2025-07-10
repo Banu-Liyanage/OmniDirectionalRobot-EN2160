@@ -290,21 +290,31 @@
         }
 
         .map-container {
-            width: 100%;
-            height: 400px;
+            margin: 0 auto;
+            width: auto;
+            /* Or: width: fit-content; */
+            height: auto;
             background: rgba(255, 255, 255, 0.95);
             border-radius: 8px;
-            position: relative;
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.2);
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 0;
+            /* Remove any padding */
         }
 
         .grid-canvas {
-            width: 100%;
-            height: 100%;
+            display: block;
+            width: unset;
+            height: unset;
+            /* Remove min-width/min-height if present */
             cursor: crosshair;
+            background: none;
         }
+
 
         .path-planning {
             margin-top: 20px;
@@ -478,22 +488,6 @@
 
                 <div class="map-controls">
                     <div class="control-group">
-                        <label>Map Size:</label>
-                        <select id="mapSize" onchange="updateMapSize()">
-                            <option value="10">10x10</option>
-                            <option value="15" selected>15x15</option>
-                            <option value="20">20x20</option>
-                            <option value="25">25x25</option>
-                        </select>
-                    </div>
-
-                    <div class="control-group">
-                        <label>Cell Size:</label>
-                        <input type="range" id="cellSize" min="15" max="30" value="20" onchange="updateCellSize()">
-                        <span id="cellSizeValue">20px</span>
-                    </div>
-
-                    <div class="control-group">
                         <label>Tool:</label>
                         <select id="toolSelect" onchange="changeTool()">
                             <option value="robot">Place Robot</option>
@@ -501,11 +495,11 @@
                             <option value="erase">Erase</option>
                         </select>
                     </div>
-
                     <div class="control-group">
                         <button class="btn danger" onclick="clearMap()">Clear Map</button>
                     </div>
                 </div>
+
 
                 <div class="legend">
                     <div class="legend-item">
@@ -555,8 +549,8 @@
         let isConnected = false;
 
         // Map variables
-        let mapSize = 15;
-        let cellSize = 20;
+        let mapSize = 50;
+        let cellSize = 16;
         let currentTool = 'robot';
         let robotPosition = null;
         let obstacles = new Set();
@@ -744,22 +738,6 @@
             ctx = canvas.getContext('2d');
 
             canvas.addEventListener('click', handleMapClick);
-            updateMapSize();
-        }
-
-        function updateMapSize() {
-            mapSize = parseInt(document.getElementById('mapSize').value);
-            document.getElementById('destX').max = mapSize - 1;
-            document.getElementById('destY').max = mapSize - 1;
-            obstacles.clear();
-            robotPosition = null;
-            currentPath = [];
-            drawMap();
-        }
-
-        function updateCellSize() {
-            cellSize = parseInt(document.getElementById('cellSize').value);
-            document.getElementById('cellSizeValue').textContent = cellSize + 'px';
             drawMap();
         }
 
@@ -798,10 +776,11 @@
             const totalWidth = mapSize * cellSize;
             const totalHeight = mapSize * cellSize;
 
-            canvas.width = totalWidth;
-            canvas.height = totalHeight;
-            canvas.style.width = totalWidth + 'px';
-            canvas.style.height = totalHeight + 'px';
+            canvas.width = mapSize * cellSize;
+            canvas.height = mapSize * cellSize;
+            canvas.style.width = (mapSize * cellSize) + 'px';
+            canvas.style.height = (mapSize * cellSize) + 'px';
+
 
             // Clear canvas
             ctx.clearRect(0, 0, totalWidth, totalHeight);
