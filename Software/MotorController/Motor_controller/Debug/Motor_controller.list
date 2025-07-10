@@ -2394,15 +2394,15 @@ int main(void)
  800184e:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
  8001852:	f001 ff91 	bl	8003778 <HAL_Delay>
 
-  Profile_Move(&x_profile, 2, 0.3, 0, 0.1);
+  //Profile_Move(&x_profile, 2, 0.3, 0, 0.1);
+  //Profile_Move(&x_profile, 0, 0, 0, 0);
+  Profile_Move(&y_profile, 1, 0.1, 0, 0.05);
  8001856:	eddf 1a21 	vldr	s3, [pc, #132]	@ 80018dc <main+0x170>
  800185a:	ed9f 1a1d 	vldr	s2, [pc, #116]	@ 80018d0 <main+0x164>
  800185e:	eddf 0a20 	vldr	s1, [pc, #128]	@ 80018e0 <main+0x174>
- 8001862:	eeb0 0a00 	vmov.f32	s0, #0	@ 0x40000000  2.0
- 8001866:	481b      	ldr	r0, [pc, #108]	@ (80018d4 <main+0x168>)
+ 8001862:	eeb7 0a00 	vmov.f32	s0, #112	@ 0x3f800000  1.0
+ 8001866:	481c      	ldr	r0, [pc, #112]	@ (80018d8 <main+0x16c>)
  8001868:	f001 faf2 	bl	8002e50 <Profile_Move>
-  //Profile_Move(&x_profile, 0, 0, 0, 0);
-  //Profile_Move(&y_profile, 1, 0.1, 0, 0.05);
 
   HAL_Delay(1000);
  800186c:	f44f 707a 	mov.w	r0, #1000	@ 0x3e8
@@ -2459,8 +2459,8 @@ int main(void)
  80018d0:	00000000 	.word	0x00000000
  80018d4:	200003a8 	.word	0x200003a8
  80018d8:	200003cc 	.word	0x200003cc
- 80018dc:	3dcccccd 	.word	0x3dcccccd
- 80018e0:	3e99999a 	.word	0x3e99999a
+ 80018dc:	3d4ccccd 	.word	0x3d4ccccd
+ 80018e0:	3dcccccd 	.word	0x3dcccccd
  80018e4:	200003a4 	.word	0x200003a4
  80018e8:	2000035c 	.word	0x2000035c
  80018ec:	080077f0 	.word	0x080077f0
@@ -4415,13 +4415,14 @@ void updateMotors(){
  80024a0:	edd3 7a02 	vldr	s15, [r3, #8]
  80024a4:	ee77 7a67 	vsub.f32	s15, s14, s15
  80024a8:	edc7 7a01 	vstr	s15, [r7, #4]
-	float m4_err = target_wheel_W.rear_right - current_wheel_W.front_right;
+	float m4_err = target_wheel_W.front_right - current_wheel_W.front_right;
  80024ac:	4b98      	ldr	r3, [pc, #608]	@ (8002710 <updateMotors+0x2a8>)
- 80024ae:	ed93 7a02 	vldr	s14, [r3, #8]
+ 80024ae:	ed93 7a03 	vldr	s14, [r3, #12]
  80024b2:	4b98      	ldr	r3, [pc, #608]	@ (8002714 <updateMotors+0x2ac>)
  80024b4:	edd3 7a03 	vldr	s15, [r3, #12]
  80024b8:	ee77 7a67 	vsub.f32	s15, s14, s15
  80024bc:	edc7 7a00 	vstr	s15, [r7]
+
 
 
 

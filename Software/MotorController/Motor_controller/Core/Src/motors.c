@@ -138,7 +138,8 @@ void updateMotors(){
 	float m1_err = target_wheel_W.front_left - current_wheel_W.front_left;
 	float m2_err = target_wheel_W.rear_left - current_wheel_W.rear_left;
 	float m3_err = target_wheel_W.rear_right - current_wheel_W.rear_right;
-	float m4_err = target_wheel_W.rear_right - current_wheel_W.front_right;
+	float m4_err = target_wheel_W.front_right - current_wheel_W.front_right;
+
 
 
 

@@ -182,9 +182,9 @@ int main(void)
 
   HAL_Delay(1000);
 
-  Profile_Move(&x_profile, 2, 0.3, 0, 0.1);
+  //Profile_Move(&x_profile, 2, 0.3, 0, 0.1);
   //Profile_Move(&x_profile, 0, 0, 0, 0);
-  //Profile_Move(&y_profile, 1, 0.1, 0, 0.05);
+  Profile_Move(&y_profile, 1, 0.1, 0, 0.05);
 
   HAL_Delay(1000);
 

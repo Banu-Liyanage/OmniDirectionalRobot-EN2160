@@ -5,9 +5,9 @@
 ../Core/Src/motors.c:99:6:setRearRightMotorPWM	2
 ../Core/Src/motors.c:118:6:resetMotors	1
 ../Core/Src/motors.c:136:6:updateMotors	9
-../Core/Src/motors.c:204:6:resetIntegralTerms	1
-../Core/Src/motors.c:212:6:setTargetVelocities	1
-../Core/Src/motors.c:220:6:stopMotors	1
-../Core/Src/motors.c:238:10:analogRead	4
-../Core/Src/motors.c:273:10:getCurrentMilliamps	1
-../Core/Src/motors.c:283:6:HAL_ADC_ConvCpltCallback	1
+../Core/Src/motors.c:205:6:resetIntegralTerms	1
+../Core/Src/motors.c:213:6:setTargetVelocities	1
+../Core/Src/motors.c:221:6:stopMotors	1
+../Core/Src/motors.c:239:10:analogRead	4
+../Core/Src/motors.c:274:10:getCurrentMilliamps	1
+../Core/Src/motors.c:284:6:HAL_ADC_ConvCpltCallback	1
