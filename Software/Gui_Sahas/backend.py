@@ -14,6 +14,24 @@ from protocol_ids import *
 app = Flask(__name__)
 CORS(app)
 
+CMD_ROBOT_X = 0x000B
+CMD_ROBOT_Y = 0x000C
+CMD_FLAG_DEST_REACHED = 0x000D
+
+
+def read_packet(serial_port, timeout=300.0):
+    start_time = time.time()
+    buf = b""
+    while time.time() - start_time < timeout:
+        if serial_port.in_waiting >= 4:
+            buf += serial_port.read(4)
+            if len(buf) >= 4:
+                cmd, value = struct.unpack("<HH", buf[:4])
+                return cmd, value
+        time.sleep(0.01)
+    raise TimeoutError("Timeout waiting for reply from robot.")
+
+
 DIRECTION_MAP = {
     (0, 0): DIR_STOP,
     (0, -1): DIR_FORWARD,
@@ -846,6 +864,62 @@ def simulator_status():
             "is_moving": robot_simulator.is_moving,
         }
     )
+
+
+@app.route("/api/robot/autonavigate", methods=["POST"])
+def autonavigate():
+    """
+    Receives: {
+      "macro_path": [{"dir": <dir>, "count": <count>}],  # just ONE macro move!
+      "start": {"x":..., "y":...},
+      "destination": {"x":..., "y":...}
+    }
+    """
+    data = request.json
+    macro_path = data.get("macro_path", [])
+    start = data.get("start")
+    dest = data.get("destination")
+
+    if not (macro_path and start and dest):
+        return jsonify({"success": False, "error": "Missing required fields."})
+
+    try:
+        robot_x, robot_y = int(start["x"]), int(start["y"])
+        serial_port = robot_controller.serial_port
+
+        # Only send the first macro move
+        move = macro_path[0]
+        # 1. Send robot's current position
+        serial_port.write(struct.pack("<HH", CMD_ROBOT_X, robot_x))
+        serial_port.write(struct.pack("<HH", CMD_ROBOT_Y, robot_y))
+        # 2. Send direction and count
+        serial_port.write(struct.pack("<HH", move["dir"], move["count"]))
+
+        # 3. Wait for robot reply X and Y (expecting two packets)
+        cmd_x, value_x = read_packet(serial_port)
+        cmd_y, value_y = read_packet(serial_port)
+
+        if cmd_x != CMD_ROBOT_X or cmd_y != CMD_ROBOT_Y:
+            return jsonify({"success": False, "error": "Bad reply from robot."})
+
+        robot_x, robot_y = value_x, value_y
+
+        reached = robot_x == dest["x"] and robot_y == dest["y"]
+        # If reached, send done flag to robot
+        if reached:
+            serial_port.write(struct.pack("<HH", CMD_FLAG_DEST_REACHED, 0))
+
+        return jsonify(
+            {
+                "success": True,
+                "reached": reached,
+                "robot_position": {"x": robot_x, "y": robot_y},
+            }
+        )
+
+    except Exception as e:
+        logger.exception("Auto-navigation failed")
+        return jsonify({"success": False, "error": str(e)})
 
 
 # Error handlers
