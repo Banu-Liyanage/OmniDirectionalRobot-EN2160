@@ -16,17 +16,23 @@ CORS(app)
 
 CMD_ROBOT_X = 0x000B
 CMD_ROBOT_Y = 0x000C
+CMD_ROBOT_X_IN = 0x000E
+CMD_ROBOT_Y_IN = 0x000F
 CMD_FLAG_DEST_REACHED = 0x000D
 
 
 def read_packet(serial_port, timeout=300.0):
+    import binascii
+
     start_time = time.time()
     buf = b""
     while time.time() - start_time < timeout:
         if serial_port.in_waiting >= 4:
             buf += serial_port.read(4)
+            print("[RECV]", binascii.hexlify(buf).decode(), f"({len(buf)} bytes)")
             if len(buf) >= 4:
-                cmd, value = struct.unpack("<HH", buf[:4])
+                cmd, value = struct.unpack(">HH", buf[:4])
+                print(f"  -> Decoded: cmd=0x{cmd:04X} ({cmd}), value={value}")
                 return cmd, value
         time.sleep(0.01)
     raise TimeoutError("Timeout waiting for reply from robot.")
@@ -53,13 +59,13 @@ logger = logging.getLogger(__name__)
 
 def build_packet(cmd, value):
     # For 16-bit command and 16/32-bit values, adjust as per your protocol
-    return struct.pack("<HH", cmd, value)
+    return struct.pack(">HH", cmd, value)
 
 
 def parse_packet(data):
     # Expecting pairs: [CMD][VALUE] e.g. 4 bytes per packet
     if len(data) >= 4:
-        cmd, value = struct.unpack("<HH", data[:4])
+        cmd, value = struct.unpack(">HH", data[:4])
         return cmd, value
     return None, None
 
@@ -118,29 +124,22 @@ class RobotController:
 
     def send_direction(self, dir_id: int):
         # Example: Send [CMD_DIRECTION, dir_id]
-        packet = struct.pack("<HH", CMD_DIRECTION, dir_id)
+        packet = struct.pack(">HH", CMD_DIRECTION, dir_id)
         self.current_direction = dir_id
         self.movement_active = dir_id != DIR_STOP
         return self._write_packet(packet)
 
     def send_speed(self, speed: int):
         # Example: Send [CMD_SPEED, speed]
-        packet = struct.pack("<HH", CMD_SPEED, speed)
+        packet = struct.pack(">HH", CMD_SPEED, speed)
         return self._write_packet(packet)
 
     def send_stop(self):
         # Example: Send [CMD_STOP, 0]
-        packet = struct.pack("<HH", CMD_STOP, 0)
+        packet = struct.pack(">HH", CMD_STOP, 0)
         self.current_direction = DIR_STOP
         self.movement_active = False
         return self._write_packet(packet)
-
-    def send_imu(self, imu_x: int, imu_y: int, imu_rot: int):
-        # Example: Send [CMD_IMU_X, imu_x], [CMD_IMU_Y, imu_y], [CMD_IMU_ROTATION, imu_rot]
-        p1 = struct.pack("<HH", CMD_IMU_X, imu_x)
-        p2 = struct.pack("<HH", CMD_IMU_Y, imu_y)
-        p3 = struct.pack("<HH", CMD_IMU_ROTATION, imu_rot)
-        return self._write_packet(p1 + p2 + p3)
 
     def send_rotate_command(self, clockwise: bool = True):
         # Use DIR_ROTATE_CW or DIR_ROTATE_CCW (if defined)
@@ -890,24 +889,32 @@ def autonavigate():
         # Only send the first macro move
         move = macro_path[0]
         # 1. Send robot's current position
-        serial_port.write(struct.pack("<HH", CMD_ROBOT_X, robot_x))
-        serial_port.write(struct.pack("<HH", CMD_ROBOT_Y, robot_y))
+        serial_port.write(struct.pack(">HH", CMD_ROBOT_X, robot_x))
+        serial_port.write(struct.pack(">HH", CMD_ROBOT_Y, robot_y))
         # 2. Send direction and count
-        serial_port.write(struct.pack("<HH", move["dir"], move["count"]))
+        serial_port.write(struct.pack(">HH", move["dir"], move["count"]))
 
         # 3. Wait for robot reply X and Y (expecting two packets)
         cmd_x, value_x = read_packet(serial_port)
         cmd_y, value_y = read_packet(serial_port)
 
-        if cmd_x != CMD_ROBOT_X or cmd_y != CMD_ROBOT_Y:
-            return jsonify({"success": False, "error": "Bad reply from robot."})
+        if cmd_x != CMD_ROBOT_X_IN or cmd_y != CMD_ROBOT_Y_IN:
+            logger.error(
+                f"Expected: X={CMD_ROBOT_X_IN} Y={CMD_ROBOT_Y_IN} | Got: X={cmd_x} Y={cmd_y}"
+            )
+            return jsonify(
+                {
+                    "success": False,
+                    "error": f"Bad reply from robot. Expected: X={CMD_ROBOT_X_IN} Y={CMD_ROBOT_Y_IN}, but got: X={cmd_x} Y={cmd_y}",
+                }
+            )
 
         robot_x, robot_y = value_x, value_y
 
         reached = robot_x == dest["x"] and robot_y == dest["y"]
         # If reached, send done flag to robot
         if reached:
-            serial_port.write(struct.pack("<HH", CMD_FLAG_DEST_REACHED, 0))
+            serial_port.write(struct.pack(">HH", CMD_FLAG_DEST_REACHED, 0))
 
         return jsonify(
             {
