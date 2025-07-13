@@ -1,0 +1,137 @@
+/*
+ * RS485.c
+ *
+ *  Created on: Jul 10, 2025
+ *      Author: PANKAJA
+ */
+
+
+#include "RS485.h"
+#include "stm32f4xx_hal.h"
+#include "main.h"
+#include "motion.h"
+
+extern UART_HandleTypeDef huart3;
+extern UART_HandleTypeDef huart2;
+extern Motion motion;
+
+//#define CMD_FORWARD         0x01
+//#define CMD_BACKWARD        0x02
+//#define CMD_LEFT            0x03
+//#define CMD_RIGHT           0x04
+//#define CMD_FORWARD_LEFT    0x05
+//#define CMD_FORWARD_RIGHT   0x06
+//#define CMD_BACKWARD_LEFT   0x07
+//#define CMD_BACKWARD_RIGHT  0x08
+//#define CMD_ROTATE_CW		0x09
+//#define CMD_ROTATE_CCW		0x0A
+
+
+// Execute received command
+void ExecuteCommand(uint8_t command, uint8_t value)
+{
+
+//    // Clamp velocity value
+//    if (value > MAX_VELOCITY) value = MAX_VELOCITY;
+//    if (value < MIN_VELOCITY) value = MIN_VELOCITY;
+
+    switch (command)
+    {
+        case CMD_FORWARD:
+        	Motion_X(&motion, (float)value / 50.0f);
+            break;
+        case CMD_BACKWARD:
+            // All motors backward
+        	Motion_X(&motion, -1 * (float)value / 50.0f);
+            break;
+
+        case CMD_LEFT:
+        	Motion_Y(&motion, (float)value / 50.0f);
+            break;
+
+        case CMD_RIGHT:
+        	Motion_Y(&motion, -1 * (float)value / 50.0f);
+            break;
+
+        case CMD_FORWARD_LEFT:
+            // Diagonal forward-left
+        	Motion_Diagonal_l(&motion, (float)value / 50.0f);
+            break;
+
+        case CMD_FORWARD_RIGHT:
+        	Motion_Diagonal_r(&motion, (float)value / 50.0f);
+            break;
+
+        case CMD_BACKWARD_LEFT:
+            Motion_Diagonal_r(&motion, -1 * (float)value / 50.0f);
+            break;
+
+        case CMD_BACKWARD_RIGHT:
+        	Motion_Diagonal_l(&motion, -1 * (float)value / 50.0f);
+            break;
+
+        case CMD_ROTATE_CW:
+        	break;
+
+        case CMD_ROTATE_CCW:
+        	break;
+
+        case CMD_VELOCITY:
+            // Set current velocity for future commands
+            //currentVelocity = value;
+            return; // Don't update motors, just store velocity
+
+        default:
+
+            return;
+    }
+    SendTelemetryPacket(TELEM_MOTION_COMPLETED, 1);
+
+}
+
+
+// Send individual telemetry packet
+void SendTelemetryPacket(uint8_t dataType, uint16_t value)
+{
+    uint8_t packet[2];
+    packet[0] = dataType;
+    packet[1] = value;  // High byte
+
+
+//    uint8_t packet[4];
+//	packet[0] = dataType;
+//	packet[1] = (value >> 8) & 0xFF;  // High byte
+//	packet[2] = value & 0xFF;         // Low byte
+//	packet[3] = 0xFF;                 // End marker
+
+    HAL_UART_Transmit(&huart3, packet, 2, 100);
+}
+
+void SendDistanceTelemetry(float distance){
+	SendTelemetryData(TELEM_X_DISTANCE, (uint8_t)distance * 50);
+}
+
+void SendTelemetryData(void)
+{
+    // Send battery voltage
+    SendTelemetryPacket(TELEM_BATTERY_VOLT, 69);
+   //HAL_Delay(2);
+
+//    // Send temperature
+//    SendTelemetryPacket(TELEM_TEMPERATURE, telemetryData.systemTemperature);
+//    HAL_Delay(2);
+//
+//    // Send motor currents (send average or one at a time)
+//    uint16_t avgCurrent = (telemetryData.motorCurrent[0] + telemetryData.motorCurrent[1] +
+//                          telemetryData.motorCurrent[2] + telemetryData.motorCurrent[3]) / 4;
+//    SendTelemetryPacket(TELEM_CURRENT, avgCurrent);
+//    HAL_Delay(2);
+//
+//    // Send system status
+//    SendTelemetryPacket(TELEM_SYSTEM_STATUS, telemetryData.systemStatus);
+//    HAL_Delay(2);
+//
+//    // Send motor status
+//    SendTelemetryPacket(TELEM_MOTOR_STATUS, telemetryData.motorStatus);
+//    HAL_Delay(2);
+}

@@ -36,8 +36,8 @@ void resetMotors();
 void emergencyStop(void);
 void initMotors(void);
 
-uint16_t analogRead();
-uint16_t getCurrentMilliamps();
+uint16_t analogRead(uint8_t channel);
+uint16_t getCurrentMilliamps(uint8_t channel);
 
 void updateMotors();
 

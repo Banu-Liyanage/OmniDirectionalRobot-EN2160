@@ -9,67 +9,85 @@
 #include "RS485.h"
 #include "stm32f4xx_hal.h"
 #include "main.h"
+#include "motion.h"
 
 extern UART_HandleTypeDef huart3;
 extern UART_HandleTypeDef huart2;
+extern Motion motion;
+
+//#define CMD_FORWARD         0x01
+//#define CMD_BACKWARD        0x02
+//#define CMD_LEFT            0x03
+//#define CMD_RIGHT           0x04
+//#define CMD_FORWARD_LEFT    0x05
+//#define CMD_FORWARD_RIGHT   0x06
+//#define CMD_BACKWARD_LEFT   0x07
+//#define CMD_BACKWARD_RIGHT  0x08
+//#define CMD_ROTATE_CW		0x09
+//#define CMD_ROTATE_CCW		0x0A
 
 
 // Execute received command
 void ExecuteCommand(uint8_t command, uint8_t value)
 {
-    //char debugMsg[100];
 
-    // Clamp velocity value
-    if (value > MAX_VELOCITY) value = MAX_VELOCITY;
-    if (value < MIN_VELOCITY) value = MIN_VELOCITY;
+//    // Clamp velocity value
+//    if (value > MAX_VELOCITY) value = MAX_VELOCITY;
+//    if (value < MIN_VELOCITY) value = MIN_VELOCITY;
 
     switch (command)
     {
         case CMD_FORWARD:
-            // All motors forward
-        	HAL_GPIO_TogglePin(Status_LED_GPIO_Port, Status_LED_Pin);
-//        	HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
+        	Motion_X(&motion, value);
+        	//Motion_X(&motion, -1 * (float)value / 50.0f);
             break;
-
         case CMD_BACKWARD:
             // All motors backward
-        	HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
+        	Motion_X(&motion, -value);
+        	//Motion_X(&motion, (float)value / 50.0f);
             break;
 
         case CMD_LEFT:
+        	Motion_Y(&motion, value);
             break;
 
         case CMD_RIGHT:
-            // Strafe right
+        	Motion_Y(&motion, -value);
             break;
 
         case CMD_FORWARD_LEFT:
             // Diagonal forward-left
+        	Motion_Diagonal_l(&motion, value);
             break;
 
         case CMD_FORWARD_RIGHT:
-            // Diagonal forward-right
-
+        	Motion_Diagonal_r(&motion, value);
             break;
 
         case CMD_BACKWARD_LEFT:
-            // Diagonal backward-left
+            Motion_Diagonal_r(&motion, value);
             break;
 
         case CMD_BACKWARD_RIGHT:
-            // Diagonal backward-right
-
+        	Motion_Diagonal_l(&motion, -value);
             break;
+
+        case CMD_ROTATE_CW:
+        	Motion_Rotate_CW(&motion, value);
+        	break;
+
+        case CMD_ROTATE_CCW:
+        	Motion_Rotate_CCW(&motion, value);
+        	break;
 
         case CMD_VELOCITY:
             // Set current velocity for future commands
             //currentVelocity = value;
-            return; // Don't update motors, just store velocity
-
+            break; // Don't update motors, just store velocity
         default:
-
-            return;
+            break;
     }
+    SendTelemetryPacket(TELEM_MOTION_COMPLETED, 1);
 
 }
 
@@ -88,17 +106,22 @@ void SendTelemetryPacket(uint8_t dataType, uint16_t value)
 //	packet[2] = value & 0xFF;         // Low byte
 //	packet[3] = 0xFF;                 // End marker
 
+
     HAL_UART_Transmit(&huart3, packet, 2, 100);
 }
 
+void SendDistanceTelemetry(float x_distance, float y_distance){
+	SendTelemetryPacket(TELEM_X_DISTANCE, (uint8_t)x_distance * 50);
+	SendTelemetryPacket(TELEM_Y_DISTANCE, (uint8_t)y_distance * 50);
+}
 
 void SendTelemetryData(void)
 {
     // Send battery voltage
-    SendTelemetryPacket(TELEM_BATTERY_VOLT, 69);
+    //SendTelemetryPacket(TELEM_BATTERY_VOLT, 69);
    //HAL_Delay(2);
 
-//    // Send temperature
+//    // Send temperaturex_
 //    SendTelemetryPacket(TELEM_TEMPERATURE, telemetryData.systemTemperature);
 //    HAL_Delay(2);
 //

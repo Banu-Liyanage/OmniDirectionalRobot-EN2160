@@ -42,13 +42,26 @@ void resetMotors() {
 }
 
 
-uint16_t analogRead()
+uint16_t analogRead(uint8_t channel)
 {
     ADC_ChannelConfTypeDef sConfig = {0};
     ADC_HandleTypeDef *hadc1_ptr = Get_HADC1_Ptr();
 
-
-	sConfig.Channel = ADC_CHANNEL_15;
+    switch(channel){
+		case 1:
+			sConfig.Channel = ADC_CHANNEL_4;
+			break;
+		case 2:
+			sConfig.Channel = ADC_CHANNEL_5;
+			break;
+		case 3:
+			sConfig.Channel = ADC_CHANNEL_6;
+			break;
+		case 4:
+			sConfig.Channel = ADC_CHANNEL_7;
+			break;
+    }
+	//sConfig.Channel = ADC_CHANNEL_15;
     sConfig.Rank = 1;
     sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
 
@@ -79,7 +92,7 @@ uint16_t analogRead()
 
 uint16_t getCurrentMilliamps(){
 	// 3.3V / 4096 ADC counts / 144 mV per A = 5.5948893229166666666666666666667 mA per count
-	return analogRead();
+	return analogRead() / 4096 / 144;
 }
 
 

@@ -8,6 +8,6 @@
 ../Core/Src/motors.c:206:6:resetIntegralTerms	1
 ../Core/Src/motors.c:214:6:setTargetVelocities	1
 ../Core/Src/motors.c:222:6:stopMotors	1
-../Core/Src/motors.c:240:10:analogRead	4
-../Core/Src/motors.c:275:10:getCurrentMilliamps	1
-../Core/Src/motors.c:285:6:HAL_ADC_ConvCpltCallback	1
+../Core/Src/motors.c:240:10:analogRead	8
+../Core/Src/motors.c:288:10:getCurrentMilliamps	1
+../Core/Src/motors.c:298:6:HAL_ADC_ConvCpltCallback	1

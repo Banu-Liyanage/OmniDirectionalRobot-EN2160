@@ -1,3 +1,4 @@
-../Core/Src/RS485.c:18:6:ExecuteCommand	3
-../Core/Src/RS485.c:78:6:SendTelemetryPacket	1
-../Core/Src/RS485.c:95:6:SendTelemetryData	1
+../Core/Src/RS485.c:31:6:ExecuteCommand	11
+../Core/Src/RS485.c:96:6:SendTelemetryPacket	1
+../Core/Src/RS485.c:113:6:SendDistanceTelemetry	1
+../Core/Src/RS485.c:118:6:SendTelemetryData	1

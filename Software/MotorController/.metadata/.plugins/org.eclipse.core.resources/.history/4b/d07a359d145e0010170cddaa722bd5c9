@@ -1,0 +1,291 @@
+/*
+ * motors.c
+ *
+ *  Created on: May 10, 2025
+ *      Author: PANKAJA
+ */
+
+#include "motors.h"
+#include "config.h"
+#include "bluetoothDebug.h"
+
+uint16_t adc_buf[NUM_SAMPLES];
+uint8_t complete = 0;
+
+extern UART_HandleTypeDef huart2;
+
+
+
+extern volatile WheelVelocities current_wheel_W;
+
+
+
+volatile float m1_int = 0;
+volatile float m2_int = 0;
+volatile float m3_int = 0;
+volatile float m4_int = 0;
+
+
+
+
+float limitPWM(float pwm) {
+    if (pwm > PWM_MAX)
+        return PWM_MAX;
+    else if (pwm < -PWM_MAX)
+        return -PWM_MAX;
+    return pwm;
+}
+
+void setForwardLeftMotorPWM(float pwm) {
+    // Limit PWM value
+    pwm = limitPWM(pwm);
+
+    if (pwm >= 0) {
+        // Forward direction: INA=0, INB=1
+        // M1_INA = PC10, M1_INB = PC11
+        // Reset bit 10 and Set bit 11 simultaneously
+        GPIOC->BSRR = (1U << (10 + 16)) | (1U << 11);
+        TIM1->CCR1 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
+    }
+    else {
+        // Reverse direction: INA=1, INB=0
+        // Set bit 10 and Reset bit 11 simultaneously
+        GPIOC->BSRR = (1U << 10) | (1U << (11 + 16));
+        TIM1->CCR1 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
+    }
+}
+
+void setForwardRightMotorPWM(float pwm) {
+    // Limit PWM value
+    pwm = limitPWM(pwm);
+
+    if (pwm >= 0) {
+        // Forward direction: INA=1, INB=0
+        // M2_INA = PC8, M2_INB = PC9
+        // Set bit 8 and Reset bit 9 simultaneously
+        GPIOC->BSRR = (1U << 8) | (1U << (9 + 16));
+        TIM1->CCR2 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
+    }
+    else {
+        // Reverse direction: INA=0, INB=1
+        // Reset bit 8 and Set bit 9 simultaneously
+        GPIOC->BSRR = (1U << (8 + 16)) | (1U << 9);
+        TIM1->CCR2 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
+    }
+}
+
+void setRearLeftMotorPWM(float pwm) {
+    // Limit PWM value
+    pwm = limitPWM(pwm);
+
+    if (pwm >= 0) {
+        // Forward direction: INA=0, INB=1
+        // M3_INA = PB4, M3_INB = PB5
+        // Reset bit 4 and Set bit 5 simultaneously
+        GPIOB->BSRR = (1U << (4 + 16)) | (1U << 5);
+    	//HAL_GPIO_WritePin(M3_INA_GPIO_Port, M3_INA_Pin, 0);
+    	//HAL_GPIO_WritePin(M3_INB_GPIO_Port, M3_INB_Pin, 1);
+        TIM1->CCR3 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
+    }
+    else {
+        // Reverse direction: INA=1, INB=0
+        // Set bit 4 and Reset bit 5 simultaneously
+        GPIOB->BSRR = (1U << 4) | (1U << (5 + 16));
+    	//HAL_GPIO_WritePin(M3_INA_GPIO_Port, M3_INA_Pin, 1);
+    	//HAL_GPIO_WritePin(M3_INB_GPIO_Port, M3_INB_Pin, 0);
+        TIM1->CCR3 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
+    }
+}
+
+void setRearRightMotorPWM(float pwm) {
+    // Limit PWM value
+    pwm = limitPWM(pwm);
+
+    if (pwm >= 0) {
+        // Forward direction: INA=1, INB=0
+        // M4_INA = PC2, M4_INB = PC3
+        // Set bit 2 and Reset bit 3 simultaneously
+        GPIOC->BSRR = (1U << 2) | (1U << (3 + 16));
+        TIM1->CCR4 = (uint32_t)(pwm * MAX_TIMER_COUNTS);
+    }
+    else {
+        // Reverse direction: INA=0, INB=1
+        // Reset bit 2 and Set bit 3 simultaneously
+        GPIOC->BSRR = (1U << (2 + 16)) | (1U << 3);
+        TIM1->CCR4 = (uint32_t)(-pwm * MAX_TIMER_COUNTS);
+    }
+}
+
+void resetMotors(void) {
+    // Stop all motors by setting PWM to 0
+    TIM1->CCR1 = 0;
+    TIM1->CCR2 = 0;
+    TIM1->CCR3 = 0;
+    TIM1->CCR4 = 0;
+
+    // Set all control pins low simultaneously for each port
+    // GPIOC: Reset M1_INA(PC10), M1_INB(PC11), M2_INA(PC8), M2_INB(PC9), M4_INA(PC2), M4_INB(PC3)
+    GPIOC->BSRR = (1U << (10 + 16)) | (1U << (11 + 16)) |
+                  (1U << (8 + 16)) | (1U << (9 + 16)) |
+                  (1U << (2 + 16)) | (1U << (3 + 16));
+
+    // GPIOB: Reset M3_INA(PB4), M3_INB(PB5)
+    GPIOB->BSRR = (1U << (4 + 16)) | (1U << (5 + 16));
+}
+
+
+void updateMotors(){
+    // Calculate velocity errors
+	float m1_err = target_wheel_W.front_left - current_wheel_W.front_left;
+	float m2_err = target_wheel_W.rear_left - current_wheel_W.rear_left;
+	float m3_err = target_wheel_W.rear_right - current_wheel_W.rear_right;
+	float m4_err = target_wheel_W.front_right - current_wheel_W.front_right;
+
+
+
+
+    m1_int += m1_err * LOOP_INTERVAL;
+    m2_int += m2_err * LOOP_INTERVAL;
+    m3_int += m3_err * LOOP_INTERVAL;
+    m4_int += m4_err * LOOP_INTERVAL;
+
+
+    m1_int = clampf(m1_int, -MAXINTCLAMP, MAXINTCLAMP);
+    m2_int = clampf(m2_int, -MAXINTCLAMP, MAXINTCLAMP);
+    m3_int = clampf(m3_int, -MAXINTCLAMP, MAXINTCLAMP);
+    m4_int = clampf(m4_int, -MAXINTCLAMP, MAXINTCLAMP);
+
+
+    float m1_output = Kp_Vel * m1_err + Ki_Vel * m1_int;
+    float m2_output = Kp_Vel * m2_err + Ki_Vel * m2_int;
+    float m3_output = Kp_Vel * m3_err + Ki_Vel * m3_int;
+    float m4_output = Kp_Vel * m4_err + Ki_Vel * m4_int;
+
+    //  integral windup prevention
+    // If output is saturated, reduce integral term
+    if (m1_output > PWM_MAX) {
+        m1_int -= (m1_output - PWM_MAX) / Ki_Vel;
+        m1_output = PWM_MAX;
+    } else if (m1_output < -PWM_MAX) {
+        m1_int -= (m1_output + PWM_MAX) / Ki_Vel;
+        m1_output = -PWM_MAX;
+    }
+
+    if (m2_output > PWM_MAX) {
+        m2_int -= (m2_output - PWM_MAX) / Ki_Vel;
+        m2_output = PWM_MAX;
+    } else if (m2_output < -PWM_MAX) {
+        m2_int -= (m2_output + PWM_MAX) / Ki_Vel;
+        m2_output = -PWM_MAX;
+    }
+
+    if (m3_output > PWM_MAX) {
+        m3_int -= (m3_output - PWM_MAX) / Ki_Vel;
+        m3_output = PWM_MAX;
+    } else if (m3_output < -PWM_MAX) {
+        m3_int -= (m3_output + PWM_MAX) / Ki_Vel;
+        m3_output = -PWM_MAX;
+    }
+
+    if (m4_output > PWM_MAX) {
+        m4_int -= (m4_output - PWM_MAX) / Ki_Vel;
+        m4_output = PWM_MAX;
+    } else if (m4_output < -PWM_MAX) {
+        m4_int -= (m4_output + PWM_MAX) / Ki_Vel;
+        m4_output = -PWM_MAX;
+    }
+
+
+    setForwardLeftMotorPWM(m1_output);
+    setForwardRightMotorPWM(m4_output);
+    setRearLeftMotorPWM(m2_output);
+    setRearRightMotorPWM(m3_output);
+}
+
+
+void resetIntegralTerms(void) {
+    m1_int = 0;
+    m2_int = 0;
+    m3_int = 0;
+    m4_int = 0;
+}
+
+
+void setTargetVelocities(float m1_target, float m2_target, float m3_target, float m4_target) {
+	target_wheel_W.front_left = m1_target;
+	target_wheel_W.rear_left = m2_target;
+	target_wheel_W.rear_right = m3_target;
+	target_wheel_W.front_right = m4_target;
+
+}
+
+void stopMotors(){
+	setTargetVelocities(0, 0, 0,0);
+	resetMotors();
+
+	current_wheel_W.front_left = 0.0f;
+	current_wheel_W.rear_left = 0.0f;
+	current_wheel_W.rear_right = 0.0f;
+	current_wheel_W.front_right = 0.0f;
+
+	resetMotors();
+
+
+}
+
+
+
+
+
+uint16_t analogRead()
+{
+    ADC_ChannelConfTypeDef sConfig = {0};
+    ADC_HandleTypeDef *hadc1_ptr = Get_HADC1_Ptr();
+
+
+	sConfig.Channel = ADC_CHANNEL_7;
+    sConfig.Rank = 1;
+    sConfig.SamplingTime = ADC_SAMPLETIME_3CYCLES;
+
+    if (HAL_ADC_ConfigChannel(hadc1_ptr, &sConfig) != HAL_OK)
+    {
+        return 0;
+    }
+
+    complete = 0;
+
+    HAL_ADC_Start_DMA(hadc1_ptr, (uint32_t*)adc_buf, NUM_SAMPLES);
+
+    while (complete == 0)
+    {
+        continue;
+    }
+
+    uint32_t sum = 0;
+    uint16_t measurement = 0;
+    while(measurement < NUM_SAMPLES)
+    {
+        sum += adc_buf[measurement];
+        ++measurement;
+    }
+
+    return sum/NUM_SAMPLES;
+}
+
+uint16_t getCurrentMilliamps(){
+	// 3.3V / 4096 ADC counts / 144 mV per A = 5.5948893229166666666666666666667 mA per count
+	return analogRead();
+}
+
+
+/*
+ This function is called when the ADC buffer is filled
+ It stops the ADC and changes our "complete" variable to be "true"
+ */
+void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
+    // stop the ADC
+    HAL_ADC_Stop_DMA(hadc);
+    complete = 1;
+}
+
+

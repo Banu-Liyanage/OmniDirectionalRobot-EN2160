@@ -59,7 +59,8 @@ float amax_Y = 0.05f;//ms-2
 float amax_Z = 0.05f;//ms-2
 float amaz_diagonal = 0.071f;
 
-
+float x_distance = 0;
+float y_distance = 0;
 
 volatile RobotVelocity current_robot_velocity = {0.0f, 0.0f, 0.0f};
 

@@ -98,6 +98,9 @@ extern float amax_X;
 extern float amax_Y;
 extern float amax_Z;
 
+extern float x_distance;
+extern float y_distance;
+
 float clampf(float val, float min, float max);
 
 
