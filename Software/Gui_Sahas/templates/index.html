@@ -407,6 +407,63 @@
                 grid-template-columns: 1fr;
             }
         }
+        body {
+  background-color: #0d2b56;
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 20px;
+}
+
+.profile-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.profile-section {
+  background: #123a6d;
+  border-radius: 12px;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  flex: 1;
+  min-width: 250px;
+}
+
+.profile-section h3 {
+  margin-bottom: 10px;
+}
+
+.profile-section label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.profile-section input {
+  width: 100%;
+  padding: 6px;
+  border-radius: 6px;
+  border: none;
+  margin-top: 4px;
+}
+
+.profile-section button {
+  margin-top: 15px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #1a73e8;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-section button:hover {
+  background-color: #1665c1;
+}
+
     </style>
 </head>
 
@@ -543,54 +600,86 @@
                 Click "Plan Path" to calculate the optimal route to destination.
             </div>
         </div>
+        <br>
+        <div class="profile-container">
+            <br>
+  <br>            
+  <div class="profile-section">
+    <h3>Motion Velocity</h3>
+    <label>Max Velocity:</label>
+    <input type="number" id="motionMaxVel" value="100">
+    <label>Acceleration:</label>
+    <input type="number" id="motionAcc" value="50">
+    <button onclick="sendVelocity('motion')">Send Motion</button>
+  </div>
 
-        <!-- Velocity Profile Graphs Panel -->
-<div class="control-panel" style="margin-bottom: 40px;">
-    <!-- Motion Velocity Panel -->
-    <div class="panel">
-        <h2>Motion Velocity</h2>
-        <div class="control-group">
-            <label>Max Velocity (units/s)</label>
-            <input type="number" id="motionVmax" value="1" min="0.1" step="0.1">
-        </div>
-        <div class="control-group">
-            <label>Max Acceleration (units/s²)</label>
-            <input type="number" id="motionAmax" value="0.5" min="0.1" step="0.1">
-        </div>
-        <button class="btn" onclick="drawVelocityGraph('motion')">Generate Graph</button>
-        <canvas id="motionVelocityCanvas" width="400" height="200" style="margin-top: 15px;"></canvas>
-    </div>
+  <div class="profile-section">
+    <h3>Strafe Velocity</h3>
+    <label>Max Velocity:</label>
+    <input type="number" id="strafeMaxVel" value="80">
+    <label>Acceleration:</label>
+    <input type="number" id="strafeAcc" value="40">
+    <button onclick="sendVelocity('strafe')">Send Strafe</button>
+  </div>
 
-    <!-- Rotational Velocity Panel -->
-    <div class="panel">
-        <h2>Rotational Velocity</h2>
-        <div class="control-group">
-            <label>Max Velocity (rad/s)</label>
-            <input type="number" id="rotationalVmax" value="1" min="0.1" step="0.1">
-        </div>
-        <div class="control-group">
-            <label>Max Acceleration (rad/s²)</label>
-            <input type="number" id="rotationalAmax" value="0.5" min="0.1" step="0.1">
-        </div>
-        <button class="btn" onclick="drawVelocityGraph('rotational')">Generate Graph</button>
-        <canvas id="rotationalVelocityCanvas" width="400" height="200" style="margin-top: 15px;"></canvas>
-    </div>
-
-    <!-- Strafe Velocity Panel -->
-    <div class="panel">
-        <h2>Strafe Velocity</h2>
-        <div class="control-group">
-            <label>Max Velocity (units/s)</label>
-            <input type="number" id="strafeVmax" value="1" min="0.1" step="0.1">
-        </div>
-        <div class="control-group">
-            <label>Max Acceleration (units/s²)</label>
-            <input type="number" id="strafeAmax" value="0.5" min="0.1" step="0.1">
-        </div>
-        <button class="btn" onclick="drawVelocityGraph('strafe')">Generate Graph</button>
-        <canvas id="strafeVelocityCanvas" width="400" height="200" style="margin-top: 15px;"></canvas>
-    </div>
+  <div class="profile-section">
+    <h3>Rotational Velocity</h3>
+    <label>Max Velocity:</label>
+    <input type="number" id="rotMaxVel" value="60">
+    <label>Acceleration:</label>
+    <input type="number" id="rotAcc" value="30">
+    <button onclick="sendVelocity('rotation')">Send Rotation</button>
+  </div>
 </div>
+
+        <br>
+        <!-- Velocity Profile Graphs Panel -->
+        <div class="control-panel" style="margin-bottom: 40px;">
+            <!-- Motion Velocity Panel -->
+            <div class="panel">
+                <h2>Motion Velocity</h2>
+                <div class="control-group">
+                    <label>Max Velocity (units/s)</label>
+                    <input type="number" id="motionVmax" value="1" min="0.1" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Max Acceleration (units/s²)</label>
+                    <input type="number" id="motionAmax" value="0.5" min="0.1" step="0.1">
+                </div>
+                <button class="btn" onclick="drawVelocityGraph('motion')">Generate Graph</button>
+                <canvas id="motionVelocityCanvas" width="400" height="200" style="margin-top: 15px;"></canvas>
+            </div>
+
+            <!-- Rotational Velocity Panel -->
+            <div class="panel">
+                <h2>Rotational Velocity</h2>
+                <div class="control-group">
+                    <label>Max Velocity (rad/s)</label>
+                    <input type="number" id="rotationalVmax" value="1" min="0.1" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Max Acceleration (rad/s²)</label>
+                    <input type="number" id="rotationalAmax" value="0.5" min="0.1" step="0.1">
+                </div>
+                <button class="btn" onclick="drawVelocityGraph('rotational')">Generate Graph</button>
+                <canvas id="rotationalVelocityCanvas" width="400" height="200" style="margin-top: 15px;"></canvas>
+            </div>
+
+            <!-- Strafe Velocity Panel -->
+            <div class="panel">
+                <h2>Strafe Velocity</h2>
+                <div class="control-group">
+                    <label>Max Velocity (units/s)</label>
+                    <input type="number" id="strafeVmax" value="1" min="0.1" step="0.1">
+                </div>
+                <div class="control-group">
+                    <label>Max Acceleration (units/s²)</label>
+                    <input type="number" id="strafeAmax" value="0.5" min="0.1" step="0.1">
+                </div>
+                <button class="btn" onclick="drawVelocityGraph('strafe')">Generate Graph</button>
+                <canvas id="strafeVelocityCanvas" width="400" height="200" style="margin-top: 15px;"></canvas>
+            </div>
+        </div>
 
     </div>
 
@@ -652,6 +741,24 @@
             // Always include the last point
             grouped.push(path[path.length - 1]);
             return grouped;
+        }
+        function buildMacroMoves(grouped) {
+            let moves = [];
+            for (let i = 1; i < grouped.length; ++i) {
+                let sx = grouped[i - 1].x, sy = grouped[i - 1].y;
+                let ex = grouped[i].x, ey = grouped[i].y;
+                let dx = ex - sx, dy = ey - sy;
+                // Normalize to -1,0,1
+                let stepX = Math.sign(dx), stepY = Math.sign(dy);
+                // Length is the max of dx/dy absolute
+                let length = Math.max(Math.abs(dx), Math.abs(dy));
+                // Skip zero-length
+                if (length > 0 && !(stepX === 0 && stepY === 0)) {
+                    let dirCode = directionMap[`${stepX},${stepY}`] ?? DIR_STOP;
+                    moves.push({ dir: dirCode, count: length });
+                }
+            }
+            return moves;
         }
 
         function pathToDirectionList(path) {
@@ -985,160 +1092,281 @@
                 });
         }
 
-        function executeMove() {
+        async function executeMove() {
             if (currentPath.length === 0) {
                 alert('Please plan a path first');
                 return;
             }
 
-            if (!isConnected) {
-                alert('Please connect to the robot first');
-                return;
-            }
+            let destination = currentPath[currentPath.length - 1];
+            let robotX = currentPath[0].x, robotY = currentPath[0].y;
 
-            // Convert currentPath to list of direction codes
-            const dirCodes = pathToDirectionList(currentPath);
+            // 1. Send starting position ONCE
+            sendCommand({ type: 'start', x: robotX, y: robotY });
 
-            fetch('/api/robot/path', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ path: dirCodes })
-            }).then(res => res.json())
-                .then(data => {
-                    // Handle result/confirmation if needed
-                    console.log('Path execution result:', data);
+            let reached = false;
+            let step = 0;
+
+            while (!reached) {
+                // 2. Always replan from current position
+                const mapData = {
+                    size: mapSize,
+                    robot: { x: robotX, y: robotY },
+                    destination: { x: destination.x, y: destination.y },
+                    obstacles: Array.from(obstacles).map(obs => {
+                        const [x, y] = obs.split(',').map(Number);
+                        return { x, y };
+                    })
+                };
+
+                let planRes = await fetch('/api/path/plan', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(mapData)
                 });
+                let planData = await planRes.json();
 
-            document.getElementById('pathInfo').innerHTML = `
-                <strong>EXECUTING PATH</strong><br>
-                Robot is moving to destination.<br>
-                Path: ${currentPath.map(p => `(${p.x},${p.y})`).join(' → ')}
-            `;
+                if (!planData.success || !planData.path || planData.path.length < 2) {
+                    document.getElementById('pathInfo').innerHTML = `
+                        <strong>ERROR</strong><br>
+                        ${planData.error || 'No path found. Robot stopped at (' + robotX + ',' + robotY + ')'}
+                    `;
+                    return;
+                }
+
+                // Macro grouping: get macro moves (dir + count) for this path
+                rawPath = planData.path;
+                currentPath = groupPathSegments(rawPath);
+                drawMap();
+
+                let macroMoves = buildMacroMoves(currentPath);
+
+                if (macroMoves.length === 0) {
+                    document.getElementById('pathInfo').innerHTML = `
+                        <strong>ERROR</strong><br>
+                        No macro moves found. Robot stuck?
+                    `;
+                    return;
+                }
+
+                // Only send the first macro move in the macroMoves list
+                let move = macroMoves[0];
+
+                document.getElementById('pathInfo').innerHTML = `
+                    <strong>SENDING MACRO MOVE</strong><br>
+                    Step: ${step + 1}<br>
+                    From: (${robotX}, ${robotY})<br>
+                    To:   (${currentPath[1].x}, ${currentPath[1].y})<br>
+                    Direction: ${move.dir}<br>
+                    Count: ${move.count}
+                `;
+
+                // Send the macro move (as a list, for backend API compatibility)
+                let res = await fetch('/api/robot/autonavigate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        macro_path: [move],
+                        start: { x: robotX, y: robotY },
+                        destination
+                    })
+                });
+                let feedback = await res.json();
+
+                if (!feedback.success) {
+                    document.getElementById('pathInfo').innerHTML = `
+                        <strong>ERROR</strong><br>
+                        ${feedback.error || 'Move failed.'}
+                    `;
+                    return;
+                }
+
+                // Update position based on robot's feedback
+                robotX = feedback.robot_position.x;
+                robotY = feedback.robot_position.y;
+                robotPosition = { x: robotX, y: robotY };
+                drawMap();
+
+                // If destination is reached, stop loop
+                if (feedback.reached || (robotX === destination.x && robotY === destination.y)) {
+                    document.getElementById('pathInfo').innerHTML = `
+                        <strong>DONE</strong><br>
+                        Robot reached the destination at (${robotX}, ${robotY})!
+                    `;
+                    reached = true;
+                } else {
+                    step++;
+                    // loop will replan and continue from new robotX, robotY
+                }
+            }
         }
+
 
         // Initialize map drawing
         setTimeout(() => {
             drawMap();
         }, 100);
+
         
+
         function drawVelocityGraph(type) {
-    let vmax, amax, canvas, ctx;
-    switch(type) {
-        case 'motion':
-            vmax = parseFloat(document.getElementById('motionVmax').value);
-            amax = parseFloat(document.getElementById('motionAmax').value);
-            canvas = document.getElementById('motionVelocityCanvas');
-            break;
-        case 'rotational':
-            vmax = parseFloat(document.getElementById('rotationalVmax').value);
-            amax = parseFloat(document.getElementById('rotationalAmax').value);
-            canvas = document.getElementById('rotationalVelocityCanvas');
-            break;
-        case 'strafe':
-            vmax = parseFloat(document.getElementById('strafeVmax').value);
-            amax = parseFloat(document.getElementById('strafeAmax').value);
-            canvas = document.getElementById('strafeVelocityCanvas');
-            break;
-        default:
-            console.error('Unknown velocity type');
-            return;
+            let vmax, amax, canvas, ctx;
+            switch (type) {
+                case 'motion':
+                    vmax = parseFloat(document.getElementById('motionVmax').value);
+                    amax = parseFloat(document.getElementById('motionAmax').value);
+                    canvas = document.getElementById('motionVelocityCanvas');
+                    break;
+                case 'rotational':
+                    vmax = parseFloat(document.getElementById('rotationalVmax').value);
+                    amax = parseFloat(document.getElementById('rotationalAmax').value);
+                    canvas = document.getElementById('rotationalVelocityCanvas');
+                    break;
+                case 'strafe':
+                    vmax = parseFloat(document.getElementById('strafeVmax').value);
+                    amax = parseFloat(document.getElementById('strafeAmax').value);
+                    canvas = document.getElementById('strafeVelocityCanvas');
+                    break;
+                default:
+                    console.error('Unknown velocity type');
+                    return;
+            }
+
+            if (isNaN(vmax) || isNaN(amax) || vmax <= 0 || amax <= 0) {
+                alert('Please enter valid positive numbers for velocity and acceleration.');
+                return;
+            }
+
+            ctx = canvas.getContext('2d');
+            const width = canvas.width;
+            const height = canvas.height;
+
+            // Clear canvas
+            ctx.clearRect(0, 0, width, height);
+
+            // Calculate trapezoidal profile times
+            const t_acc = vmax / amax;
+            const d_acc = 0.5 * amax * t_acc * t_acc;
+
+            // Total distance can be normalized to 1 unit for graph simplicity
+            // So total time = t_acc + t_const + t_acc = 2*t_acc + t_const
+            // We will use total distance = d = 1 for plotting
+            // t_const = (1 - 2*d_acc) / vmax
+            let t_const = (1 - 2 * d_acc) / vmax;
+            if (t_const < 0) {
+                // If triangular, use a longer distance to make it trapezoidal
+                const distance = 2.5 * d_acc;  // Use 2.5x the acceleration distance
+                t_const = (distance - 2 * d_acc) / vmax;
+            };  // Triangle profile
+
+            const t_total = 2 * t_acc + t_const;
+
+            // Setup scaling factors for drawing
+            const margin = 40;
+            const graphWidth = width - 2 * margin;
+            const graphHeight = height - 2 * margin;
+
+            // Draw axes
+            ctx.strokeStyle = '#aaa';
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            // X axis (time)
+            ctx.moveTo(margin, height - margin);
+            ctx.lineTo(width - margin, height - margin);
+            // Y axis (velocity)
+            ctx.lineTo(margin, margin);
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = '#fff';
+            ctx.font = '12px sans-serif';
+            ctx.fillText('Time (s)', width / 2, height - 10);
+            ctx.fillText('Velocity', 5, margin - 10);
+
+            // Function to convert time and velocity to canvas coords
+            function xPos(t) {
+                return margin + (t / t_total) * graphWidth;
+            }
+            function yPos(v) {
+                return height - margin - (v / vmax) * graphHeight;
+            }
+
+            // Draw trapezoidal velocity profile
+            ctx.strokeStyle = '#4a90e2';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(xPos(0), yPos(0));
+            ctx.lineTo(xPos(t_acc), yPos(vmax));
+            ctx.lineTo(xPos(t_acc + t_const), yPos(vmax));
+            ctx.lineTo(xPos(t_total), yPos(0));
+            ctx.stroke();
+
+            // Draw grid lines
+            ctx.strokeStyle = '#555';
+            ctx.lineWidth = 1;
+
+            // Horizontal grid lines for velocity
+            for (let i = 0; i <= 5; i++) {
+                let v = (vmax / 5) * i;
+                let y = yPos(v);
+                ctx.beginPath();
+                ctx.moveTo(margin, y);
+                ctx.lineTo(width - margin, y);
+                ctx.stroke();
+                ctx.fillText(v.toFixed(1), 5, y + 4);
+            }
+
+            // Vertical grid lines for time
+            for (let i = 0; i <= 5; i++) {
+                let t = (t_total / 5) * i;
+                let x = xPos(t);
+                ctx.beginPath();
+                ctx.moveTo(x, height - margin);
+                ctx.lineTo(x, margin);
+                ctx.stroke();
+                ctx.fillText(t.toFixed(2), x - 10, height - margin + 15);
+            }
+        }
+
+        function sendVelocity(type) {
+    // Get values based on the type
+    let maxVelInput, accInput;
+    if (type === "motion") {
+      maxVelInput = document.getElementById("motionMaxVel").value;
+      accInput = document.getElementById("motionAcc").value;
+    } else if (type === "strafe") {
+      maxVelInput = document.getElementById("strafeMaxVel").value;
+      accInput = document.getElementById("strafeAcc").value;
+    } else if (type === "rotation") {
+      maxVelInput = document.getElementById("rotMaxVel").value;
+      accInput = document.getElementById("rotAcc").value;
     }
 
-    if (isNaN(vmax) || isNaN(amax) || vmax <= 0 || amax <= 0) {
-        alert('Please enter valid positive numbers for velocity and acceleration.');
-        return;
-    }
+    const payload = {
+      type: type,
+      max_velocity: parseInt(maxVelInput),
+      acceleration: parseInt(accInput)
+    };
 
-    ctx = canvas.getContext('2d');
-    const width = canvas.width;
-    const height = canvas.height;
-
-    // Clear canvas
-    ctx.clearRect(0, 0, width, height);
-
-    // Calculate trapezoidal profile times
-    const t_acc = vmax / amax;
-    const d_acc = 0.5 * amax * t_acc * t_acc;
-
-    // Total distance can be normalized to 1 unit for graph simplicity
-    // So total time = t_acc + t_const + t_acc = 2*t_acc + t_const
-    // We will use total distance = d = 1 for plotting
-    // t_const = (1 - 2*d_acc) / vmax
-    let t_const = (1 - 2 * d_acc) / vmax;
-    if (t_const < 0){
-    // If triangular, use a longer distance to make it trapezoidal
-    const distance = 2.5 * d_acc;  // Use 2.5x the acceleration distance
-    t_const = (distance - 2 * d_acc) / vmax;
-};  // Triangle profile
-
-    const t_total = 2 * t_acc + t_const;
-
-    // Setup scaling factors for drawing
-    const margin = 40;
-    const graphWidth = width - 2 * margin;
-    const graphHeight = height - 2 * margin;
-
-    // Draw axes
-    ctx.strokeStyle = '#aaa';
-    ctx.lineWidth = 1;
-    ctx.beginPath();
-    // X axis (time)
-    ctx.moveTo(margin, height - margin);
-    ctx.lineTo(width - margin, height - margin);
-    // Y axis (velocity)
-    ctx.lineTo(margin, margin);
-    ctx.stroke();
-
-    // Labels
-    ctx.fillStyle = '#fff';
-    ctx.font = '12px sans-serif';
-    ctx.fillText('Time (s)', width / 2, height - 10);
-    ctx.fillText('Velocity', 5, margin - 10);
-
-    // Function to convert time and velocity to canvas coords
-    function xPos(t) {
-        return margin + (t / t_total) * graphWidth;
-    }
-    function yPos(v) {
-        return height - margin - (v / vmax) * graphHeight;
-    }
-
-    // Draw trapezoidal velocity profile
-    ctx.strokeStyle = '#4a90e2';
-    ctx.lineWidth = 3;
-    ctx.beginPath();
-    ctx.moveTo(xPos(0), yPos(0));
-    ctx.lineTo(xPos(t_acc), yPos(vmax));
-    ctx.lineTo(xPos(t_acc + t_const), yPos(vmax));
-    ctx.lineTo(xPos(t_total), yPos(0));
-    ctx.stroke();
-
-    // Draw grid lines
-    ctx.strokeStyle = '#555';
-    ctx.lineWidth = 1;
-
-    // Horizontal grid lines for velocity
-    for(let i=0; i<=5; i++) {
-        let v = (vmax / 5) * i;
-        let y = yPos(v);
-        ctx.beginPath();
-        ctx.moveTo(margin, y);
-        ctx.lineTo(width - margin, y);
-        ctx.stroke();
-        ctx.fillText(v.toFixed(1), 5, y + 4);
-    }
-
-    // Vertical grid lines for time
-    for(let i=0; i<=5; i++) {
-        let t = (t_total / 5) * i;
-        let x = xPos(t);
-        ctx.beginPath();
-        ctx.moveTo(x, height - margin);
-        ctx.lineTo(x, margin);
-        ctx.stroke();
-        ctx.fillText(t.toFixed(2), x - 10, height - margin + 15);
-    }
-}
+    fetch("http://localhost:5000/api/robot/velocity", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(`✅ Sent: ${data.messages_sent.join(", ")}`);
+      } else {
+        alert(`❌ Failed: ${data.error}`);
+      }
+    })
+    .catch(error => {
+      alert(`❌ Error: ${error}`);
+    });
+  }
 
     </script>
 </body>

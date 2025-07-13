@@ -14,6 +14,30 @@ from protocol_ids import *
 app = Flask(__name__)
 CORS(app)
 
+CMD_ROBOT_X = 0x000B
+CMD_ROBOT_Y = 0x000C
+CMD_ROBOT_X_IN = 0x000E
+CMD_ROBOT_Y_IN = 0x000F
+CMD_FLAG_DEST_REACHED = 0x000D
+
+
+def read_packet(serial_port, timeout=300.0):
+    import binascii
+
+    start_time = time.time()
+    buf = b""
+    while time.time() - start_time < timeout:
+        if serial_port.in_waiting >= 4:
+            buf += serial_port.read(4)
+            print("[RECV]", binascii.hexlify(buf).decode(), f"({len(buf)} bytes)")
+            if len(buf) >= 4:
+                cmd, value = struct.unpack(">HH", buf[:4])
+                print(f"  -> Decoded: cmd=0x{cmd:04X} ({cmd}), value={value}")
+                return cmd, value
+        time.sleep(0.01)
+    raise TimeoutError("Timeout waiting for reply from robot.")
+
+
 DIRECTION_MAP = {
     (0, 0): DIR_STOP,
     (0, -1): DIR_FORWARD,
@@ -35,13 +59,13 @@ logger = logging.getLogger(__name__)
 
 def build_packet(cmd, value):
     # For 16-bit command and 16/32-bit values, adjust as per your protocol
-    return struct.pack("<HH", cmd, value)
+    return struct.pack(">HH", cmd, value)
 
 
 def parse_packet(data):
     # Expecting pairs: [CMD][VALUE] e.g. 4 bytes per packet
     if len(data) >= 4:
-        cmd, value = struct.unpack("<HH", data[:4])
+        cmd, value = struct.unpack(">HH", data[:4])
         return cmd, value
     return None, None
 
@@ -100,29 +124,22 @@ class RobotController:
 
     def send_direction(self, dir_id: int):
         # Example: Send [CMD_DIRECTION, dir_id]
-        packet = struct.pack("<HH", CMD_DIRECTION, dir_id)
+        packet = struct.pack(">HH", CMD_DIRECTION, dir_id)
         self.current_direction = dir_id
         self.movement_active = dir_id != DIR_STOP
         return self._write_packet(packet)
 
     def send_speed(self, speed: int):
         # Example: Send [CMD_SPEED, speed]
-        packet = struct.pack("<HH", CMD_SPEED, speed)
+        packet = struct.pack(">HH", CMD_SPEED, speed)
         return self._write_packet(packet)
 
     def send_stop(self):
         # Example: Send [CMD_STOP, 0]
-        packet = struct.pack("<HH", CMD_STOP, 0)
+        packet = struct.pack(">HH", CMD_STOP, 0)
         self.current_direction = DIR_STOP
         self.movement_active = False
         return self._write_packet(packet)
-
-    def send_imu(self, imu_x: int, imu_y: int, imu_rot: int):
-        # Example: Send [CMD_IMU_X, imu_x], [CMD_IMU_Y, imu_y], [CMD_IMU_ROTATION, imu_rot]
-        p1 = struct.pack("<HH", CMD_IMU_X, imu_x)
-        p2 = struct.pack("<HH", CMD_IMU_Y, imu_y)
-        p3 = struct.pack("<HH", CMD_IMU_ROTATION, imu_rot)
-        return self._write_packet(p1 + p2 + p3)
 
     def send_rotate_command(self, clockwise: bool = True):
         # Use DIR_ROTATE_CW or DIR_ROTATE_CCW (if defined)
@@ -848,6 +865,110 @@ def simulator_status():
     )
 
 
+@app.route("/api/robot/autonavigate", methods=["POST"])
+def autonavigate():
+    """
+    Receives: {
+      "macro_path": [{"dir": <dir>, "count": <count>}],  # just ONE macro move!
+      "start": {"x":..., "y":...},
+      "destination": {"x":..., "y":...}
+    }
+    """
+    data = request.json
+    macro_path = data.get("macro_path", [])
+    start = data.get("start")
+    dest = data.get("destination")
+
+    if not (macro_path and start and dest):
+        return jsonify({"success": False, "error": "Missing required fields."})
+
+    try:
+        robot_x, robot_y = int(start["x"]), int(start["y"])
+        serial_port = robot_controller.serial_port
+
+        # Only send the first macro move
+        move = macro_path[0]
+        # 1. Send robot's current position
+        serial_port.write(struct.pack(">HH", CMD_ROBOT_X, robot_x))
+        serial_port.write(struct.pack(">HH", CMD_ROBOT_Y, robot_y))
+        # 2. Send direction and count
+        serial_port.write(struct.pack(">HH", move["dir"], move["count"]))
+
+        # 3. Wait for robot reply X and Y (expecting two packets)
+        cmd_x, value_x = read_packet(serial_port)
+        cmd_y, value_y = read_packet(serial_port)
+
+        if cmd_x != CMD_ROBOT_X_IN or cmd_y != CMD_ROBOT_Y_IN:
+            logger.error(
+                f"Expected: X={CMD_ROBOT_X_IN} Y={CMD_ROBOT_Y_IN} | Got: X={cmd_x} Y={cmd_y}"
+            )
+            return jsonify(
+                {
+                    "success": False,
+                    "error": f"Bad reply from robot. Expected: X={CMD_ROBOT_X_IN} Y={CMD_ROBOT_Y_IN}, but got: X={cmd_x} Y={cmd_y}",
+                }
+            )
+
+        robot_x, robot_y = value_x, value_y
+
+        reached = robot_x == dest["x"] and robot_y == dest["y"]
+        # If reached, send done flag to robot
+        if reached:
+            serial_port.write(struct.pack(">HH", CMD_FLAG_DEST_REACHED, 0))
+
+        return jsonify(
+            {
+                "success": True,
+                "reached": reached,
+                "robot_position": {"x": robot_x, "y": robot_y},
+            }
+        )
+
+    except Exception as e:
+        logger.exception("Auto-navigation failed")
+        return jsonify({"success": False, "error": str(e)})
+
+
+@app.route("/api/robot/velocity_profile", methods=["POST"])
+def set_velocity_profile():
+    data = request.json
+    profile_type = data.get("type")
+    vmax = int(data.get("vmax", 0))
+    acc = int(data.get("acc", 0))
+
+    logger.info(f"Received velocity profile: {profile_type} | vmax={vmax}, acc={acc}")
+
+    if not robot_controller.is_connected:
+        return jsonify({"success": False, "error": "Serial port not available"})
+
+    if vmax < 0 or acc < 0:
+        return jsonify({"success": False, "error": "vmax and acc must be non-negative"})
+
+    # Command mapping
+    cmd_map = {
+        "motion": (CMD_MOTION_PROFILE, CMD_MOTION_PROFILE + 1),
+        "strafe": (CMD_STRAFE_PROFILE, CMD_STRAFE_PROFILE + 1),
+        "rotation": (CMD_ROTATION_PROFILE, CMD_ROTATION_PROFILE + 1),
+    }
+
+    cmd_ids = cmd_map.get(profile_type)
+    if not cmd_ids:
+        return jsonify({"success": False, "error": "Invalid profile type"})
+
+    try:
+        # Each command is 4 bytes: [CMD_ID][VALUE] = 2 x uint16
+        packet_vmax = struct.pack("<HH", cmd_ids[0], vmax)
+        packet_acc = struct.pack("<HH", cmd_ids[1], acc)
+
+        ok1 = robot_controller._write_packet(packet_vmax)
+        ok2 = robot_controller._write_packet(packet_acc)
+
+        return jsonify({"success": ok1 and ok2})
+    except Exception as e:
+        logger.error(f"Failed to send velocity profile: {e}")
+        return jsonify({"success": False, "error": str(e)})
+
+
 # Error handlers
 @app.errorhandler(404)
 def not_found(error):
@@ -877,3 +998,36 @@ if __name__ == "__main__":
 
     # Run the Flask app
     app.run(host="0.0.0.0", port=5000, debug=True)
+
+
+@app.route("/api/robot/velocity", methods=["POST"])
+def set_velocity_profile():
+    """
+    Accepts: {
+      "type": "motion" | "strafe" | "rotation",
+      "max_velocity": 100,
+      "acceleration": 50
+    }
+    Sends over Bluetooth:
+      type_velocity_<value>
+      type_acceleration_<value>
+    """
+    data = request.json
+    velocity_type = data.get("type")
+    max_vel = data.get("max_velocity")
+    acc = data.get("acceleration")
+
+    if not robot_controller.is_connected:
+        return jsonify({"success": False, "error": "Robot not connected"}), 400
+
+    try:
+        msg1 = f"{velocity_type}_velocity_{max_vel}\n"
+        msg2 = f"{velocity_type}_acceleration_{acc}\n"
+
+        robot_controller.serial_port.write(msg1.encode("utf-8"))
+        time.sleep(0.05)
+        robot_controller.serial_port.write(msg2.encode("utf-8"))
+
+        return jsonify({"success": True, "messages_sent": [msg1.strip(), msg2.strip()]})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
