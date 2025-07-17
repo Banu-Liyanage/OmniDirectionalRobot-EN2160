@@ -101,7 +101,7 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 <table>
 <tr>
 <td align="center"><img src="Images/20250711_125314.jpg" alt="Complete Robot" width="450"><br><b>Complete Assembly</b></td>
-<td align="center"><img src="Images/robot.jpg" alt="Enclosure" width="450"><br><b>Internal view</b></td>
+<td align="center"><img src="Images/20250711_125746.jpg" alt="Enclosure" width="400"><br><b>Internal view</b></td>
 
 </tr>
 </table>
