@@ -278,9 +278,7 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 ---
 
 ## 👥 Team
-<div align="center">
-  <img src="Images/PSX_20250712_002913.jpg">
-</div>
+
 <div align="center">
 
 | 🧑‍💻 **Name** | 📧 **Email** |
@@ -295,7 +293,9 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 | **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk |
 
 </div>
-
+<div align="center">
+  <img src="Images/PSX_20250712_002913.jpg">
+</div>
 
 
 <!-- ## 📁 Repository Architecture
