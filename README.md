@@ -32,11 +32,9 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 
 
 <div align="center">
-
-<!-- Add your hero image here -->
-![Robot ](Images/front.jpg)
-
+  <img src="Images/20250711_124842(1)(1)%20(1).jpg">
 </div>
+
 
 
 
