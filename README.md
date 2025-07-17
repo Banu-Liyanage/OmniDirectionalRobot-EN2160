@@ -52,24 +52,7 @@ This is an on-going project, where we are currently working on the Robot's Firmw
 
 
 
----
 
-## 👥 Team
-
-<div align="center">
-
-| 🧑‍💻 **Name** | 📧 **Email** |
-|:---:|:---:|
-| **Pankaja Balasooriya** | balasooriyabapi.22@uom.lk |
-| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk |
-| **Chandupa Dineshara** | dinesharamc.22@uom.lk |
-| **Chamath Diunugala** | diunugalach.22@uom.lk |
-| **Sahas Eshan** | eashansgs.22@uom.lk |
-| **Rusiru Fernando** | fernandoard.22@uom.lk |
-| **Banuka Liyanage** | liyanagedlbb.22@uom.lk |
-| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk |
-
-</div>
 
 
 
@@ -292,7 +275,28 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 | Material handling | Supply delivery | Shelf restocking | STEM demonstrations |
 | Quality inspection | Patient assistance | Customer guidance | Competition robotics |
 
+---
 
+## 👥 Team
+
+<div align="center">
+
+| 🧑‍💻 **Name** | 📧 **Email** |
+|:---:|:---:|
+| **Pankaja Balasooriya** | balasooriyabapi.22@uom.lk |
+| **Oshani Dewasumithra** | dewasumithrampo.22@uom.lk |
+| **Chandupa Dineshara** | dinesharamc.22@uom.lk |
+| **Chamath Diunugala** | diunugalach.22@uom.lk |
+| **Sahas Eshan** | eashansgs.22@uom.lk |
+| **Rusiru Fernando** | fernandoard.22@uom.lk |
+| **Banuka Liyanage** | liyanagedlbb.22@uom.lk |
+| **Rusula Oshadha Pathirana** | pathiranapdro.22@uom.lk |
+
+</div>
+
+<div align="center">
+  <img src="Images/20250711_124842(1)(1)%20(1).jpg">
+</div>
 
 <!-- ## 📁 Repository Architecture
 
