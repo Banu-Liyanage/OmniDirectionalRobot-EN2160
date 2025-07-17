@@ -871,13 +871,6 @@
             });
 
             // Optional: Keep sending if button is held down (for real-time movement)
-            moveInterval = setInterval(() => {
-                sendCommand({
-                    type: 'joystick',
-                    x: x,
-                    y: y
-                });
-            }, 100);
         }
 
 
