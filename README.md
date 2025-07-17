@@ -295,7 +295,7 @@ Extensive Finite Element Analysis (FEA) was conducted to validate:
 </div>
 
 <div align="center">
-  <img src="Images/20250711_124842(1)(1)%20(1).jpg">
+  <img src="Images/PSX_20250712_002913.jpg">
 </div>
 
 <!-- ## 📁 Repository Architecture
