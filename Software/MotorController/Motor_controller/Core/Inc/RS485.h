@@ -15,20 +15,38 @@
 
 // Command definitions
 #define CMD_FORWARD         0x01
-#define CMD_BACKWARD        0x02
+#define CMD_BACKWARD        0x02//
 #define CMD_LEFT            0x03
-#define CMD_RIGHT           0x04
+#define CMD_RIGHT           0x04//
 #define CMD_FORWARD_LEFT    0x05
 #define CMD_FORWARD_RIGHT   0x06
 #define CMD_BACKWARD_LEFT   0x07
-#define CMD_BACKWARD_RIGHT  0x08
-#define CMD_VELOCITY        0x09
+#define CMD_BACKWARD_RIGHT  0x08//
+#define CMD_ROTATE_CW		0x09
+#define CMD_ROTATE_CCW		0x0A
+#define CMD_VELOCITY        0x0B
+
+
+// Command definitions
+//#define CMD_FORWARD         0x01
+//#define CMD_BACKWARD        0x05//
+//#define CMD_LEFT            0x07
+//#define CMD_RIGHT           0x03//
+//#define CMD_FORWARD_LEFT    0x05
+//#define CMD_FORWARD_RIGHT   0x02
+//#define CMD_BACKWARD_LEFT   0x06
+//#define CMD_BACKWARD_RIGHT  0x04//
+//#define CMD_ROTATE_CW		0x09
+//#define CMD_ROTATE_CCW		0x0A
+//#define CMD_VELOCITY        0x0B
+
 
 
 // Telemetry data identifiers
-#define TELEM_MOTOR_STATUS  0xA1
-#define TELEM_BATTERY_VOLT  0xA2
-#define TELEM_TEMPERATURE   0xA3
+#define TELEM_MOTION_COMPLETED  0xA1
+#define TELEM_X_DISTANCE  0xA2
+#define TELEM_Y_DISTANCE   0xA3
+
 #define TELEM_CURRENT       0xA4
 #define TELEM_ENCODER_DATA  0xA5
 #define TELEM_SYSTEM_STATUS 0xA6
@@ -42,5 +60,6 @@ void ExecuteCommand(uint8_t command, uint8_t value);
 void SendTelemetryPacket(uint8_t dataType, uint16_t value);
 void SendTelemetryData(void);
 
+void SendDistanceTelemetry(float x_distance, float y_distance);
 
 #endif /* INC_RS485_H_ */

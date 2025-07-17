@@ -30,7 +30,9 @@ Core/Src/RS485.o: ../Core/Src/RS485.c ../Core/Inc/RS485.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- ../Core/Inc/main.h
+ ../Core/Inc/main.h ../Core/Inc/motion.h ../Core/Inc/profile.h \
+ ../Core/Inc/config.h ../Core/Inc/controller.h ../Core/Inc/main.h \
+ ../Core/Inc/encoders.h
 ../Core/Inc/RS485.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -64,3 +66,9 @@ Core/Src/RS485.o: ../Core/Src/RS485.c ../Core/Inc/RS485.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Inc/main.h:
+../Core/Inc/motion.h:
+../Core/Inc/profile.h:
+../Core/Inc/config.h:
+../Core/Inc/controller.h:
+../Core/Inc/main.h:
+../Core/Inc/encoders.h:

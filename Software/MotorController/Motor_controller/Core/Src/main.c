@@ -57,6 +57,7 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 TIM_HandleTypeDef htim4;
 TIM_HandleTypeDef htim5;
+TIM_HandleTypeDef htim11;
 TIM_HandleTypeDef htim13;
 TIM_HandleTypeDef htim14;
 
@@ -68,6 +69,9 @@ uint32_t adc_values[4];
 uint8_t rx_idx;
 uint8_t rx_buff[100];
 uint8_t rx_data[2];
+
+extern float x_distance;
+extern float y_distance;
 
 /* USER CODE END PV */
 
@@ -85,6 +89,7 @@ static void MX_TIM5_Init(void);
 static void MX_USART3_UART_Init(void);
 static void MX_TIM14_Init(void);
 static void MX_TIM13_Init(void);
+static void MX_TIM11_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -105,6 +110,8 @@ uint8_t rxBuffer[2];
 uint8_t rxIndex = 0;
 float currentVelocity = DEFAULT_VELOCITY;
 uint8_t commandReceived = 0;
+
+
 
 
 /* USER CODE END 0 */
@@ -149,6 +156,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_TIM14_Init();
   MX_TIM13_Init();
+  MX_TIM11_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_2);
@@ -175,6 +183,7 @@ int main(void)
   // Velocity timer
   HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start_IT(&htim13);
+  HAL_TIM_Base_Start_IT(&htim11);
 
   HAL_GPIO_WritePin(Status_LED_GPIO_Port, Status_LED_Pin, 1);
   HAL_Delay(500);
@@ -191,7 +200,7 @@ int main(void)
   Controller_ResetControllers(&controller);
   Motion_ResetDriveSystem(&motion);
 
-  HAL_Delay(5000);
+  //HAL_Delay(5000);
 
 //Profile_Move(&x_profile, 2, 0.25, 0, 0.05);
 //  Profile_Move(&y_profile, 4, 0.6, 0, 0.05);
@@ -201,10 +210,14 @@ int main(void)
 //  Profile_Move(&y_profile, 0, 0, 0, 0);
 //  Profile_Move(&W_profile, 0, 0, 0, 0);
 
- //Motion_X(&motion, 3);
+  //Motion_X(&motion, 1);
  //Motion_Y(&motion, -1);
+  //float val = (float)25 / 50.0f;
+  //Motion_Y(&motion, val);
+  //Motion_Diagonal_l(&motion, -1.414);
+  //Motion_X(&motion, -1 * (float)50 / 50.0f);
 
-  HAL_Delay(1000);
+  //HAL_Delay(1000);
 
   //HAL_UART_Receive_IT(&huart3, rx_data, 1);
 
@@ -233,6 +246,7 @@ int main(void)
 // set_robot_velocity(0, 0, 0);
  //resetIntegralTerms();
   //int i = 0;
+  //commandReceived = 1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -251,8 +265,15 @@ int main(void)
 //    UART_Transmit_Int(&huart3, "S", i);
 //    i++;
 //    HAL_Delay(1000);
-	  SendTelemetryData();
-	  HAL_Delay(100);
+//	  SendTelemetryData();
+	  if (commandReceived)
+		{
+			//UART_Transmit_Int(&huart2, "R", rxBuffer[0]);
+			ExecuteCommand(rxBuffer[0], rxBuffer[1]);
+		  //ExecuteCommand(1, 50);
+			commandReceived = 0;
+		}
+	  //HAL_Delay(100);
 
 
 	  //UART_Transmit_WheelW(&huart2, m1_W, m4_W, m2_W, m3_W);
@@ -642,6 +663,37 @@ static void MX_TIM5_Init(void)
 }
 
 /**
+  * @brief TIM11 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM11_Init(void)
+{
+
+  /* USER CODE BEGIN TIM11_Init 0 */
+
+  /* USER CODE END TIM11_Init 0 */
+
+  /* USER CODE BEGIN TIM11_Init 1 */
+
+  /* USER CODE END TIM11_Init 1 */
+  htim11.Instance = TIM11;
+  htim11.Init.Prescaler = 1800-1;
+  htim11.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim11.Init.Period = 10000-1;
+  htim11.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim11.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim11) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM11_Init 2 */
+
+  /* USER CODE END TIM11_Init 2 */
+
+}
+
+/**
   * @brief TIM13 Initialization Function
   * @param None
   * @retval None
@@ -873,30 +925,30 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
 		UpdateControllers(&controller, Motion_XVelocity(&motion), Motion_YVelocity(&motion),  Motion_Omega(&motion), 0);
 
 	}
+	else if(htim == &htim11){
+		//Transmit Telemetry data
+		//UART_Transmit_Int(&huart2, "T", HAL_GetTick());
+		SendDistanceTelemetry(x_distance, y_distance);
+	}
 }
-int j = 0;
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart->Instance == USART3)
 	    {
 //		HAL_GPIO_TogglePin(LED_RX_GPIO_Port, LED_RX_Pin);
 	        rxIndex++;
-	        j++;
 	        HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 1);
 
 	        if (rxIndex >= 2)
 	        {
+	        	HAL_GPIO_WritePin(LED_RX_GPIO_Port, LED_RX_Pin, 0);
 	            // Complete command received
 	            commandReceived = 1;
 	            rxIndex = 0;
-	            if (commandReceived)
-				{
-	            	UART_Transmit_Int(&huart2, "R", rxBuffer[0]);
-					ExecuteCommand(rxBuffer[0], rxBuffer[1]);
-					commandReceived = 0;
-				}
+
 
 	            // Echo back the received command
+
 	            //HAL_UART_Transmit(&huart2, rxBuffer, 2, 100);
 
 	        }
@@ -904,7 +956,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	        // Continue receiving
 	        HAL_UART_Receive_IT(&huart3, &rxBuffer[rxIndex], 1);
 	    }
-//
+
 
 //  if (huart == &huart3)
 //  {

@@ -55,7 +55,12 @@ uint8_t Motion_YMoveFinished(Motion *motion);
 
 void Motion_X(Motion *motion, float distance);
 void Motion_Y(Motion *motion, float distance);
-void Motion_Diagonal(Motion *motion, float distance);
+void Motion_Diagonal_l(Motion *motion, float distance);
+void Motion_Diagonal_r(Motion *motion, float distance);
+
+
+void Motion_Rotate_CW(Motion *motion, float angle);
+void Motion_Rotate_CCW(Motion *motion, float angle);
 
 
 #endif /* INC_MOTION_H_ */

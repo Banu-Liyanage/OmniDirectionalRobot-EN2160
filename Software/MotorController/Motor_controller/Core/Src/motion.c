@@ -9,6 +9,8 @@
 #include "motion.h"
 #include "config.h"
 
+extern float x_distance;
+extern float y_distance;
 
 void Motion_Init(Motion *motion, Controller *controller, Profile *x_profile, Profile *y_profile, Profile *W_profile) {
     motion->controller = *controller;
@@ -112,16 +114,43 @@ uint8_t Motion_YMoveFinished(Motion *motion) {
 void Motion_X(Motion *motion, float distance) {
     Profile_Move(&(motion->x_profile), distance, 0.25, 0, 0.05);
     Profile_WaitUntilFinished(&(motion->x_profile));
+    x_distance += distance;
 }
 
 void Motion_Y(Motion *motion, float distance) {
     Profile_Start(&(motion->y_profile), distance, vmax_Y, 0, amax_Y);
     Profile_WaitUntilFinished(&(motion->x_profile));
+    y_distance += distance;
 }
 
-void Motion_Diagonal(Motion *motion, float distance) {
+void Motion_Diagonal_l(Motion *motion, float distance) {
 	Profile_Start(&(motion->x_profile), distance, vmax_X, 0, amax_X);
     Profile_Start(&(motion->y_profile), distance, vmax_Y, 0, amax_Y);
     Profile_WaitUntilFinished(&(motion->x_profile));
     Profile_WaitUntilFinished(&(motion->y_profile));
+    x_distance += distance;
+    y_distance += distance;
+
+
+}
+
+void Motion_Diagonal_r(Motion *motion, float distance) {
+	Profile_Start(&(motion->x_profile), distance, vmax_X, 0, amax_X);
+    Profile_Start(&(motion->y_profile), -1 * distance, vmax_Y, 0, amax_Y);
+    Profile_WaitUntilFinished(&(motion->x_profile));
+    Profile_WaitUntilFinished(&(motion->y_profile));
+    x_distance += distance;
+	y_distance += distance;
+}
+
+
+
+void Motion_Rotate_CW(Motion *motion, float angle){
+	Profile_Start(&(motion->W_profile), angle, wmax_Z, 0, amax_Z);
+	Profile_WaitUntilFinished(&(motion->W_profile));
+}
+
+void Motion_Rotate_CCW(Motion *motion, float angle){
+	Profile_Start(&(motion->W_profile), -1 * angle, wmax_Z, 0, amax_Z);
+	Profile_WaitUntilFinished(&(motion->W_profile));
 }

@@ -1,3 +1,4 @@
+"./Core/Src/FIRFilter.o"
 "./Core/Src/RS485.o"
 "./Core/Src/bluetoothDebug.o"
 "./Core/Src/config.o"
